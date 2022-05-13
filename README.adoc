@@ -1,91 +1,127 @@
-= NetBSD AsciiDoc Article Title
-Firstname Lastname <author@asciidoctor.org>
-3.0, July 29, 2022: AsciiDoc article template
+=  Chapter 2. Installing NetBSD: Preliminary considerations and preparations
+The NetBSD Foundation <author@asciidoctor.org>
+1.0, May 13, 2022: AsciiDoc Guide article test
 :toc:
+:toclevels: 4
 :icons: font
 :url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
 
-Content entered directly below the header but before the first section heading is called the preamble.
+== 2.1. Preliminary considerations
 
-== First level heading
+=== 2.1.1. Dual booting
 
-This is a paragraph with a *bold* word and an _italicized_ word.
+It is possible to install NetBSD together with other operating systems on one hard disk.
 
-.Image caption
-image::image-file-name.png[I am the image alt text.]
+If there is already an operating system on the hard disk, think about how you can free some space for NetBSD; if NetBSD will share the disk with other operating systems you will probably need to create a new partition (which you will do with sysinst). Oftentimes this will not be possible unless you resize an existing partition.
 
-This is another paragraph.footnote:[I am footnote text and will be displayed at the bottom of the article.]
+Unfortunately, it is not possible to resize an existing partition with sysinst, but there are some commercial products (like Partition Magic) and some free tools (GNU Parted, FIPS, pfdisk) available for this.
 
-=== Second level heading
+You can also install NetBSD on a separate hard disk.
 
-.Unordered list title
-* list item 1
-** nested list item
-*** nested nested list item 1
-*** nested nested list item 2
-* list item 2
-
-This is a paragraph.
-
-.Example block title
 ====
-Content in an example block is subject to normal substitutions.
+*Advice*
+
+Unless you are comfortable with setting up a partitioning scheme for two or more operating systems, and unless you understand the risk of data loss if you should make a mistake, it is recommended that you give NetBSD its own hard disk. This removes the risk of damage to the existing operating system.
 ====
 
-.Sidebar title
-****
-Sidebars contain aside text and are subject to normal substitutions.
-****
+===  2.1.2. NetBSD on emulation and virtualization
 
-==== Third level heading
+It is possible to install and run NetBSD on top of other operating systems without having to worry about partitioning. Emulators or virtualization environments provide a quick and secure way to try out NetBSD. The host operating system remains unchanged, and the risk of damaging important data is minimized.
 
-[#id-for-listing-block]
-.Listing block title
+Information about NetBSD as a Xen host and guest system is available on the NetBSD/xen web page.
+
+The NetBSD on emulated hardware web page provides detailed information about various emulators and the supported NetBSD platforms. It should also be noted that NetBSD runs as a VMware guest.
+
+== 2.2. Install preparations
+===  2.2.1. The INSTALL document
+
+The first thing to do before installing NetBSD is to read the release information and installation notes in one of the INSTALL files: this is the official description of the installation procedure, with platform-specific information and important details. It is available in HTML, PostScript, plain text, and an enhanced text format to be used with more. These files can be found in the root directory of the NetBSD release (on the install CD or on the FTP server). For example, the amd64 install instructions are available at ftp.NetBSD.org/pub/NetBSD/NetBSD-9.2/amd64/INSTALL.html
+
+===  2.2.2. Partitions
+
+The terminology used by NetBSD for partitioning is different from the typical DOS/Windows terminology; in fact, there are two partitioning schemes involved when running NetBSD on a typical PC. NetBSD installs in one of the four primary BIOS partitions (the partitions defined in the hard disk partition table).
+
+Within a BIOS partition (also called slice) NetBSD defines its BSD partitions using a disklabel. These partitions can be seen only by NetBSD and are identified by lowercase letters (starting with “a”). For example, wd0a refers to the “a” partition of the first IDE disk (wd0) and sd0a refers to the “a” partition of the first SCSI disk. In Figure 2.1, “Partitions” there are two primary BIOS partitions, one used by DOS and the other by NetBSD. NetBSD describes the disk layout through the disklabel.
+
+.Figure 2.1. Partitions
+.Image Partitions
+image::part.gif[Partitions]
+
+
+====
+*Note*
+
+The meaning of partitions “c” and “d” is typical of the amd64 port. On most other ports, “c” represents the whole disk.
+====
+====
+*Note*
+
+If NetBSD shares the hard disk with another operating system (like in the previous example) you will want to install a boot manager, i.e., a program which lets you choose which OS to start at boot time. sysinst can do this for you and will ask if you want to install one. Unless you have specific reasons not to, you should let sysinst perform this step.
+====
+=== 2.2.3. Hard disk space requirements
+The exact amount of space required for a given NetBSD installation varies depending on the platform being used and which distribution sets are selected. Generally speaking, if you have a few GB of free space on your hard drive, you will have enough space for a full installation of the base system. 
+
+===  2.2.4. Network settings
+
+If you plan to fetch distribution sets over the network (not necessary if you downloaded a full-size install ISO) and do not use DHCP, write down your basic network settings. You will need:
+
+
+    * Your IP address (example: 192.168.1.7)
+
+    * the netmask (example: 255.255.255.0)
+
+    * the IP address of your default gateway (example: 192.168.1.1)
+
+    * the IP address of the DNS server you use (example: 145.253.2.75)
+
+===  2.2.5. Backup your data and operating systems!
+
+Before you begin the installation, make sure that you have a reliable backup of any operating systems and data on the used hard disk. Mistakes in partitioning your hard disk can lead to data loss. Existing operating systems may become unbootable. "Reliable backup" means that the backup and restore procedure is tested and works flawlessly!
+
+===  2.2.6. Preparing the installation media
+
+The NetBSD installation system consists of two parts. The first part is the installation kernel. This kernel contains the NetBSD install program sysinst and it is booted from the install media (e.g, CD/DVD, USB drive, memory card, etc.). The sysinst program will prepare the disk: it separates the disk space into partitions, makes the disk bootable and creates the necessary file systems.
+
+The second part of the install system is made up of the binary distribution sets: the files of the NetBSD operating system. The installer needs to have access to the distribution sets. sysinst will usually fetch these files from the install media you booted from, but it can also fetch them via FTP, NFS, or a local filesystem.
+
+The NetBSD Project provides complete install media for every supported hardware architecture. This is usually in the form of bootable CD images (.iso files).
+
+==== 2.2.6.1. Booting the install system from USB
+To use a bootable USB install image (on amd64, i386), download the img.gz file for your hardware architecture, decompress and copy the image to a USB. For example on a Unix-like system you may use:
+
 ----
-Content in a listing block is subject to verbatim substitutions.
-Listing block content is commonly used to preserve code input.
+# gunzip NetBSD-9.2-amd64-install.img.gz
+# dd if=NetBSD-9.2-amd64-install.img of=/dev/your-usb bs=2m
 ----
 
-===== Fourth level heading
+Examples of your-usb are /dev/rsd0d (NetBSD), /dev/sda (Linux).
 
-.Table title
-|===
-|Column heading 1 |Column heading 2
+*Caution*
+Selecting the wrong device in dd may destroy your current system. Double-check it isn't mounted and is your USB stick. It should appear at the bottom of   dmesg on connect, for example, if you see:
+  
+  
+----
+sd0 at scsibus0 target 0 lun 0: [...], disk removable
+----
 
-|Column 1, row 1
-|Column 2, row 1
+ on NetBSD, you will want to select /dev/rsd0d.
+ 
+====  2.2.6.2. Booting the install system from CD
 
-|Column 1, row 2
-|Column 2, row 2
-|===
+To use a bootable NetBSD install CD, download the iso file for your hardware architecture and burn it to a CD or DVD. You will need to handle this step alone, as burning programs vary widely. Ensure that your computer is set up to boot from CD-ROM before hard drives, insert the disc, and reboot the computer.
 
-====== Fifth level heading
+==  2.3. Checklist
 
-[quote, firstname lastname, movie title]
-____
-I am a block quote or a prose excerpt.
-I am subject to normal substitutions.
-____
+This is the checklist about the things that should be clear and on-hand now:
 
-[verse, firstname lastname, poem title and more]
-____
-I am a verse block.
-  Indents and endlines are preserved in verse blocks.
-____
+   * Available disk space
 
-== First level heading
+   * Bootable medium with the install system
 
-TIP: There are five admonition labels: Tip, Note, Important, Caution and Warning.
+   * CD/DVD or server with the distribution sets
 
-// I am a comment and won't be rendered.
+   * Your network information (only if you will be fetching distribution sets via the network and do not use DHCP)
 
-. ordered list item
-.. nested ordered list item
-. ordered list item
+   * A working backup
 
-The text at the end of this sentence is cross referenced to <<_third_level_heading,the third level heading>>
-
-== First level heading
-
-This is a link to the https://docs.asciidoctor.org/home/[Asciidoctor documentation].
-This is an attribute reference {url-quickref}[that links this text to the AsciiDoc Syntax Quick Reference].
+   * A copy of the INSTALL document
