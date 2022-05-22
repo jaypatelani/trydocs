@@ -2,6 +2,7 @@
 The NetBSD Foundation <author@asciidoctor.org>
 1.0, May 13, 2022: AsciiDoc Guide article test
 :toc:
+:toc: left
 :toclevels: 4
 :icons: font
 :url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
