@@ -163,17 +163,17 @@ There has been a lot of talk about “ports”, “packages”, etc. so far. Her
         
 ===  1.3.1. Roles involved in pkgsrc
 
-.pkgsrc users
+pkgsrc users::
 
-    The pkgsrc users are people who use the packages provided by pkgsrc. Typically they are system administrators.The people using the software that is inside the packages (maybe called “end users”) are not covered by the pkgsrc guide.There are two kinds of pkgsrc users: Some only want to install pre-built binary packages. Others build the pkgsrc packages from source, either for installing them directly or for building binary packages themselves. For pkgsrc users http://netbsd.org/docs/pkgsrc/users-guide.html[Part I, “The pkgsrc user's guide”] should provide all necessary documentation.
+The pkgsrc users are people who use the packages provided by pkgsrc. Typically they are system administrators.The people using the software that is inside the packages (maybe called “end users”) are not covered by the pkgsrc guide.There are two kinds of pkgsrc users: Some only want to install pre-built binary packages. Others build the pkgsrc packages from source, either for installing them directly or for building binary packages themselves. For pkgsrc users http://netbsd.org/docs/pkgsrc/users-guide.html[Part I, “The pkgsrc user's guide”] should provide all necessary documentation.
     
-.package maintainers
+package maintainers::
 
-    A package maintainer creates packages as described in http://netbsd.org/docs/pkgsrc/developers-guide.html[Part II, “The pkgsrc developer's guide”].
+A package maintainer creates packages as described in http://netbsd.org/docs/pkgsrc/developers-guide.html[Part II, “The pkgsrc developer's guide”].
     
-.infrastructure developers
+infrastructure developers::
 
-    These people are involved in all those files that live in the mk/ directory and below. Only these people should need to read through http://netbsd.org/docs/pkgsrc/infrastructure.html[Part III, “The pkgsrc infrastructure internals”]might be curious, too.
+These people are involved in all those files that live in the mk/ directory and below. Only these people should need to read through http://netbsd.org/docs/pkgsrc/infrastructure.html[Part III, “The pkgsrc infrastructure internals”]might be curious, too.
     
 ==  1.4. Typography
     
