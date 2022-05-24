@@ -162,7 +162,6 @@ which will output and run a set of shell commands to fetch the necessary files i
 
 Once the software has downloaded, any patches will be applied, then it will be compiled for you. This may take some time depending on your computer, and how many other packages the software depends on and their compile time. 
  
-.NOTE
 [NOTE]
 ===============================
 If using bootstrap or pkgsrc on a non-NetBSD system, use the pkgsrc **bmake** command instead of "make” in the examples in this guide.
