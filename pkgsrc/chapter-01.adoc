@@ -137,29 +137,31 @@ This document is available in various formats:
 
 There has been a lot of talk about “ports”, “packages”, etc. so far. Here is a description of all the terminology used within this document.
 
-.Package
+Package::
 
-    A set of files and building instructions that describe what's necessary to build a certain piece of software using pkgsrc. Packages are traditionally stored under /usr/pkgsrc, but may be stored in any location, referred to as PKGSRCDIR.
+A set of files and building instructions that describe what's necessary to build a certain piece of software using pkgsrc. Packages are traditionally stored under /usr/pkgsrc, but may be stored in any location, referred to as PKGSRCDIR.
 
-.The NetBSD package system
-    This is the former name of “pkgsrc”. It is part of the NetBSD operating system and can be bootstrapped to run on non-NetBSD operating systems as well. It handles building (compiling), installing, and removing of packages.
+The NetBSD package system::
 
-.Distfile
-    This term describes the file or files that are provided by the author of the piece of software to distribute his work. All the changes necessary to build on NetBSD are reflected in the corresponding package. Usually the distfile is in the form of a compressed tar-archive, but other types are possible, too. Distfiles are usually stored below /usr/pkgsrc/distfiles.
-	    
-.Port
-        This is the term used by FreeBSD and OpenBSD people for what we call a package. In NetBSD terminology, “port” refers to a different architecture.
+This is the former name of “pkgsrc”. It is part of the NetBSD operating system and can be bootstrapped to run on non-NetBSD operating systems as well. It handles building (compiling), installing, and removing of packages.
+
+Distfile::
+
+This term describes the file or files that are provided by the author of the piece of software to distribute his work. All the changes necessary to build on NetBSD are reflected in the corresponding package. Usually the distfile is in the form of a compressed tar-archive, but other types are possible, too. Distfiles are usually stored below /usr/pkgsrc/distfiles.
+
+Port::
+
+This is the term used by FreeBSD and OpenBSD people for what we call a package. In NetBSD terminology, “port” refers to a different architecture.
         
         
-.Precompiled/binary package
+Precompiled/binary package::
 
-    
-
-    A set of binaries built with pkgsrc from a distfile and stuffed together in a single .tgz file so it can be installed on machines of the same machine architecture without the need to recompile. Packages are usually generated in /usr/pkgsrc/packages; there is also an archive on ftp.NetBSD.org.
+A set of binaries built with pkgsrc from a distfile and stuffed together in a single .tgz file so it can be installed on machines of the same machine architecture without the need to recompile. Packages are usually generated in /usr/pkgsrc/packages; there is also an archive on ftp.NetBSD.org.
     Sometimes, this is referred to by the term “package” too, especially in the context of precompiled packages.
     
-.Program
-        The piece of software to be installed which will be constructed from all the files in the distfile by the actions defined in the corresponding package.
+Program::
+
+The piece of software to be installed which will be constructed from all the files in the distfile by the actions defined in the corresponding package.
         
 ===  1.3.1. Roles involved in pkgsrc
 
