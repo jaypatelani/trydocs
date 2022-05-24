@@ -23,14 +23,12 @@ By default, in privileged mode pkgsrc uses ``/usr/pkg`` for __prefix__ where pro
 
 You can change default layout using command-line arguments. Run “./bootstrap --help” to get details.
 
-.NOTE
 [NOTE]
 ===============================
 The bootstrap installs a **bmake** tool. Use this **bmake** when building via pkgsrc. For examples in this guide, use **bmake** instead of “make”.
 ===============================
 
 
-.NOTE
 [NOTE]
 ===============================
 It is possible to bootstrap multiple instances of pkgsrc using non-intersecting directories. Use **bmake** corresponding to the installation you're working with to build and install packages.
