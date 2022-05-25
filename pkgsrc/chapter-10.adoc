@@ -1,0 +1,239 @@
+=  Chapter 10. Frequently Asked Questions
+:toc:
+:toc: left
+:toclevels: 4
+
+This section contains hints, tips & tricks on special things in pkgsrc that we didn't find a better place for in the previous chapters, and it contains items for both pkgsrc users and developers.
+
+== 10.1. Are there any mailing lists for pkg-related discussion?
+
+The following mailing lists may be of interest to pkgsrc users:
+
+*   http://www.NetBSD.org/mailinglists/index.html#pkgsrc-users[pkgsrc-users]: This is a general purpose list for most issues regarding pkgsrc, regardless of platform, e.g. soliciting user help for pkgsrc configuration, unexpected build failures, using particular packages, upgrading pkgsrc installations, questions regarding the pkgsrc release branches, etc.  General announcements or proposals for changes that impact the pkgsrc user community, e.g. major infrastructure changes, new features, package removals, etc., may also be posted.
+
+*   https://www.NetBSD.org/mailinglists/index.html#pkgsrc-bulk[pkgsrc-bulk]: A list where the results of pkgsrc bulk builds are sent and discussed.
+
+*   https://www.NetBSD.org/mailinglists/index.html#pkgsrc-changes[pkgsrc-changes]: This list is for those who are interested in getting a commit message for every change committed to pkgsrc. It is also available in digest form, meaning one daily message containing all commit messages for changes to the package source tree in that 24 hour period.
+
+To subscribe, do:
+
+    % echo subscribe listname | mail majordomo@NetBSD.org
+    
+Archives for all these mailing lists are available from https://mail-index.NetBSD.org/[https://mail-index.NetBSD.org/].
+
+==  10.2. Utilities for package management (pkgtools)
+
+The directory ``pkgsrc/pkgtools`` contains a number of useful utilities for both users and developers of pkgsrc. This section attempts only to make the reader aware of some of the utilities and when they might be useful, and not to duplicate the documentation that comes with each package.
+
+Utilities used by pkgsrc (automatically installed when needed):
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/x11-links/index.html[``pkgtools/x11-links``]: Symlinks for use by buildlink.
+
+OS tool augmentation (automatically installed when needed):
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/digest/index.html[``pkgtools/digest``]: Calculates various kinds of checksums (including SHA3).
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/libnbcompat/index.html[``pkgtools/libnbcompat``]: Compatibility library for pkgsrc tools.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/mtree/index.html[``pkgtools/mtree``]: Installed on non-BSD systems due to lack of native mtree.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_install/index.html[``pkgtools/pkg_install``]: Up-to-date replacement for ``/usr/sbin/pkg_install``, or for use on operating systems where pkg_install is not present.
+
+Utilities used by pkgsrc (not automatically installed):
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_tarup/index.html[``pkgtools/pkg_tarup``]: Create a binary package from an already-installed package.  Used by **make replace** to save the old package.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/dfdisk/index.html[``pkgtools/dfdisk``]: Adds extra functionality to pkgsrc, allowing it to fetch distfiles from multiple locations. It currently supports the following methods: multiple CD-ROMs and network FTP/HTTP connections.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/devel/cpuflags/index.html[``devel/cpuflags``]: Determine the best compiler flags to optimise code for your current CPU and compiler.
+
+Utilities for keeping track of installed packages, being up to date,
+etc:
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgin/index.html[``pkgtools/pkgin``]: A package update tool similar to apt(1). Download, install, and upgrade binary packages easily.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_chk/index.html[``pkgtools/pkg_chk``]: Reports on packages whose installed versions do not match the latest pkgsrc entries.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgdep/index.html[``pkgtools/pkgdep``]: Makes dependency graphs of packages, to aid in choosing a strategy for updating.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgdepgraph/index.html[``pkgtools/pkgdepgraph``]: Makes graphs from the output of https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgdep/index.html[``pkgtools/pkgdep``] (uses graphviz).
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkglint/index.html[``pkgtools/pkglint``]: The pkglint(1) program checks a pkgsrc entry for errors.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/lintpkgsrc/index.html[``pkgtools/lintpkgsrc``]: The lintpkgsrc(1) program does various checks on the complete pkgsrc system.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgsurvey/index.html[``pkgtools/pkgsurvey``]: Report what packages you have installed.
+
+Utilities for people maintaining or creating individual packages:
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgdiff/index.html[``pkgtools/pkgdiff``]: Automate making and maintaining patches for a package (includes pkgdiff, pkgvi, mkpatches, etc.).
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/url2pkg/index.html[``pkgtools/url2pkg``]: Aids in converting to pkgsrc.
+
+Utilities for people maintaining pkgsrc (or: more obscure pkg
+utilities)
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_comp/index.html[``pkgtools/pkg_comp``]: Build packages in a chrooted area.
+
+*   https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/libkver/index.html[``pkgtools/libkver``]: Spoof kernel version for chrooted cross builds.
+
+== 10.3. How to use pkgsrc as non-root
+
+To install packages from source as a non-root user, download pkgsrc as described in https://www.netbsd.org/docs/pkgsrc/getting.html[Chapter 3, Where to get pkgsrc and how to keep it up-to-date], cd into that directory and run the command **./bootstrap/bootstrap --unprivileged**.
+
+This will install the binary part of pkgsrc to ``~/pkg`` and put the pkgsrc configuration https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``]
+into ``~/pkg/etc``.
+
+For more details, see ``mk/unprivileged.mk``.
+
+== 10.4. How to resume transfers when fetching distfiles?
+
+By default, resuming transfers in pkgsrc is disabled, but you can enable this feature by adding the option ``PKG_RESUME_TRANSFERS=YES`` into https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``]. If, during a fetch step, an incomplete distfile is found, pkgsrc will try to resume it.
+
+You can also use a different program than the platform default program by changing the ``FETCH_USING`` variable. You can specify the program by using of ftp, fetch, wget or curl. Alternatively, fetching can be disabled by using the value manual. A value of custom disables the system defaults and dependency tracking for the fetch program.  In that case you have to provide ``FETCH_CMD``, ``FETCH_BEFORE_ARGS``, ``FETCH_RESUME_ARGS``, ``FETCH_OUTPUT_ARGS``, ``FETCH_AFTER_ARGS``.
+
+For example, if you want to use ``wget`` to download, you'll have to use something like:
+
+    FETCH_USING=    wget
+    
+== 10.5. How can I install/use modular X.org from pkgsrc?
+
+If you want to use modular X.org from pkgsrc instead of your system's own X11 (``/usr/X11R6``, ``/usr/openwin``, ...) you will have to add the following line into https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``]:
+    
+    X11_TYPE=modular
+    
+== 10.6. How to fetch files from behind a firewall
+
+If you are sitting behind a firewall which does not allow direct connections to Internet hosts (i.e. non-NAT), you may specify the relevant proxy hosts. This is done using an environment variable in the form of a URL, e.g. in Amdahl, the machine “orpheus.amdahl.com” is one of the firewalls, and it uses port 80 as the proxy port number. So the proxy environment variables are:
+
+    ftp_proxy=ftp://orpheus.amdahl.com:80/
+    http_proxy=http://orpheus.amdahl.com:80/
+
+== 10.7. How to fetch files from HTTPS sites
+
+Some fetch tools are not prepared to support HTTPS by default (for example, the one in NetBSD 6.0), or the one installed by the pkgsrc bootstrap (to avoid an openssl dependency that low in the dependency graph).
+
+Usually you won't notice, because distribution files are mirrored weekly to “ftp.NetBSD.org”, but that might not be often enough if you are following pkgsrc-current. In that case, set ``FETCH_USING`` in your https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``] file to “curl” or “wget”, which are both compiled with HTTPS support by default. Of course, these tools need to be installed before you can use them this way.
+
+== 10.8. How do I tell make fetch to do passive FTP?
+
+This depends on which utility is used to retrieve distfiles. From ``bsd.pkg.mk``, ``FETCH_CMD`` is assigned the first available command from the following list:
+
+*   ``${LOCALBASE}/bin/ftp``
+
+*   ``/usr/bin/ftp``
+
+On a default NetBSD installation, this will be ``/usr/bin/ftp``, which automatically tries passive connections first, and falls back to active connections if the server refuses to do passive. For the other tools, add the following to your https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``] file: ``PASSIVE_FETCH=1``.
+
+Having that option present will prevent ``/usr/bin/ftp`` from falling back to active transfers.
+
+== 10.9. How to fetch all distfiles at once
+
+You would like to download all the distfiles in a single batch from work or university, where you can't run a **make fetch**. There is an archive of distfiles on ftp://ftp.NetBSD.org/pub/pkgsrc/distfiles/[ftp.NetBSD.org], but downloading the entire directory may not be appropriate.
+
+The answer here is to do a **make fetch-list** in ``/usr/pkgsrc`` or one of its subdirectories, carry the resulting list to your machine at work/school and use it there.  If you don't have a NetBSD-compatible https://man.NetBSD.org/NetBSD-9.2/i386/ftp.1[ftp(1)] (like tnftp) at work, don't forget to set ``FETCH_CMD`` to something that fetches a URL:
+
+At home:
+
+    % cd /usr/pkgsrc
+    % make fetch-list FETCH_CMD=wget DISTDIR=/tmp/distfiles >/tmp/fetch.sh
+    % scp /tmp/fetch.sh work:/tmp
+    
+At work:
+
+    % sh /tmp/fetch.sh
+    
+then tar up ``/tmp/distfiles`` and take it home.
+
+If you have a machine running NetBSD, and you want to get __all__ distfiles (even ones that aren't for your machine architecture), you can do so by using the above-mentioned **make fetch-list** approach, or fetch the distfiles directly by running:
+
+    % make mirror-distfiles
+    
+If you even decide to ignore ``NO_{SRC,BIN}_ON_{FTP,CDROM}``, then you can get everything by running:
+
+    % make fetch NO_SKIP=yes
+    
+== 10.10. What does “Don't know how to make /usr/share/tmac/tmac.andoc” mean?
+
+When compiling the https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_install/index.html[``pkgtools/pkg_install``] package, you get the error from make that it doesn't know how to make ``/usr/share/tmac/tmac.andoc``? This indicates that you don't have installed the “text” set (nroff, ...) from the NetBSD base distribution on your machine.  It is recommended to do that to format man pages.
+
+In the case of the https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_install/index.html[``pkgtools/pkg_install``] package, you can get away with setting ``NOMAN=YES`` either in the environment or in https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``].
+
+== 10.11. What does “Could not find bsd.own.mk” mean?
+
+You didn't install the compiler set, ``comp.tgz``, when you installed your NetBSD machine.  Please get and install it, by extracting it in ``/``:
+
+    # cd /
+    # tar --unlink -zxvpf .../comp.tgz
+    
+``comp.tgz`` is part of every NetBSD release. Get the one that corresponds to your release (determine via **uname -r**).
+
+== 10.12. Using 'sudo' or 'priv' with pkgsrc
+
+When installing packages as non-root user and using the just-in-time https://man.NetBSD.org/NetBSD-9.2/i386/su.1[su(1)] feature of pkgsrc, it can become annoying to type in the root password for each required package installed.  To avoid this, the sudo package can be used, which does password caching over a limited time. To use it, install **sudo** or
+**priv** (either as binary package, from https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/security/priv/index.html[``security/priv``], or https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/security/sudo/index.html[``security/sudo``]) and then put the following into your https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``], somewhere __after__ the definition of the ``LOCALBASE`` variable:
+
+    .if exists(${LOCALBASE}/bin/sudo)
+    SU_CMD=        ${LOCALBASE}/bin/sudo /bin/sh -c
+    .endif
+    
+== 10.13. How do I change the location of configuration files?
+
+As the system administrator, you can choose where configuration files are installed.  The default settings make all these files go into ``${PREFIX}/etc`` or some of its subdirectories; this may be suboptimal depending on your expectations (e.g., a read-only, NFS-exported ``PREFIX`` with a need of per-machine configuration of the provided packages).
+
+In order to change the defaults, you can modify the ``PKG_SYSCONFBASE`` variable (in https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``]) to point to your preferred configuration directory; some common examples include ``/etc`` or ``/etc/pkg``.
+
+Furthermore, you can change this value on a per-package basis by setting the ``PKG_SYSCONFDIR.${PKG_SYSCONFVAR}`` variable. ``PKG_SYSCONFVAR``'s value usually matches the name of the package you would like to modify, that is, the contents of ``PKGBASE``.
+
+Note that after changing these settings, you must rebuild and reinstall any affected packages.
+
+== 10.14. Automated security checks
+
+Please be aware that there can often be bugs in third-party software, and some of these bugs can leave a machine vulnerable to exploitation by attackers.  In an effort to lessen the exposure, the NetBSD packages team
+maintains a database of known-exploits to packages which have at one time
+been included in pkgsrc. The database can be downloaded automatically, and a security audit of all packages installed on a system can take place. To do this, refer to the following two tools (installed as part of the https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_install/index.html[``pkgtools/pkg_install``] package):
+
+1.  **pkg_admin fetch-pkg-vulnerabilities**, an easy way to download a list of the security vulnerabilities information. This list is kept up to date by the pkgsrc security team, and is distributed from the NetBSD ftp server:
+
+https://ftp.NetBSD.org/pub/NetBSD/packages/vulns/pkg-vulnerabilities[https://ftp.NetBSD.org/pub/NetBSD/packages/vulns/pkg-vulnerabilities]
+
+2.  **pkg_admin audit**, an easy way to audit the current machine, checking each known vulnerability. If a vulnerable package is installed, it will be shown by output to stdout, including a description of the type of vulnerability, and a URL containing more information.
+
+Use of these tools is strongly recommended! See https://www.netbsd.org/docs/pkgsrc/using.html#vulnerabilities[Section 5.1.6, “Checking for security vulnerabilities in installed packages”] for instructions on how to automate checking and reporting.
+
+If this database is installed, pkgsrc builds will use it to perform a security check before building any package.
+
+== 10.15. Why do some packages ignore my CFLAGS?
+
+When you add your own preferences to the ``CFLAGS`` variable in your https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``], these flags are passed in environment variables to the ``./configure`` scripts and to https://man.NetBSD.org/NetBSD-9.2/i386/make.1[make(1)]. Some package authors ignore the ``CFLAGS`` from the environment variable by overriding them in the ``Makefile``s of their package.
+
+Currently there is no solution to this problem. If you really need the package to use your ``CFLAGS`` you should run **make patch** in the package directory and then inspect any ``Makefile`` and	``Makefile.in`` for whether they define ``CFLAGS`` explicitly. Usually you can remove these lines. But be aware that some “smart”	programmers write so bad code that it only works for the specific combination of ``CFLAGS`` they have chosen.
+
+To find out where the CFLAGS are ignored, add the following lines to https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``]:
+
+    CPPFLAGS+=              -Dpkgsrc___CPPFLAGS
+    CFLAGS+=                -Dpkgsrc___CFLAGS
+    CXXFLAGS+=              -Dpkgsrc___CXXFLAGS
+    
+Then run **bmake show-all-configure show-all-build** to see whether the above flags are passed to the actual build commands in general.
+
+To find out whether the flags are passed to individual compiler commands, have a look at the file ``work/.work.log``. In most cases, the flags from the original command lines (the lines starting with ``[*]``) are passed unmodified to the actual compiler (the lines starting with ``<.>``). If the flag is missing from the actual compiler command, it must have been removed by the https://www.netbsd.org/docs/pkgsrc/build.html#build.wrapper[pkgsrc compiler wrappers].
+
+== 10.16. A package does not build. What shall I do?
+
+1. Make sure that your copy of pkgsrc is consistent. A case that occurs often is that people only update pkgsrc in parts, because of performance reasons. Since pkgsrc is one large system, not a collection of many small systems, there are sometimes changes that only work when the whole pkgsrc tree is updated.
+
+2. Make sure that you don't have any CVS conflicts. Search for “<<<<<<” or “>>>>>>” in all your pkgsrc files.
+
+3. Make sure that you don't have old copies of the packages extracted. Run **make clean clean-depends** to verify this.
+
+4. If you are a package developer who wants to invest some work, have a look at https://www.netbsd.org/docs/pkgsrc/fixes.html[Chapter 21, Making your package work].
+
+5. If the problem still exists, write a mail to the ``pkgsrc-users`` mailing list.
+
+
+== 10.17. What does “Makefile appears to contain unresolved cvs/rcs/??? merge conflicts” mean?
+
+You have modified a file from pkgsrc, and someone else has modified that same file afterwards in the CVS repository. Both changes are in the same region of the file, so when you updated pkgsrc, the ``cvs`` command marked the conflicting changes in the file. Because of these markers, the file is no longer a valid ``Makefile``.
+
+Have a look at that file, and if you don't need your local changes anymore, you can remove that file and run **cvs -q update -dP** in that directory to download the current version.
