@@ -36,3 +36,9 @@ The available help topics are listed in http://netbsd.org/docs/pkgsrc/help-topic
 	or by using a specialized chat program such as
 	http://xchat.org/[XChat].
 	Pick any user name and join the channel #pkgsrc.
+	
+.Next 
+Chapter 3. Where to get pkgsrc and how to keep it up-to-date xref:chapter-03.adoc[xrefstyle=basic]
+
+.Previous
+Chapter 1. What is pkgsrc? xref:chapter-01.adoc[xrefstyle=basic]
