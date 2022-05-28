@@ -180,3 +180,7 @@ These people are involved in all those files that live in the mk/ directory and 
 ==  1.4. Typography
     
 When giving examples for commands, shell prompts are used to show if the command should/can be issued as root, or if “normal” user privileges are sufficient. We use a # for root's shell prompt, a % for users' shell prompt, assuming they use the C-shell or tcsh and a $ for bourne shell and derivatives.
+
+
+.Next 
+Chapter 2. Getting help xref:chapter-02.adoc[xrefstyle=basic]
