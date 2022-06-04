@@ -1,0 +1,123 @@
+= Chapter 22. GNOME packaging and porting
+:toc:
+:toc: left
+:toclevels: 4
+:docinfo: private
+
+[quote, GNOME's website]
+____
+The GNOME project provides two things: The GNOME desktop environment, an intuitive and attractive desktop for users, and the GNOME development platform, an extensive framework for building applications that integrate into the rest of the desktop.
+____
+
+pkgsrc provides a seamless way to automatically build and install a complete GNOME environment __under many different platforms__. We can say with confidence that pkgsrc is one of the most advanced build and packaging systems for GNOME due to its included technologies buildlink3, the wrappers and tools framework and automatic configuration file management. Lots of efforts are put into achieving a completely clean deinstallation of installed software components.
+
+Given that pkgsrc is https://www.NetBSD.org/[NetBSD]'s official packaging system, the above also means that great efforts are put into making GNOME work under this operating system.
+
+This chapter is aimed at pkgsrc developers and other people interested in helping our GNOME porting and packaging efforts. It provides instructions on how to manage the existing packages and some important information regarding their internals.
+
+== 22.1. Meta packages
+
+pkgsrc includes three GNOME-related meta packages:
+
+* https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/gnome-base/index.html[``meta-pkgs/gnome-base``]: Provides the core GNOME desktop environment. It only includes the necessary bits to get it to boo correctly, although it may lack important functionality for daily operation. The idea behind this package is to let end users build their own configurations on top of this one, first installing this meta package to achieve a functional setup and then adding individual applications.
+
+* https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/gnome/index.html[``meta-pkgs/gnome``]: Provides a complete installation of the GNOME platform and desktop as defined by the GNOME project; this is based on the components distributed in the ``platform/x.y/x.y.z/sources`` and ``desktop/x.y/x.y.z/sources`` directories of the official FTP server. Developer-only tools found in those directories are not installed unless required by some other component to work properly. Similarly, packages from the bindings set (``bindings/x.y/x.y.z/sources``) are not pulled in unless required as a dependency for an end-user component. This package "extends" https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/gnome-base/index.html[``meta-pkgs/gnome-base``].
+
+* https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/gnome-devel/index.html[``meta-pkgs/gnome-devel``]: Installs all the tools required to build a GNOME component when fetched from the CVS repository. These are required to let the **autogen.sh** scripts work appropriately.
+
+In all these packages, the ``DEPENDS`` lines are sorted in a way that eases updates: a package may depend on other packages listed before it but not on any listed after it. It is very important to keep this order to ease updates so... __do not change it to alphabetical sorting!__
+
+== 22.2. Packaging a GNOME application
+
+Almost all GNOME applications are written in C and use a common set of tools as their build system. Things get different with the new bindings to other languages (such as Python), but the following will give you a general idea on the minimum required tools:
+
+* Almost all GNOME applications use the GNU Autotools as their build system. As a general rule you will need to tell this to your package:
+
+    GNU_CONFIGURE=  yes
+    USE_LIBTOOL=    yes
+    USE_TOOLS+=     gmake
+    
+* If the package uses pkg-config to detect dependencies, add this tool to the list of required utilities:
+
+    USE_TOOLS+=     pkg-config
+    
+Also use https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/verifypc/index.html[``pkgtools/verifypc``] at the end of the build process to ensure that you did not miss to specify any dependency in your package and that the version requirements are all correct.
+
+If the package uses intltool, be sure to add ``intltool`` to the ``USE_TOOLS`` to handle dependencies and to force the package to use the latest available version.
+
+If the package uses gtk-doc (a documentation generation utility), do __not__ add a dependency on it. The tool is rather big and the distfile should come with pregenerated documentation anyway; if it does not, it is a bug that you ought to report. For such packages you should disable gtk-doc (unless it is the default):
+
+    CONFIGURE_ARGS+=        --disable-gtk-doc
+    
+The default location of installed HTML files (``share/gtk-doc/<package-name>``) is correct and should not be changed unless the package insists on installing them somewhere else. Otherwise programs as **devhelp** will not be able to open them. You can do that with an entry similar to:
+
+    CONFIGURE_ARGS+=        --with-html-dir=${PREFIX}/share/gtk-doc/...
+
+GNOME uses multiple __shared__ directories and files under the installation prefix to maintain databases. In this context, shared means that those exact same directories and files are used among several different packages, leading to conflicts in the ``PLIST``.  pkgsrc currently includes functionality to handle the most common cases, so you have to forget about using ``@unexec ${RMDIR}`` lines in your file lists and omitting shared files from them.  If you find yourself doing those,
+__your package is most likely incorrect__.
+
+The following table lists the common situations that result in using shared directories or files.  For each of them, the appropriate solution is given. After applying the solution be sure to __regenerate the package's file list__ with **make print-PLIST** and ensure it is correct.
+
+**Table 22.1. PLIST handling for GNOME packages**
+
+[options="header"]
+|=======================
+|If the package...|Then...
+|Installs icons under the ``share/icons/hicolor`` hierarchy or updates ``share/icons/hicolor/icon-theme.cache``. |See http://netbsd.org/docs/pkgsrc/fixes.html#hicolor-theme[Section 21.6.16, “Packages installing hicolor icons”].     
+|Installs files under ``share/mime/packages``.   |See http://netbsd.org/docs/pkgsrc/fixes.html#mime-database[Section 21.6.11, “Packages installing extensions to the MIME database”].    
+|Installs ``.desktop`` files under ``share/applications`` and these include MIME information.   |See http://netbsd.org/docs/pkgsrc/fixes.html#desktop-files[Section 21.6.17, “Packages installing desktop files”].
+|=======================
+
+== 22.3. Updating GNOME to a newer version
+
+When seeing GNOME as a whole, there are two kinds of updates:
+
+Major update::
+
+Given that there is still a very long way for GNOME 3 (if it ever appears), we consider a major update one that goes from a ``2.X`` version to a ``2.Y`` one, where ``Y`` is even and greater than ``X``. These are hard to achieve because they introduce lots of changes in the components' code and almost all GNOME distfiles are updated to newer versions. Some of them can even break API and ABI compatibility with the previous major version series. As a result, the update needs to be done all at once to minimize breakage.
+
+A major update typically consists of around 80 package updates and the addition of some new ones.
+
+Minor update::
+
+We consider a minor update one that goes from a ``2.A.X`` version to a ``2.A.Y`` one where ``Y`` is greater than ``X``. These are easy to achieve because they do not update all GNOME components, can be done in an incremental way and do not break API nor ABI compatibility.
+
+A minor update typically consists of around 50 package updates, although the numbers here may vary a lot.
+
+In order to update the GNOME components in pkgsrc to a new stable release (either major or minor), the following steps should be followed:
+
+1. Get a list of all the tarballs that form the new release by using the following commands. These will leave the full list of the components' distfiles into the ``list.txt`` file:
+
+    % echo ls "*.tar.bz2" | \
+        ftp -V ftp://ftp.gnome.org/pub/gnome/platform/x.y/x.y.z/sources/ | \
+        awk '{ print $9 }' >list.txt
+    % echo ls "*.tar.bz2" | \
+        ftp -V ftp://ftp.gnome.org/pub/gnome/desktop/x.y/x.y.z/sources/ | \
+        awk '{ print $9 }' >>list.txt
+        
+2. Open each meta package's ``Makefile`` and bump their version to the release you are updating them to. The three meta packages should be always consistent with versioning. Obviously remove any ``PKGREVISION``s that might be in them.
+
+
+3. For each meta package, update all its ``DEPENDS`` lines to match the latest versions as shown by the above commands. Do __not__ list any newer version (even if found in the FTP) because the meta packages are supposed to list the exact versions that form a specific GNOME release. Exceptions are permitted here if a newer version solves a serious issue in the overall desktop experience; these typically come in the form of a revision bump in pkgsrc, not in newer versions from the developers.
+
+Packages not listed in the ``list.txt`` file should be updated to the latest version available (if found in pkgsrc). This is the case, for example, of the dependencies on the GNU Autotools in the https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/gnome-devel/index.html[``meta-pkgs/gnome-devel``] meta package.
+
+4. Generate a patch from the modified meta packages and extract the list of "new" lines. This will provide you an outline on what packages need to be updated in pkgsrc and in what order:
+
+    % cvs diff -u gnome-devel gnome-base gnome | grep '^+D' >todo.txt
+    
+5. For major desktop updates it is recommended to zap all your
+    installed packages and start over from scratch at this point.
+
+6. Now comes the longest step by far: iterate over the contents of ``todo.txt`` and update the packages listed in it in order. For major desktop updates none of these should be committed until the entire set is completed because there are chances of breaking not-yet-updated packages.
+
+7. Once the packages are up to date and working, commit them to the tree one by one with appropriate log messages. At the end, commit the three meta package updates and all the corresponding changes to the ``doc/CHANGES-<YEAR>`` and http://cvsweb.NetBSD.org/bsdweb.cgi/pkgsrc/doc/TODO?rev=HEAD&content-type=text/x-cvsweb-markup[``pkgsrc/doc/TODO``] files.
+
+== 22.4. Patching guidelines
+
+GNOME is a very big component in pkgsrc which approaches 100 packages. Please, it is very important that you always, always, **always** feed back any portability fixes you do to a GNOME package to the mainstream developers (see http://netbsd.org/docs/pkgsrc/components.html#components.patches.feedback[Section 12.3.5, “Feedback to the author”]). This is the only way to get their attention on portability issues and to ensure that future versions can be built out-of-the box on NetBSD. The less custom patches in pkgsrc, the easier further updates are. Those developers in charge of issuing major GNOME updates will be grateful if you do that.
+
+The most common places to report bugs are the https://gitlab.gnome.org/GNOME[GNOME's GitLab] and the https://gitlab.freedesktop.org/explore/groups[freedesktop.org's
+GitLab]. Not all components use these to track bugs, but most of them do. Do not be short on your reports: always provide detailed explanations of the current failure, how it can be improved to achieve maximum portability and, if at all possible, provide a patch against the main Git branch. The more verbose you are, the higher chances of your patch being accepted.
+
+Also, please avoid using preprocessor magic to fix portability issues. While the FreeBSD GNOME people are doing a great job in porting GNOME to their operating system, the official GNOME sources are now plagued by conditionals that check for ``__FreeBSD__`` and similar macros. This hurts portability. Please see our patching guidelines (http://netbsd.org/docs/pkgsrc/components.html#components.patches.guidelines[Section 12.3.4, “Patching guidelines”]) for more details.
