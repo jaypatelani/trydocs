@@ -1,0 +1,65 @@
+= Chapter 26. Regression tests
+:toc:
+:toc: left
+:toclevels: 4
+:docinfo: private
+
+The pkgsrc infrastructure consists of a large codebase, and there are many corners where every little bit of a file is	well thought out, making pkgsrc likely to fail as soon as anything is changed near those parts. To prevent most changes from breaking anything, a suite of regression tests should go along with every important part of the pkgsrc infrastructure. This chapter describes how regression tests work in pkgsrc and how you can add new tests.
+
+== 26.1. Running the regression tests
+
+You first need to install the https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_regress/index.html[``pkgtools/pkg_regress``] package, which	provides the **pkg_regress** command. Then you can simply run that command, which will run all tests in the ``regress/`` directory.
+
+== 26.2. Adding a new regression test
+
+Every directory in the ``regress/`` directory that contains a file called ``spec`` is considered a regression test. This file is a shell program that is included by the **pkg_regress** command. The following functions can be overridden to suit your needs.
+
+=== 26.2.1. Overridable functions
+
+These functions do not take any parameters. Although they are called in “set -e” mode, they don't stop at the first failing command. See https://stackoverflow.com/q/4072984[this Stack Overflow question] for details.
+
+``do_setup``::
+This function prepares the environment for the test. By default it does nothing.
+
+``do_test``::
+This function runs the actual test. By default, it calls ``TEST_MAKE`` with the arguments ``MAKEARGS_TEST`` and writes its output including error messages into the file ``TEST_OUTFILE``.
+
+When defining this function, make sure that all output that needs to be checked is written to the correct output file. Example:
+
+    do_test() {
+        echo "Example output"
+    } 1>$TEST_OUTFILE 2>&1
+    
+``check_result``::
+This function is run after the test and is typically used to compare the actual output from the one that is expected. It can make use of the various helper functions from the next section. Example:
+
+    check_result() {
+        exit_status 0
+        output_require "Example"
+        output_require "^[[:alpha:]+[[:space:]][[:alpha:]]{6}$"
+        output_prohibit "no such file or directory"
+        regress_fail "expected $expected but got $actual for input $input"
+    }
+    
+``do_cleanup``::
+This function cleans everything up after the test has been run. By default it does nothing.
+
+=== 26.2.2. Helper functions
+
+``regress_fail __message...``__::
+
+This function makes the test fail with the given error message.
+
+``exit_status expected``::
+
+This function compares the exitcode of the **do_test** function with its first parameter. If they differ, the test will fail.
+
+``output_require regex...``::
+
+This function checks for each of its parameters	if the output from **do_test** matches the extended regular expression. If it does not, the test will fail. Example:
+
+    output_require "looks fine"
+    output_require "^[[:alpha:]+[[:space:]][[:alpha:]]{6}$"
+    
+``output_prohibit regex...``::
+This function checks for each of its parameters if the output from **do_test()** does __not__ match the extended regular expression. If any the regular expressions matches, the test will fail.
