@@ -1,0 +1,29 @@
+= Chapter 27. Porting pkgsrc
+:toc:
+:toc: left
+:toclevels: 4
+:docinfo: private
+
+The pkgsrc system has already been ported to many operating systems, hardware architectures and compilers. This chapter explains the necessary steps to make pkgsrc even more portable.
+
+== 27.1. Porting pkgsrc to a new operating system
+
+To port pkgsrc to a new operating system (called ``MyOS`` in this example), you need to touch the following files:
+
+``pkgtools/bootstrap-mk-files/files/mods/__MyOS``__.sys.mk
+
+This file contains some basic definitions, for example the name of the C compiler.
+
+``mk/bsd.prefs.mk``
+
+Insert code that defines the variables ``OPSYS``, ``OS_VERSION``, ``OPSYS_VERSION``, ``LOWER_VENDOR``, ``MACHINE_ARCH``, ``OBJECT_FMT``, ``APPEND_ELF``, and the other variables that appear in this file.
+
+``mk/platform/__MyOS``__.mk
+
+This file contains the platform-specific definitions that are used by pkgsrc. Start by copying one of the	other files and edit it to your needs.
+
+``mk/tools/tools.__MyOS``__.mk
+
+This file defines the paths to all the tools that are needed by one or the other package in pkgsrc, as well as by pkgsrc itself. Find out where these tools are on your platform and add them.
+
+Now, you should be able to build some basic packages, like https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/lang/perl5/index.html[``lang/perl5``], https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/shells/bash/index.html[``shells/bash``].
