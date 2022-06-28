@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 When you find a package that is not yet in pkgsrc, you most likely have a URL from where you can download the source code. Starting with this URL, creating a package involves only a few steps.
 
