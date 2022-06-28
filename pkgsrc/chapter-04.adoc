@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 ==  4.1. Binary distribution
 See http://netbsd.org/docs/pkgsrc/using.html#using-pkg[Section 5.1, “Using binary packages”].
