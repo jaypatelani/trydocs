@@ -1,0 +1,47 @@
+= Appendix F. Editing guidelines for the pkgsrc guide
+:toc:
+:toc: left
+:toclevels: 4
+:docinfo: private
+
+This section contains information on editing the pkgsrc guide itself.
+
+== F.1. Make targets
+
+The pkgsrc guide's source code is stored in ``pkgsrc/doc/guide/files``, and several files are created from it:
+
+* ``pkgsrc/doc/pkgsrc.txt``
+
+* ``pkgsrc/doc/pkgsrc.html``
+
+* https://www.netbsd.org/docs/pkgsrc/[https://www.NetBSD.org/docs/pkgsrc/]
+
+* https://www.netbsd.org/docs/pkgsrc/pkgsrc.pdf[https://www.NetBSD.org/docs/pkgsrc/pkgsrc.pdf]: The PDF version of the pkgsrc guide.
+
+* https://www.netbsd.org/docs/pkgsrc/pkgsrc.ps[https://www.NetBSD.org/docs/pkgsrc/pkgsrc.ps]: PostScript version of the pkgsrc guide.
+
+== F.2. Procedure
+
+The procedure to edit the pkgsrc guide is:
+
+1. Make sure you have checked out the htdocs repository into a sibling directory of your pkgsrc directory. You will need the ability to commit from both pkgsrc and htdocs.
+
+2. Make sure you have the packages needed to regenerate the pkgsrc guide (and other XML-based NetBSD documentation) installed. These are automatically installed when you install the https://cdn.netbsd.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/pkgsrc-guide-tools/index.html[``meta-pkgs/pkgsrc-guide-tools``] package.
+
+3. Run **cd doc/guide** to get to the right directory. All further steps will take place here.
+
+4. Edit the XML file(s) in ``files/``.
+
+5. Run **bmake** to check the pkgsrc guide for valid XML and to build the final output files. If you get any errors at this stage, you can just edit the files, as there are only symbolic links in the working directory, pointing to the files in ``files/``.
+
+6. **(cd files && cvs commit)**
+
+7. Run **bmake clean && bmake** to regenerate the output files with the proper RCS Ids.
+
+8. Run **bmake regen** to install and commit the files in both ``pkgsrc/doc`` and ``htdocs``.
+[NOTE]
+====
+*Note*
+
+If you have added, removed or renamed some chapters, you need to synchronize them using **cvs add** or **cvs delete** in the htdocs directory.
+====
