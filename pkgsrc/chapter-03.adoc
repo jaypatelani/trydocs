@@ -3,6 +3,7 @@
 :toc: left
 :toclevels: 4
 :icons: font
+:docinfo: private
 
 Before you download and extract the files, you need to decide where you want to extract them. When using pkgsrc as root user, pkgsrc is usually installed in ``/usr/pkgsrc``. You are though free to install the sources and binary packages wherever you want in your filesystem, provided that the pathname does not contain white-space or other characters that are interpreted specially by the shell and some other programs. A safe bet is to use only letters, digits, underscores and dashes.
 
