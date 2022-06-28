@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 Whenever you're preparing a package, there are a number of files involved which are described in the following sections.
 
