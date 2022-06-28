@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 The ``PLIST`` file contains a package's “packing list”, i.e. a list of files that belong to the package (relative to the ``${PREFIX}`` directory it's been installed in) plus some additional statements - see the https://man.NetBSD.org/NetBSD-9.2/i386/pkg_create.1[pkg_create(1)] man page for a full list. This chapter addresses some issues that need attention when dealing with the ``PLIST`` file (or files, see below!).
 
