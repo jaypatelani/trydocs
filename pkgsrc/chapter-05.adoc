@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 Basically, there are two ways of using pkgsrc. The first is to only install the package tools and to use binary packages that someone else has prepared. This is the “pkg” in pkgsrc. The second way is to install the “src” of pkgsrc, too. Then you are able to build your own packages, and you can still use binary packages from someone else.
 
