@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 Pkgsrc consists of many ``Makefile`` fragments, each of which forms a well-defined part of the pkgsrc system. Using the https://man.NetBSD.org/NetBSD-9.2/i386/make.1[make(1)] system as a programming language for a big system like pkgsrc requires some discipline to keep the code correct and understandable.
 
