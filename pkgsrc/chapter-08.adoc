@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 For a number of reasons, you may want to build binary packages for a large selected set of packages in pkgsrc, or even for all pkgsrc packages. For instance, when you have multiple machines that should run the same software, it is wasted time if they all build their packages themselves from source. Or you may want to build a list of packages you want and check them before deploying onto production systems. There is a way of getting a set of binary packages: the bulk build system, or pbulk ("p" stands for "parallel"). This chapter describes how to set it up.
 
