@@ -1,0 +1,165 @@
+= Appendix A. A simple example package: bison
+:toc:
+:toc: left
+:toclevels: 4
+:docinfo: private
+
+We checked to find a piece of software that wasn't in the packages collection, and picked GNU bison. Quite why someone would want to have **bison** when Berkeley **yacc** is already present in the tree is beyond us, but it's useful for the purposes of this exercise.
+
+== A.1. files
+=== A.1.1. Makefile
+
+    # $NetBSD: examples.html,v 1.225 2022/06/02 21:25:00 gutteridge Exp $
+    #
+    DISTNAME=       bison-1.25
+    CATEGORIES=     devel
+    MASTER_SITES=   ${MASTER_SITE_GNU:=bison/}
+    MAINTAINER=     pkgsrc-users@NetBSD.org
+    HOMEPAGE=       https://www.gnu.org/software/bison/bison.html
+    COMMENT=        GNU yacc clone
+    GNU_CONFIGURE=  yes
+    INFO_FILES=     yes
+    .include "../../mk/bsd.pkg.mk"
+
+=== A.1.2. DESCR
+
+    GNU version of yacc.  Can make re-entrant parsers, and numerous other
+    improvements.  Why you would want this when Berkeley yacc(1) is part
+    of the NetBSD source tree is beyond me.
+    
+=== A.1.3. PLIST
+
+    @comment $NetBSD: examples.html,v 1.225 2022/06/02 21:25:00 gutteridge Exp $
+    bin/bison
+    man/man1/bison.1.gz
+    share/bison.simple
+    share/bison.hairy
+    
+=== A.1.4. Checking a package with pkglint
+
+The NetBSD package system comes with https://cdn.netbsd.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkglint/index.html[``pkgtools/pkglint``] which helps to check the contents of these files. After installation it is quite easy to use, just change to the directory of the package you wish to examine and run **pkglint**:
+
+    $ pkglint
+    ERROR: Makefile: Each package must define its LICENSE.
+    WARN: Makefile:9: HOMEPAGE should migrate from http to https.
+    NOTE: PLIST:3: The .gz extension is unnecessary for manual pages.
+    WARN: PLIST:5: "share/bison.hairy" should be sorted before "share/bison.simple".
+    1 error, 2 warnings and 1 note found.
+    (Run "pkglint -e" to show explanations.)
+    (Run "pkglint -fs" to show what can be fixed automatically.)
+    (Run "pkglint -F" to automatically fix some issues.)
+    
+Depending on the supplied command line arguments (see pkglint(1)), more checks will be performed. Use e.g. **pkglint -Wall** for a very thorough check.
+  
+== A.2. Steps for building, installing, packaging
+
+Create the directory where the package lives, plus any auxiliary directories:
+
+    # cd /usr/pkgsrc/lang
+    # mkdir bison
+    # cd bison
+    # mkdir patches
+ 
+ Create ``Makefile``, ``DESCR`` and ``PLIST`` (see http://www.netbsd.org/docs/pkgsrc/components.html[Chapter 12, Package components - files, directories and contents]) then continue with fetching the distfile:
+ 
+     # make fetch
+    >> bison-1.25.tar.gz doesn't seem to exist on this system.
+    >> Attempting to fetch from ftp://prep.ai.mit.edu/pub/gnu//.
+    Requesting ftp://prep.ai.mit.edu/pub/gnu//bison-1.25.tar.gz (via ftp://orpheus.amdahl.com:80/)
+    ftp: Error retrieving file: 500 Internal error
+    >> Attempting to fetch from ftp://wuarchive.wustl.edu/systems/gnu//.
+    Requesting ftp://wuarchive.wustl.edu/systems/gnu//bison-1.25.tar.gz (via ftp://orpheus.amdahl.com:80/)
+    ftp: Error retrieving file: 500 Internal error
+    >> Attempting to fetch from ftp://ftp.freebsd.org/pub/FreeBSD/distfiles//.
+    Requesting ftp://ftp.freebsd.org/pub/FreeBSD/distfiles//bison-1.25.tar.gz (via ftp://orpheus.amdahl.com:80/)
+    Successfully retrieved file.
+    
+Generate the checksum of the distfile into ``distinfo``:
+
+    # make makedistinfo
+    
+Now compile:
+
+    # make
+    >> Checksum OK for bison-1.25.tar.gz.
+    ===>  Extracting for bison-1.25
+    ===>  Patching for bison-1.25
+    ===>   Ignoring empty patch directory
+    ===>  Configuring for bison-1.25
+    creating cache ./config.cache
+    checking for gcc... cc
+    checking whether we are using GNU C... yes
+    checking for a BSD compatible install... /usr/bin/install -c -o bin -g bin
+    checking how to run the C preprocessor... cc -E
+    checking for minix/config.h... no
+    checking for POSIXized ISC... no
+    checking whether cross-compiling... no
+    checking for ANSI C header files... yes
+    checking for string.h... yes
+    checking for stdlib.h... yes
+    checking for memory.h... yes
+    checking for working const... yes
+    checking for working alloca.h... no
+    checking for alloca... yes
+    checking for strerror... yes
+    updating cache ./config.cache
+    creating ./config.status
+    creating Makefile
+    ===>  Building for bison-1.25
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g LR0.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g allocate.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g closure.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g conflicts.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g derives.c
+    cc -c -DXPFILE=\"/usr/pkg/share/bison.simple\"  -DXPFILE1=\"/usr/pkg/share/bison.hairy\" -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1  -g  ./files.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g getargs.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g gram.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g lalr.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g lex.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g main.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g nullable.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g output.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g print.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g reader.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g reduce.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g symtab.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g warshall.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g version.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g getopt.c
+    cc -c -DSTDC_HEADERS=1 -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MEMORY_H=1 -DHAVE_ALLOCA=1 -DHAVE_STRERROR=1 -I./../include  -g getopt1.c
+    cc  -g -o bison LR0.o allocate.o closure.o conflicts.o derives.o files.o         getargs.o gram.o lalr.o lex.o                                   main.o nullable.o output.o print.o reader.o reduce.o symtab.o   warshall.o version.o getopt.o getopt1.o
+    ./files.c:240: warning: mktemp() possibly used unsafely, consider using mkstemp()
+    rm -f bison.s1
+    sed -e "/^#line/ s|bison|/usr/pkg/share/bison|" < ./bison.simple > bison.s1
+
+
+ Everything seems OK, so install the files:
+
+
+    # make install
+    >> Checksum OK for bison-1.25.tar.gz.
+    ===>  Installing for bison-1.25
+    sh ./mkinstalldirs /usr/pkg/bin /usr/pkg/share  /usr/pkg/info /usr/pkg/man/man1
+    rm -f /usr/pkg/bin/bison
+    cd /usr/pkg/share; rm -f bison.simple bison.hairy
+    rm -f /usr/pkg/man/man1/bison.1 /usr/pkg/info/bison.info*
+    install -c  -o bin -g bin -m 555 bison /usr/pkg/bin/bison
+    /usr/bin/install -c -o bin -g bin -m 644 bison.s1 /usr/pkg/share/bison.simple
+    /usr/bin/install -c -o bin -g bin -m 644 ./bison.hairy /usr/pkg/share/bison.hairy
+    cd .; for f in bison.info*;  do /usr/bin/install -c -o bin -g bin -m 644 $f /usr/pkg/info/$f; done
+    /usr/bin/install -c -o bin -g bin -m 644 ./bison.1 /usr/pkg/man/man1/bison.1
+    ===>  Registering installation for bison-1.25
+    
+You can now use bison, and also - if you decide so - remove it with **pkg_delete bison**. Should you decide that you want a binary package, do this now:
+  
+    # make package
+    >> Checksum OK for bison-1.25.tar.gz.
+    ===>  Building package for bison-1.25
+    Creating package bison-1.25.tgz
+    Registering depends:.
+    Creating gzip'd tar ball in '/u/pkgsrc/lang/bison/bison-1.25.tgz'
+    
+Now that you don't need the source and object files any more, clean up:
+
+    # make clean
+    ===>  Cleaning for bison-1.25
