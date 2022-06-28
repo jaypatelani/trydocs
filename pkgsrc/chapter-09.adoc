@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 The files that are installed by pkgsrc are organized in a way that
 is similar to what you find in the ``/usr`` directory of the base system. But some details are different. This is because pkgsrc initially came from FreeBSD and had adopted its file system hierarchy. Later it was largely influenced by NetBSD. But no matter which operating system you are using pkgsrc with, you can expect the same layout for pkgsrc.
