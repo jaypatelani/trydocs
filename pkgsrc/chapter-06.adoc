@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 The whole pkgsrc system is configured in a single file, usually called ``mk.conf``. In which directory pkgsrc looks for that file depends on the installation. On NetBSD, when you use http://man.NetBSD.org/NetBSD-9.2/i386/make.1[make(1)] from the base system, it is in the directory ``/etc/``. In all other cases the default location is ``${PREFIX}/etc/``, depending on where you told the bootstrap program to install the binary packages.
 
