@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 The ``USE_TOOLS`` definition is used both internally by pkgsrc and also for individual packages to define what commands are needed for building a package (like ``TOOL_DEPENDS``) or for later run-time of an installed packaged (such as ``DEPENDS``). If the native system provides an adequate tool, then in many cases, a pkgsrc package will not be used.
 
