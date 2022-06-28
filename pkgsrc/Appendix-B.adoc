@@ -1,0 +1,263 @@
+= Appendix B. Security hardening
+:toc:
+:toc: left
+:toclevels: 4
+:docinfo: private
+
+A number of mechanisms are available in pkgsrc to improve the security of the resulting system. This page describes the mechanisms, and gives hints about detecting and fixing problems.
+
+Mechanisms can be enabled individually in ``mk.conf``, and are individually described below.
+
+Typically, a feature will cause some programs to fail to build or work when first enabled. This can be due to latent problems in the program, and can be due to other reasons. After enough testing to have confidence that user problems will be quite rare, individual mechanisms will be enabled by default.
+
+For each mechanism, see the Caveats section below for an explanation of what might go wrong at compile time and at run time, and how to notice and address these problems.
+
+== B.1. Mechanisms
+=== B.1.1. Enabled by default
+==== B.1.1.1. PKGSRC_USE_FORTIFY
+
+This allows substitute wrappers to be used for some commonly used library functions that do not have built-in bounds checking - but could in some cases.
+
+Two mitigation levels are available:
+
+* "weak" only enables checks at compile-time.
+
+* "strong" enables checks at compile-time and runtime. "strong" has been enabled by default since pkgsrc-2017Q3.
+
+==== B.1.1.2. PKGSRC_USE_SSP
+
+This enables a stack-smashing protection mitigation. It is done by adding a guard variable to functions with vulnerable objects. The guards are initialized when a function is entered and then checked when the function exits. The guard check will fail and the program forcibly exited if the variable was modified in the meantime. This can happen in case of buffer overflows or memory corruption, and therefore exposing these bugs.
+
+Different mitigation levels are available:
+
+* "yes", which will only protect functions considered vulnerable by the compiler;
+
+* "all", which will protect every function;
+
+* "strong", the default, which will apply a better balance between the two settings above. 
+
+This mitigation is supported by both GCC and clang. It may be supported in additional compilers, possibly under a different name. It is particularly useful for unsafe programming languages, such as C/C++.
+
+* "yes" is enabled by default where known supported since pkgsrc-2017Q3.
+
+* "strong" is enabled by default where known supported since pkgsrc-2021Q4.
+More details can be found here:
+
+* https://en.wikipedia.org/wiki/Buffer_overflow_protection[Buffer overflow protection on Wikipedia]
+
+==== B.1.1.3. PKGSRC_MKPIE
+
+This requests the creation of PIE (Position Independent Executables) for all executables. The PIE mechanism is normally used for shared libraries, so that they can be loaded at differing addresses at runtime. PIE itself does not have useful security properties; however, it is necessary to fully leverage some, such as ASLR. Some operating systems support Address Space Layout Randomization (ASLR), which causes different addresses to be used each time a program is run. This makes it more difficult for an attacker to guess addresses and thus makes exploits harder to construct. With PIE, ASLR can really be applied to the entire program, instead of the stack and heap only.
+
+PIE executables will only be built for toolchains that are known to support PIE. Currently, this means NetBSD on x86, ARM, SPARC64, m68k, and MIPS.
+
+``PKGSRC_MKPIE`` was enabled by default after the pkgsrc-2021Q3 branch.
+
+==== B.1.1.4. PKGSRC_USE_RELRO
+
+This also makes the exploitation of some security vulnerabilities more difficult in some cases.
+
+Two different mitigation levels are available:
+
+* partial (the default): the ELF sections are reordered so that internal data sections precede the program's own data sections, and non-PLT GOT is read-only;
+
+* full: in addition to partial RELRO, every relocation is performed immediately when starting the program, allowing the entire GOT to be read-only. This can greatly slow down startup of large programs.
+
+This is currently supported by GCC. Many software distributions now enable this feature by default, at the "partial"     level.
+
+More details can be found here:
+
+*   https://www.redhat.com/en/blog/hardening-elf-binaries-using-relocation-read-only-relro[Hardening ELF binaries using Relocation Read-Only (RELRO)]
+
+=== B.1.2. Not enabled by default
+==== B.1.2.1. PKGSRC_MKREPRO
+
+With this option, pkgsrc will try to build packages reproducibly. This allows packages built from the same tree and with the same options, to produce identical results bit by bit. This option should be combined with ASLR and ``PKGSRC_MKPIE`` to avoid predictable address offsets for attackers attempting to exploit security vulnerabilities.
+
+More details can be found here:
+
+* https://reproducible-builds.org/[Reproducible Builds - a set of software development practices that create an independently-verifiable path from source to binary code] 
+
+More work likely needs to be done before pkgsrc is fully reproducible.
+
+==== B.1.2.2. PKGSRC_USE_STACK_CHECK
+
+This uses ``-fstack-check`` with GCC for another stack protection mitigation.
+
+It asks the compiler to generate code verifying that it does not corrupt the stack. According to GCC's manual page, this is really only useful for multi-threaded programs.
+
+== B.2. Caveats
+=== B.2.1. Problems with PKGSRC_MKPIE
+==== B.2.1.1. Packages failing to build
+
+A number of packages may fail to build with this option enabled. The failures are often related to the absence of the ``-fPIC`` compilation flag when building libraries or executables (or ideally ``-fPIE`` in the latter case). This flag is added to the ``CFLAGS`` already, but requires the package to actually support it.
+
+===== B.2.1.1.1. How to fix
+
+These instructions are meant as a reference only; they likely need to be adapted for many packages individually.
+
+For packages using ``Makefiles``:
+  
+    MAKE_FLAGS+=	CFLAGS=${CFLAGS:Q}
+    MAKE_FLAGS+=	LDFLAGS=${LDFLAGS:Q}
+    
+For packages using ``Imakefiles``:
+  
+    MAKE_FLAGS+=	CCOPTIONS=${CFLAGS:Q}
+    MAKE_FLAGS+=	LOCAL_LDFLAGS=${LDFLAGS:Q}
+  
+==== B.2.1.2. Run-time crashes
+
+Some programs may fail to run, or crash at random times once built as PIE. Two scenarios are essentially possible. This is nearly always due to a bug in the program being exposed due to ASLR.
+
+==== B.2.1.3. Disabling PKGSRC_MKPIE on a per-package basis
+Ideally, packages should be fixed for compatibility with MKPIE. However, in some cases this is very difficult, due to complex build systems, packages using non-standard toolchains, or programming languages with odd bootstrapping mechanisms.
+
+To disable ``PKGSRC_MKPIE`` on a per-package basis, set ``MKPIE_SUPPORTED= no`` in the package's Makefile before ``bsd.prefs.mk`` is included.
+
+=== B.2.2. Problems with PKGSRC_USE_FORTIFY
+==== B.2.2.1. Packages failing to build
+
+This feature makes use of pre-processing directives to look for hardened, alternative implementations of essential library calls. Some programs may fail to build as a result; this usually happens for those trying too hard to be portable, or otherwise abusing definitions in the standard library.
+
+==== B.2.2.2. Run-time crashes
+This feature may cause some programs to crash, usually indicating an actual bug in the program. The fix will typically involve patching the original program's source code.
+
+==== B.2.2.3. Optimization is required
+
+At least in the case of GCC, FORTIFY will only be applied if optimization is applied while compiling. This means that the ``CFLAGS`` should also contain ``-O``, ``-O2`` or another optimization level. This cannot easily be applied globally, as some packages may require specific optimization levels.
+
+==== B.2.2.4. Disabling FORTIFY on a per-package basis[NOTE]
+====
+*Note*
+
+FORTIFY should not be disabled to work around runtime crashes in the program! This is a very bad idea and will expose you to security vulnerabilities.
+====
+  
+To disable FORTIFY on a per-package basis, set the following in the package's ``Makefile`` before ``bsd.prefs.mk`` is included:
+
+    FORTIFY_SUPPORTED=	no
+    
+=== B.2.3. Problems with PKGSRC_USE_RELRO
+==== B.2.3.1. Performance impact
+
+For better protection, full RELRO requires every symbol to be resolved when the program starts, rather than simply when required at run-time. This will have more impact on programs using a lot of symbols, or linked to libraries exposing a lot of symbols. Therefore, daemons or programs otherwise running in background are affected only when started. Programs loading plug-ins at run-time are affected when loading the plug-ins.
+
+The impact is not expected to be noticeable on modern hardware, except in some cases for big programs.
+
+==== B.2.3.2. Run-time crashes
+
+Some programs handle plug-ins and dependencies in a way that conflicts with RELRO: for instance, with an initialization routine listing any other plug-in required. With full RELRO, the missing symbols are resolved before the initialization routine can run, and the dynamic loader will not be able to find them directly and abort as a result. Unfortunately, this is how Xorg loads its drivers. Partial RELRO can be applied instead in this case.
+
+==== B.2.3.3. Disabling RELRO on a per-package basis
+
+To disable RELRO on a per-package basis, set the following in the package's ``Makefile`` before ``bsd.prefs.mk`` is included:
+  
+    RELRO_SUPPORTED=	no
+
+It is also possible to at most enable partial RELRO, by setting ``RELRO_SUPPORTED`` to ``partial``.
+
+=== B.2.4. Problems with PKGSRC_USE_SSP
+==== B.2.4.1. Packages failing to build
+
+The stack-smashing protection provided by this option does not work for some programs. The most common situation in which this happens is when the program allocates variables on the stack, with the size determined at run-time.
+
+==== B.2.4.2. Run-time crashes
+
+Again, this feature may cause some programs to crash via a ``SIGABRT``, usually indicating an actual bug in the program.
+
+On NetBSD ``LOG_CRIT`` level syslog messages are sent and - by default - appended to ``/var/log/messages``, e.g.:
+
+    Jan  6 15:42:51 hostname -: hostname program - - - buffer overflow detected; terminated
+
+
+(where ``hostname`` is the hostname(1) and ``program`` is the basename(1) of the program crashed).
+
+Patching the original program is then required.
+
+Rebuilding the package via:
+
+    % env CFLAGS=-g INSTALL_UNSTRIPPED=yes make replace
+
+and inspecting the backtrace of the coredump via the debugger should point out the problematic call by inspecting the frame calling the _chk() (SSP) function.
+  
+==== B.2.4.3. Performance impact
+
+The compiler emits extra code when using this feature: a check for buffer overflows is performed when entering and exiting functions, requiring an extra variable on the stack. The level of protection can otherwise be adjusted to affect only those functions considered more sensitive by the compiler (with -fstack-protector instead of -fstack-protector-all).
+
+The impact is not expected to be noticeable on modern hardware. However, programs with a hard requirement to run at the fastest possible speed should avoid using this feature, or using libraries built with this feature.
+
+==== B.2.4.4. Disabling SSP on a per-package basis[NOTE]
+====
+*Note*
+
+SSP should not be disabled to work around runtime crashes in the program! This is a very bad idea and will expose you to security vulnerabilities.
+====
+
+To disable SSP on a per-package basis, set the following in the package's ``Makefile`` before ``bsd.prefs.mk`` is included:
+
+    SSP_SUPPORTED=	no
+
+== B.3. Auditing the system
+
+The illusion of security is worse than having no security at all. This section lists a number of ways to ensure the security features requested are actually effective.
+
+These instructions were obtained and tested on a system derived from NetBSD 7 (amd64). YMMV.
+
+=== B.3.1. Checking for PIE
+
+The ELF executable type in use changes for binaries built as PIE; without:
+  
+    $ file /path/to/bin/ary
+    /path/to/bin/ary: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for NetBSD 7.0, not stripped
+    
+as opposed to the following binary, built as PIE:
+
+    $ file /path/to/pie/bin/ary
+    /path/to/pie/bin/ary: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for NetBSD 7.0, not stripped
+    
+The latter result is then what is expected.
+
+=== B.3.2. Checking for partial RELRO
+The following command should list a section called RELRO:
+  
+    $ objdump -p /path/to/bin/ary
+    /path/to/bin/ary:     file format elf64-x86-64
+    Program Header:
+    [...]
+    RELRO off    0x0000000000000d78 vaddr 0x0000000000600d78 paddr 0x0000000000600d78 align 2**0
+    
+This check is now performed automatically if ``PKG_DEVELOPER`` is set and RELRO is enabled.
+  
+=== B.3.3. Checking for full RELRO
+
+The dynamic loader will apply RELRO immediately when detecting the presence of the ``BIND_NOW`` flag:
+
+    $ objdump -x /path/to/bin/ary
+    /path/to/bin/ary:     file format elf64-x86-64
+    Dynamic Section:
+    [...]
+    BIND_NOW             0x0000000000000000
+
+This has to be combined with partial RELRO (see above) to be fully efficient.
+
+This check is now performed automatically (where supported) if ``PKG_DEVELOPER`` is set.
+
+=== B.3.4. Checking for SSP
+
+====
+*Note*
+
+Checking for SSP using this method only works where the operating system uses ``libssp``. ``libssp`` is not used on recent NetBSD/FreeBSD/Linux versions.
+====
+
+Building objects, binaries and libraries with SSP will affect the presence of additional symbols in the resulting file:
+
+    $ nm /path/to/bin/ary
+    [...]
+                     U __stack_chk_fail
+    0000000000600ea0 B __stack_chk_guard
+    
+This is an indicator that the program was indeed built with support for SSP.
+
+This check is now performed automatically (where supported) if ``PKG_DEVELOPER`` is set and SSP is enabled.
