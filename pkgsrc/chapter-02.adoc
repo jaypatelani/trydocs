@@ -2,6 +2,7 @@
 :toc:
 :toc: left
 :toclevels: 4
+:docinfo: private
 
 To get help when using pkgsrc, the definitive source is this
 	document, the pkgsrc guide. If you don't find anything here,
