@@ -1,0 +1,232 @@
+= Chapter 12. Package components - files, directories and contents
+:toc:
+:toc: left
+:toclevels: 4
+:docinfo: private
+
+Whenever you're preparing a package, there are a number of files involved which are described in the following sections.
+
+== 12.1. Makefile 
+
+Building, installation and creation of a binary package are all controlled by the package's ``Makefile``. The ``Makefile`` describes various things about a package, for example from where to get it, how to configure, build, and install it.
+
+A package ``Makefile`` contains several sections that describe the package.
+
+In the first section there are the following variables, which should appear exactly in the order given here. The order and grouping of the variables is mostly historical and has no further meaning.
+
+* ``DISTNAME`` is the basename of the distribution file to be downloaded from the package's website.
+
+* ``PKGNAME`` is the name of the package, as used by pkgsrc. You need to provide it if ``DISTNAME`` (which is the default) is not a good name for the package in pkgsrc or ``DISTNAME`` is not provided (no distribution file is required). Usually it is the pkgsrc directory name together with the version number. It must match the regular expression ``^[A-Za-z0-9][A-Za-z0-9-_.+]*$``, that is, it starts with a letter or digit, and contains only letters, digits, dashes, underscores, dots and plus signs. New packages should have entirely lower-case names, with the exception of some that must follow pre-existing conventions (e.g. R packages begin with ``R-``). You can use the ``:tl`` variable modifier to lower-case the package name.
+
+* ``CATEGORIES`` is a list of categories which the package fits in. You can choose any of the top-level directories of pkgsrc for it.
+
+Currently the following values are available for ``CATEGORIES``. If more than one is used, they need to be separated by spaces:
+
+    archivers     cross         geography     meta-pkgs     security
+    audio         databases     graphics      misc          shells
+    benchmarks    devel         ham           multimedia    sysutils
+    biology       editors       inputmethod   net           textproc
+    cad           emulators     lang          news          time
+    chat          finance       mail          parallel      wm
+    comms         fonts         math          pkgtools      www
+    converters    games         mbone         print         x11
+    
+* ``MASTER_SITES``, ``DYNAMIC_MASTER_SITES``, ``DIST_SUBDIR``, ``EXTRACT_SUFX``and ``DISTFILES`` are discussed in detail in https://www.netbsd.org/docs/pkgsrc/build.html#build.fetch[Section 13.5, “The __fetch__ phase”].
+
+The second section contains information about separately downloaded patches, if any.
+
+* ``PATCHFILES``: Name(s) of additional files that contain distribution patches. There is no default. pkgsrc will look for them at ``PATCH_SITES``. They will automatically be uncompressed before patching if the names end with ``.gz`` or ``.Z``.
+
+* ``PATCH_SITES``: Primary location(s) for distribution patch files (see ``PATCHFILES`` above) if not found locally.
+
+* ``PATCH_DIST_STRIP``: an argument to https://man.NetBSD.org/NetBSD-9.2/i386/patch.1[patch(1)] that sets the pathname strip count to help find the correct files to patch. It defaults to **-p0**.
+
+The third section contains the following variables.
+
+* ``MAINTAINER`` is the email address of the person who feels responsible for this package, and who is most likely to look at problems or questions regarding this package which have been reported with https://man.NetBSD.org/NetBSD-9.2/i386/send-pr.1[send-pr(1)]. Other developers may contact the ``MAINTAINER``before making changes to the package, but are not required to do so. When packaging a new program, set ``MAINTAINER`` to yourself. If you really can't maintain the package for future updates, set it to ``<mailto:pkgsrc-users@NetBSD.org[pkgsrc-users@NetBSD.org]>``.
+
+* ``OWNER`` should be used instead of ``MAINTAINER`` when you do not want other developers to update or change the package without contacting you first. A package Makefile should contain one of ``MAINTAINER`` or ``OWNER``, but not both.
+
+* ``HOMEPAGE`` is a URL where users can find more information about the package.
+
+* ``COMMENT`` is a one-line description of the package (should not include the package name).
+
+* ``LICENSE`` indicates the license(s) applicable for the package. See https://www.netbsd.org/docs/pkgsrc/fixes.html#handling-licenses[Section 21.1.3, “Handling licenses”] for further details.
+
+Other variables that affect the build:
+
+* ``WRKSRC``: The directory where the interesting distribution files of the package are found. The default is ``${WRKDIR}/${DISTNAME}``, which works for most packages.
+
+If a package doesn't create a subdirectory for itself (most GNU software does, for instance), but extracts itself in the current directory, you should set ``WRKSRC=${WRKDIR}``.
+
+If a package doesn't create a subdirectory with the name of ``DISTNAME`` but some different name, set ``WRKSRC`` to point to the proper name in ``${WRKDIR}``, for example ``WRKSRC=${WRKDIR}/${DISTNAME}/unix``. See https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/lang/tcl/index.html[``lang/tcl``] and https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/x11/tk/index.html[``x11/tk``] for other examples.
+
+The name of the working directory created by pkgsrc is taken from the ``WRKDIR_BASENAME`` variable. By default, its value is ``work``. If you want to use the same pkgsrc tree for building different kinds of binary packages, you can change the variable according to your needs. Two other variables handle common cases of setting ``WRKDIR_BASENAME`` individually. If ``OBJHOSTNAME`` is defined in https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf[``mk.conf``], the first component of the host's name is attached to the directory name. If ``OBJMACHINE`` is defined, the platform name is attached, which might look like ``work.i386`` or ``work.sparc``.
+
+Please pay attention to the following gotchas:
+
+* Add ``MANCOMPRESSED`` if man pages are installed in compressed form by the package. For packages using BSD-style makefiles which honor MANZ, there is ``MANCOMPRESSED_IF_MANZ``.
+
+* Replace ``/usr/local`` with “${PREFIX}” in all files (see patches, below).
+
+* If the package installs any info files, see https://www.netbsd.org/docs/pkgsrc/fixes.html#faq.info-files[Section 21.6.7, “Packages installing info files”].
+
+== 12.2. distinfo 
+
+The ``distinfo`` file contains the message digest, or checksum, of each distfile needed for the package. This ensures that the distfiles retrieved from the Internet have not been corrupted during transfer or altered by a malign force to introduce a security hole. To provide maximum security, all distfiles are protected using three different message digest algorithms (SHA1,RMD160, SHA512), as well as the file size.
+
+The ``distinfo`` file also contains the checksums for all the patches found in the ``patches`` directory (see https://www.netbsd.org/docs/pkgsrc/components.html#components.patches[Section 12.3, “``patches/*``”]). These checksums ensure that patches are only applied intentionally and that they don't accidentally change, e.g. when merging different changes together. They also make sure that new patches are actually added to CVS and old ones are removed. Too see whether the patches and the ``distinfo`` file match, run **pkglint** after changing the patches.
+
+To regenerate the ``distinfo`` file, use the **make distinfo** command.
+
+Some packages have different sets of distfiles depending on the platform, for example https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/lang/openjdk8/index.html[``lang/openjdk8``]. These are kept in the same ``distinfo`` file and care should be taken when upgrading such a package to ensure distfile information is not lost.
+
+== 12.3. patches/* 
+
+Some packages don't work out-of-the box on the various platforms that are supported by pkgsrc. These packages need to be patched to make them work. The patch files can be found in the ``patches/`` directory.
+
+In the __patch__ phase, these patches are applied to the files in ``WRKSRC`` directory after extracting them, in alphabetic order.
+
+=== 12.3.1. Structure of a single patch file
+
+The ``patch-*`` files should be in **diff -bu** format, and apply without a fuzz to avoid problems. (To force patches to apply with fuzz you can set ``PATCH_FUZZ_FACTOR=-F2``). Furthermore, each patch should contain only changes for a single file, and no file should be patched by more than one patch file. This helps to keep future modifications simple.
+
+Each patch file is structured as follows: In the first line, there is the RCS Id of the patch itself. The second line should be empty for aesthetic reasons. After that, there should be a comment for each change that the patch does. There are a number of standard cases:
+
+* Patches for commonly known vulnerabilities should mention the vulnerability ID (CAN, CVE).
+
+* Patches that change source code should mention the platform and other environment (for example, the compiler) that the patch is needed for.
+
+The patch should be commented so that any developer who knows the code of the application can make some use of the patch. Special care should be taken for the upstream developers, since we generally want that they accept our patches, so we have less work in the future.
+
+=== 12.3.2. Creating patch files
+
+One important thing to mention is to pay attention that no RCS IDs get stored in the patch files, as these will cause problems when later checked into the NetBSD CVS tree. Use the **pkgdiff** command from the https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgdiff/index.html[``pkgtools/pkgdiff``] package to avoid these problems.
+
+For even more automation, we recommend using **mkpatches** from the same package to make a whole set of patches. You just have to back up files before you edit them to ``filename.orig``, e.g., with **cp -p filename filename.orig** or, easier, by using **pkgvi** again from the same package. If you upgrade a package this way, you can easily compare the new set of patches with the previously existing one with **patchdiff**. The files in ``patches`` are replaced by new files, so carefully check if you want to take all the changes.
+
+When you have finished a package, remember to generate the checksums for the patch files by using the **make makepatchsum** command, see https://www.netbsd.org/docs/pkgsrc/components.html#components.distinfo[Section 12.2, “``distinfo``”].
+
+When adding a patch that corrects a problem in the  distfile (rather than e.g. enforcing pkgsrc's view of where man pages should go), send the patch as a bug report to the maintainer. This benefits non-pkgsrc users of the package, and usually makes it possible to remove the patch in future version.
+
+The file names of the patch files are usually of the form ``patch-__path_to_file__with__underscores.c``__. Many packages still use the previous convention ``patch-__[a-z][a-z]``__, but new patches should be of the form containing the filename. **mkpatches** included in https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgdiff/index.html[``pkgtools/pkgdiff``] takes care of the name automatically.
+
+When updating pre-existing patch files, if a file uses the old ``patch-__[a-z][a-z]``__ convention, it's best not to change it to the new form, as that will just cause churn that makes it harder to track changes to patching over time. Similarly, if a patch now applies at different line offsets, but still applies cleanly as-is, there's no need to update it, as that also unnecessarily complicates the patch history.
+
+=== 12.3.3. Sources where the patch files come from
+
+If you want to share patches between multiple packages in pkgsrc, e.g. because they use the same distfiles, set ``PATCHDIR`` to the path where the patch files can be found, e.g.:
+
+    PATCHDIR=       ../../editors/xemacs/patches
+    
+Patch files that are distributed by the author or other maintainers can be listed in ``PATCHFILES``.
+
+If it is desired to store any patches that should not be committed into pkgsrc, they can be kept outside the pkgsrc tree in the ``$LOCALPATCHES`` directory. The directory tree there is expected to have the same “category/package” structure as pkgsrc, and patches are expected to be stored inside these dirs (also known as ``$LOCALPATCHES/$PKGPATH``). For example, if you want to keep a private patch for ``pkgsrc/graphics/png``, keep it in ``$LOCALPATCHES/graphics/png/mypatch``. All files in the named directory are expected to be patch files, and __they are applied after pkgsrc patches are applied__.
+
+=== 12.3.4. Patching guidelines
+
+When fixing a portability issue in the code do not use preprocessor magic to check for the current operating system nor platform. Doing so hurts portability to other platforms because the OS-specific details are not abstracted appropriately.
+
+The general rule to follow is: instead of checking for the operating system the application is being built on, check for the specific __features__ you need. For example, instead of assuming that kqueue is available under NetBSD and using the ``__NetBSD__`` macro to conditionalize kqueue support, add a check that detects kqueue itself -- yes, this generally involves patching the **configure** script. There is absolutely nothing that prevents some OSes from adopting interfaces from other OSes (e.g. Linux implementing kqueue), something that the above checks cannot take into account.
+
+Of course, checking for features generally involves more work on the developer's side, but the resulting changes are cleaner and there are chances they will work on many other platforms. Not to mention that there are higher chances of being later integrated into the mainstream sources. Remember: __It doesn't work unless it is right!__
+
+Some typical examples:
+
+.Patching examples
+[width="1000%", options="header"]
+|====
+| Where | Incorrect | Correct
+| configure script | case ${target_os} in netbsd*) have_kvm=yes ;; *) have_kvm=no;; esac | AC_CHECK_LIB(kvm, kvm_open, have_kvm=yes, have_kvm=no)
+| C source file | #if defined(__NetBSD__) #  include <sys/event.h> #endif
+| #if defined(HAVE_SYS_EVENT_H) #  include <sys/event.h> #endif
+
+
+| C source file | int monitor_file(...) { #if defined(__NetBSD__) int fd = kqueue(); ... #else ... #endif } | int monitor_file(...) { #if defined(HAVE_KQUEUE) int fd = kqueue(); ... #else ... #endif }
+
+|====
+
+
+=== 12.3.5. Feedback to the author
+
+Always, always, **always** feed back any __portability fixes__ or improvements you do to a package to the mainstream developers. This is the only way to get their attention on portability issues and to ensure that future versions can be built out-of-the box on NetBSD. Furthermore, any user that gets newer distfiles will get the fixes straight from the packaged code.
+
+This generally involves cleaning up the patches (because sometimes the patches that are added to pkgsrc are quick hacks), filing bug reports in the appropriate trackers for the projects and working with the mainstream authors to accept your changes. It is __extremely important__ that you do it so that the packages in pkgsrc are kept simple and thus further changes can be done without much hassle.
+
+When you have done this, please add a URL to the upstream bug report to the patch comment.
+
+Support the idea of free software!
+
+== 12.4. Other mandatory files
+
+``DESCR`` A multi-line description of the piece of software. This should include any credits where they are due. Please bear in mind that others do not share your sense of humour (or spelling idiosyncrasies), and that others will read everything that you write here.
+
+``PLIST`` This file governs the files that are installed on your system: all the binaries, manual pages, etc. There are other directives which may be entered in this file, to control the creation and deletion of directories, and the location of inserted files. See https://www.netbsd.org/docs/pkgsrc/plist.html[Chapter 19, PLIST issues] for more information.
+
+== 12.5. Optional files
+=== 12.5.1. Files affecting the binary package
+
+``INSTALL`` This shell script is invoked twice by https://man.NetBSD.org/NetBSD-9.2/i386/pkg_add.1[pkg_add(1)]. First time after package extraction and before files are moved in place, the second time after the files to install are moved in place. This can be used to do any custom procedures not possible with @exec commands in ``PLIST``. See https://man.NetBSD.org/NetBSD-9.2/i386/pkg_add.1[pkg_add(1)] and https://man.NetBSD.org/NetBSD-9.2/i386/pkg_create.1[pkg_create(1)] for more information. See also https://www.netbsd.org/docs/pkgsrc/pkginstall.html#files-and-dirs-outside-prefix[Section 20.1, “Files and directories outside the installation prefix”]. Please note that you can modify variables in it easily by using ``FILES_SUBST`` in the package's ``Makefile``:
+
+    FILES_SUBST+=  SOMEVAR="somevalue"
+    
+replaces "@SOMEVAR@" with “somevalue” in the ``INSTALL``. By default, substitution is performed for ``PREFIX``, ``LOCALBASE``, ``X11BASE``, ``VARBASE``, and a few others, type **make help topic=FILES_SUBST** for a complete list.
+
+``DEINSTALL`` This script is executed before and after any files are removed. It is this script's responsibility to clean up any additional messy details around the package's installation, since all pkg_delete knows is how to delete the files created in the original distribution. See https://man.NetBSD.org/NetBSD-9.2/i386/pkg_delete.1[pkg_delete(1)] and https://man.NetBSD.org/NetBSD-9.2/i386/pkg_create.1[pkg_create(1)] for more information. The same methods to replace variables can be used as for the ``INSTALL`` file.
+
+``MESSAGE`` This file is displayed after installation of the package. While this was used often in the past, it has two problems: the display will be missed if many packages are intalled at once, and the person installing the package and the one using or configuring it may be different. It should therefore be used only in exceptional circumstances where lasting negative consequences would result from someone not reading it.
+
+MESSAGE should not be used for:
+
+* exhortations to read the documentation
+
+* reminders to install rc.d files and set variables
+
+* anything that should be explained in the installation/configuration documentation that should come with the package
+
+If the documentation provided by upstream needs enhancing, create e.g. files/README.pkgsrc and install it in the package's documentation directory.
+
+Note that MESSAGE is shown for all operating systems and all init systems. If a MESSAGE is necessary, it should be narrowed to only those operating systems and init systems to which it applies.
+
+Note that you can modify variables in it easily by using ``MESSAGE_SUBST`` in the package's ``Makefile``:
+
+    MESSAGE_SUBST+=  SOMEVAR="somevalue"
+    
+
+replaces "${SOMEVAR}" with “somevalue” in ``MESSAGE``. By default, substitution is performed for ``PKGNAME``, ``PKGBASE``, ``PREFIX``, ``LOCALBASE``, ``X11BASE``, ``PKG_SYSCONFDIR``, ``ROOT_GROUP``, and ``ROOT_USER``.
+
+You can display a different or additional files by setting the ``MESSAGE_SRC`` variable. Its default is ``MESSAGE``, if the file exists.
+
+
+``ALTERNATIVES`` This file is used by the alternatives framework. It creates, configures, and destroys generic wrappers used to run programs with similar interfaces. See pkg_alternatives(8) from pkgtools/pkg_alternatives for more information.
+
+Each line of the file contains two filenames, first the wrapper and then the alternative provided by the package. Both paths are relative to ``PREFIX``.
+
+=== 12.5.2. Files affecting the build process
+
+``Makefile.common`` This file contains arbitrary things that could also go into a ``Makefile``, but its purpose is to be used by more than one package. This file should only be used when the packages that will use the file are known in advance. For other purposes it is often better to write a  ``*.mk`` file and give it a good name that describes what it does.
+
+``buildlink3.mk`` This file contains the dependency information for the buildlink3 framework (see https://www.netbsd.org/docs/pkgsrc/buildlink.html[Chapter 18, Buildlink methodology]).
+
+``hacks.mk`` This file contains workarounds for compiler bugs and similar things. It is included automatically by the pkgsrc infrastructure, so you don't need an extra ``.include`` line for it.
+
+``options.mk`` This file contains the code for the package-specific options (see https://www.netbsd.org/docs/pkgsrc/options.html[Chapter 16, Options handling]) that can be selected by the user. If a package has only one or two options, it is equally acceptable to put the code directly into the ``Makefile``.
+
+
+=== 12.5.3. Files affecting nothing at all
+
+``README*`` These files do not take place in the creation of a package and thus are purely informative to the package developer.
+
+``TODO`` This file contains things that need to be done	to make the package even better.
+
+== 12.6. work* 
+
+When you type **make**, the distribution files are unpacked into the directory denoted by ``WRKDIR``. It can be removed by running **make clean**. Besides the sources, this directory is also used to keep various timestamp files. The directory gets __removed completely__ on clean. The default is ``${.CURDIR}/work`` or ``${.CURDIR}/work.${MACHINE_ARCH}`` if ``OBJMACHINE`` is set.
+
+== 12.7. files/* 
+
+If you have any files that you wish to be placed in the package prior to configuration or building, you can place these files here and use a **${CP}** command in the “post-extract” target to achieve this.
+
+If you want to share files in this way with other packages, set the ``FILESDIR`` variable to point to the other package's ``files`` directory, e.g.:
+
+    FILESDIR=       ../../editors/xemacs/files
