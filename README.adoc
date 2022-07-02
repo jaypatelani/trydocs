@@ -5,7 +5,7 @@ The pkgsrc Developers
 :lang: en
 :toc: left
 :toclevels: 4
-:numbered:
+
 :includedir: pkgsrcNEW
 
 
