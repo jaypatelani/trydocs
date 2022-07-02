@@ -1,6 +1,5 @@
 = The pkgsrc guide
 The pkgsrc Developers 
-:doctype: book
 :encoding: utf-8
 :lang: en
 :toc: left
@@ -18,14 +17,6 @@ This is a comment block, you can remove it.
 ////
 Organize your book chapter by chapter
 ////
-
-include::{includedir}/preface.adoc[]
-
-include::{includedir}/colophon.adoc[]
-
-include::{includedir}/dedication.adoc[]
-
-include::{includedir}/glossary.adoc[]
 
 include::{includedir}/introduction.adoc[]
 
@@ -93,6 +84,3 @@ include::{includedir}/help-topics.adoc[]
 
 include::{includedir}/editing.adoc[]
 
-include::{includedir}/bibliography.adoc[]
-
-include::{includedir}/index.adoc[]
