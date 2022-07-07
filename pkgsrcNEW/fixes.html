@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Chapter 21. Making your package work</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<style>
+
+.previous {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #f1f1f1;
+    color: black;
+}
+.index {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #f1f1f1;
+    color: black;
+
+}
+.next {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #FF4500;
+    color: white;
+    float: right !important;}
+
+#myBtn {
+  #display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #FF4500; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
+}
+
+</style>
+<script>
+//Get the button
+var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+
+
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/pkginstall.html" class="previous">&laquo; Previous</a>
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/index.html" class="previous">&laquo; Index</a>
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/gnome.html" class="next">Next &raquo;</a>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<div id="header">
+<h1>Chapter 21. Making your package work</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_21_1_general_operation">21.1. General operation</a>
+<ul class="sectlevel2">
+<li><a href="#_21_1_1_how_to_pull_in_user_settable_variables_from_mk_conf">21.1.1. How to pull in user-settable variables from mk.conf</a></li>
+<li><a href="#_21_1_2_user_interaction">21.1.2. User interaction</a></li>
+<li><a href="#_21_1_3_handling_licenses">21.1.3. Handling licenses</a>
+<ul class="sectlevel3">
+<li><a href="#_21_1_3_1_adding_a_package_with_a_new_license">21.1.3.1. Adding a package with a new license</a></li>
+<li><a href="#_21_1_3_2_change_to_the_license">21.1.3.2. Change to the license</a></li>
+</ul>
+</li>
+<li><a href="#_21_1_4_restricted_packages">21.1.4. Restricted packages</a></li>
+<li><a href="#_21_1_5_handling_dependencies">21.1.5. Handling dependencies</a></li>
+<li><a href="#_21_1_6_handling_conflicts_with_other_packages">21.1.6. Handling conflicts with other packages</a></li>
+<li><a href="#_21_1_7_packages_that_cannot_or_should_not_be_built">21.1.7. Packages that cannot or should not be built</a></li>
+<li><a href="#_21_1_8_packages_which_should_not_be_deleted_once_installed">21.1.8. Packages which should not be deleted, once installed</a></li>
+<li><a href="#_21_1_9_handling_packages_with_security_problems">21.1.9. Handling packages with security problems</a></li>
+<li><a href="#_21_1_10_how_to_handle_incrementing_versions_when_fixing_an_existing_package">21.1.10. How to handle incrementing versions when fixing an existing package</a></li>
+<li><a href="#_21_1_11_substituting_variable_text_in_the_package_files_the_subst_framework">21.1.11. Substituting variable text in the package files (the SUBST framework)</a>
+<ul class="sectlevel3">
+<li><a href="#_21_1_11_1_choosing_the_time_where_the_substitutions_happen">21.1.11.1. Choosing the time where the substitutions happen</a></li>
+<li><a href="#_21_1_11_2_choosing_the_files_where_the_substitutions_happen">21.1.11.2. Choosing the files where the substitutions happen</a></li>
+<li><a href="#_21_1_11_3_choosing_what_to_substitute">21.1.11.3. Choosing what to substitute</a></li>
+<li><a href="#_21_1_11_4_other_subst_variables">21.1.11.4. Other SUBST variables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_21_2_the_fetch_phase">21.2. The fetch phase</a>
+<ul class="sectlevel2">
+<li><a href="#_21_2_1_packages_whose_distfiles_arent_available_for_plain_downloading">21.2.1. Packages whose distfiles aren&#8217;t available for plain downloading</a></li>
+<li><a href="#_21_2_2_how_to_handle_modified_distfiles_with_the_old_name">21.2.2. How to handle modified distfiles with the 'old' name</a></li>
+<li><a href="#_21_2_3_packages_hosted_on_github_com">21.2.3. Packages hosted on github.com</a>
+<ul class="sectlevel3">
+<li><a href="#_21_2_3_1_fetch_based_on_a_tagged_release">21.2.3.1. Fetch based on a tagged release</a></li>
+<li><a href="#_21_2_3_2_fetch_based_on_a_specific_commit_before_the_first_release">21.2.3.2. Fetch based on a specific commit before the first release</a></li>
+<li><a href="#_21_2_3_3_fetch_based_on_a_specific_commit_after_a_release">21.2.3.3. Fetch based on a specific commit after a release</a></li>
+<li><a href="#_21_2_3_4_fetch_based_on_release">21.2.3.4. Fetch based on release</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_21_3_the_configure_phase">21.3. The configure phase</a>
+<ul class="sectlevel2">
+<li><a href="#_21_3_1_shared_libraries_libtool">21.3.1. Shared libraries - libtool</a></li>
+<li><a href="#_21_3_2_using_libtool_on_gnu_packages_that_already_support_libtool">21.3.2. Using libtool on GNU packages that already support libtool</a></li>
+<li><a href="#_21_3_3_gnu_autoconfautomake">21.3.3. GNU Autoconf/Automake</a></li>
+<li><a href="#_21_3_4_meson_ninja">21.3.4. Meson / ninja</a></li>
+</ul>
+</li>
+<li><a href="#_21_4_programming_languages">21.4. Programming languages</a>
+<ul class="sectlevel2">
+<li><a href="#_21_4_1_c_c_and_fortran">21.4.1. C, C++, and Fortran</a></li>
+<li><a href="#_21_4_2_java">21.4.2. Java</a></li>
+<li><a href="#_21_4_3_go">21.4.3. Go</a></li>
+<li><a href="#_21_4_4_rust">21.4.4. Rust</a></li>
+<li><a href="#_21_4_5_packages_containing_perl_scripts">21.4.5. Packages containing Perl scripts</a></li>
+<li><a href="#_21_4_6_packages_containing_shell_scripts">21.4.6. Packages containing shell scripts</a></li>
+<li><a href="#_21_4_7_other_programming_languages">21.4.7. Other programming languages</a></li>
+</ul>
+</li>
+<li><a href="#_21_5_the_build_phase">21.5. The build phase</a>
+<ul class="sectlevel2">
+<li><a href="#_21_5_1_compiling_c_and_c_code_conditionally">21.5.1. Compiling C and C++ code conditionally</a>
+<ul class="sectlevel4">
+<li><a href="#_21_5_1_1_c_preprocessor_macros_to_identify_the_operating_system">21.5.1.1. C preprocessor macros to identify the operating system</a></li>
+<li><a href="#_21_5_1_2_c_preprocessor_macros_to_identify_the_hardware_architecture">21.5.1.2. C preprocessor macros to identify the hardware architecture</a></li>
+<li><a href="#_21_5_1_3_c_preprocessor_macros_to_identify_the_compiler">21.5.1.3. C preprocessor macros to identify the compiler</a></li>
+</ul>
+</li>
+<li><a href="#_21_5_2_how_to_handle_compiler_bugs">21.5.2. How to handle compiler bugs</a></li>
+<li><a href="#_21_5_3_no_such_file_or_directory">21.5.3. No such file or directory</a>
+<ul class="sectlevel3">
+<li><a href="#_21_5_3_1_headers_from_other_packages">21.5.3.1. Headers from other packages</a></li>
+<li><a href="#_21_5_3_2_headers_generated_during_the_build">21.5.3.2. Headers generated during the build</a></li>
+<li><a href="#_21_5_3_3_symlinks">21.5.3.3. Symlinks</a></li>
+<li><a href="#_21_5_3_4_stale_working_directories">21.5.3.4. Stale working directories</a></li>
+<li><a href="#_21_5_3_5_other_possible_reasons">21.5.3.5. Other possible reasons</a></li>
+</ul>
+</li>
+<li><a href="#_21_5_4_undefined_reference_to">21.5.4. Undefined reference to “&#8230;&#8203;”</a>
+<ul class="sectlevel3">
+<li><a href="#_21_5_4_1_the_sunpro_compiler_and_inline_functions">21.5.4.1. The SunPro compiler and inline functions</a></li>
+</ul>
+</li>
+<li><a href="#_21_5_5_running_out_of_memory">21.5.5. Running out of memory</a></li>
+</ul>
+</li>
+<li><a href="#_21_6_the_install_phase">21.6. The install phase</a>
+<ul class="sectlevel2">
+<li><a href="#_21_6_1_creating_needed_directories">21.6.1. Creating needed directories</a></li>
+<li><a href="#_21_6_2_where_to_install_documentation">21.6.2. Where to install documentation</a></li>
+<li><a href="#_21_6_3_installing_highscore_files">21.6.3. Installing highscore files</a></li>
+<li><a href="#_21_6_4_adding_destdir_support_to_packages">21.6.4. Adding DESTDIR support to packages</a></li>
+<li><a href="#_21_6_5_packages_with_hardcoded_paths_to_other_interpreters">21.6.5. Packages with hardcoded paths to other interpreters</a></li>
+<li><a href="#_21_6_6_packages_installing_perl_modules">21.6.6. Packages installing Perl modules</a></li>
+<li><a href="#_21_6_7_packages_installing_info_files">21.6.7. Packages installing info files</a></li>
+<li><a href="#_21_6_8_packages_installing_man_pages">21.6.8. Packages installing man pages</a></li>
+<li><a href="#_21_6_9_packages_installing_x11_fonts">21.6.9. Packages installing X11 fonts</a></li>
+<li><a href="#_21_6_10_packages_installing_sgml_or_xml_data">21.6.10. Packages installing SGML or XML data</a></li>
+<li><a href="#_21_6_11_packages_installing_extensions_to_the_mime_database">21.6.11. Packages installing extensions to the MIME database</a></li>
+<li><a href="#_21_6_12_packages_using_intltool">21.6.12. Packages using intltool</a></li>
+<li><a href="#_21_6_13_packages_installing_startup_scripts">21.6.13. Packages installing startup scripts</a></li>
+<li><a href="#_21_6_14_packages_installing_tex_modules">21.6.14. Packages installing TeX modules</a></li>
+<li><a href="#_21_6_15_packages_supporting_running_binaries_in_emulation">21.6.15. Packages supporting running binaries in emulation</a></li>
+<li><a href="#_21_6_16_packages_installing_hicolor_icons">21.6.16. Packages installing hicolor icons</a></li>
+<li><a href="#_21_6_17_packages_installing_desktop_files">21.6.17. Packages installing desktop files</a></li>
+</ul>
+</li>
+<li><a href="#_21_7_marking_packages_as_having_problems">21.7. Marking packages as having problems</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_21_1_general_operation">21.1. General operation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One appealing feature of pkgsrc is that it runs on many different platforms. As a result, it is important to ensure, where possible, that packages in pkgsrc are portable. This chapter mentions some particular details you should pay attention to while working on pkgsrc.</p>
+</div>
+<div class="sect2">
+<h3 id="_21_1_1_how_to_pull_in_user_settable_variables_from_mk_conf">21.1.1. How to pull in user-settable variables from mk.conf</h3>
+<div class="paragraph">
+<p>The pkgsrc user can configure pkgsrc by overriding several variables in the file pointed to by <code>MAKECONF</code>, which is <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> by default. When you want to use those variables in the preprocessor directives of <a href="https://man.NetBSD.org/NetBSD-9.2/i386/make.1">make(1)</a> (for example <code>.if</code> or <code>.for</code>), you need to include the file <code>../../mk/bsd.prefs.mk</code> before, which in turn loads the user preferences.</p>
+</div>
+<div class="paragraph">
+<p>But note that some variables may not be completely defined after <code>../../mk/bsd.prefs.mk</code> has been included, as they may contain references to variables that are not yet defined. In shell commands (the lines in <code>Makefile</code> that are indented with a tab) this is no problem, since variables are only expanded when they are used. But in the preprocessor directives mentioned above and in dependency lines (of the form target: dependencies) the variables are expanded at load time.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="title"><strong>Note</strong></div>
+<div class="paragraph">
+<p>To check whether a variable can be used at load time, run pkglint -Wall on your package.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_2_user_interaction">21.1.2. User interaction</h3>
+<div class="paragraph">
+<p>Occasionally, packages require interaction from the user, and this can be in a number of ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>When fetching the distfiles, some packages require user interaction such as entering username/password or accepting a license on a web page.</p>
+</li>
+<li>
+<p>When extracting the distfiles, some packages may ask for passwords.</p>
+</li>
+<li>
+<p>help to configure the package before it is built</p>
+</li>
+<li>
+<p>help during the build process</p>
+</li>
+<li>
+<p>help during the installation of a package</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A package can set the <code>INTERACTIVE_STAGE</code> variable to define which stages need interaction. This should be done in the package&#8217;s <code>Makefile</code>, e.g.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>INTERACTIVE_STAGE=      configure install</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The user can then decide to skip this package by setting the <code>BATCH</code> variable. Packages that require interaction are also excluded from bulk builds.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_3_handling_licenses">21.1.3. Handling licenses</h3>
+<div class="paragraph">
+<p>Authors of software can choose the licence under which software can be copied. The Free Software Foundation has declared some licenses "Free", and the Open Source Initiative has a definition of "Open Source".</p>
+</div>
+<div class="paragraph">
+<p>By default, pkgsrc allows packages with Free or Open Source licenses to be built. To allow packages with other licenses to be built as well, the pkgsrc user needs to add these licenses to the <code>ACCEPTABLE_LICENSES</code> variable in <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>. Note that this variable only affects which packages may be <em>built</em>, while the license terms often also restrict the actual use of the package and its redistribution.</p>
+</div>
+<div class="paragraph">
+<p>One might want to only install packages with a BSD license, or the GPL, and not the other. The free licenses are added to the default <code>ACCEPTABLE_LICENSES</code> variable. The pkgsrc user can override the default by setting the <code>ACCEPTABLE_LICENSES</code> variable with "=" instead of "+=". The licenses accepted by default are defined in the <code>DEFAULT_ACCEPTABLE_LICENSES</code> variable in the file <code>pkgsrc/mk/license.mk</code>.</p>
+</div>
+<div class="paragraph">
+<p>The license tag mechanism is intended to address copyright-related issues surrounding building, installing and using a package, and not to address redistribution issues (see <code>RESTRICTED</code> and <code>NO_SRC_ON_FTP</code>, etc.). Packages with redistribution restrictions should set these tags.</p>
+</div>
+<div class="paragraph">
+<p>Denoting that a package may be copied according to a particular license is done by placing the license in <code>pkgsrc/licenses</code> and setting the <code>LICENSE</code> variable to a string identifying the license, e.g. in <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/graphics/xv/index.html"><code>graphics/xv</code></a>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>LICENSE=        xv-license</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When trying to build, the user will get a notice that the package is covered by a license which has not been placed in the <code>ACCEPTABLE_LICENSES</code> variable:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>% make
+===&gt; xv-3.10anb9 has an unacceptable license: xv-license.
+===&gt;     To view the license, enter "/usr/bin/make show-license".
+===&gt;     To indicate acceptance, add this line to your /etc/mk.conf:
+===&gt;     ACCEPTABLE_LICENSES+=xv-license
+*** Error code 1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The license can be viewed with <strong>make show-license</strong>, and if the user so chooses, the line printed above can be added to <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> to convey to pkgsrc that it should not in the future fail because of that license:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ACCEPTABLE_LICENSES+=xv-license</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The use of <code>LICENSE=shareware</code>, <code>LICENSE=no-commercial-use</code>, and similar language is deprecated because it does not crisply refer to a particular license text. Another problem with such usage is that it does not enable a user to tell pkgsrc to proceed for a single package without also telling pkgsrc to proceed for all packages with that tag.</p>
+</div>
+<div class="sect3">
+<h4 id="_21_1_3_1_adding_a_package_with_a_new_license">21.1.3.1. Adding a package with a new license</h4>
+<div class="paragraph">
+<p>When adding a package with a new license, the following steps are required:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Check whether the license qualifies as Free or Open Source by referencing <a href="https://www.gnu.org/licenses/license-list.en.html">Various Licenses and Comments about Them</a> and <a href="https://opensource.org/licenses/alphabetical">Licenses by Name | Open Source Initiative</a>. If this is the case, the filename in <code>pkgsrc/licenses/</code> does not need the <code>-license</code> suffix, and the license name should be added to:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>DEFAULT_ACCEPTABLE_LICENSES in <code>pkgsrc/mk/license.mk</code></p>
+</li>
+<li>
+<p>default_acceptable_licenses in <code>pkgsrc/pkgtools/pkg_install/files/lib/license.c</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The license text should be added to <code>pkgsrc/licenses</code> for displaying. A list of known licenses can be seen in this directory.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_1_3_2_change_to_the_license">21.1.3.2. Change to the license</h4>
+<div class="paragraph">
+<p>When the license changes (in a way other than formatting), make sure that the new license has a different name (e.g., append the version number if it exists, or the date). Just because a user told pkgsrc to build programs under a previous version of a license does not mean that pkgsrc should build programs under the new licenses. The higher-level point is that pkgsrc does not evaluate licenses for reasonableness; the only test is a mechanistic test of whether a particular text has been approved by either of two bodies (FSF or OSI).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_4_restricted_packages">21.1.4. Restricted packages</h3>
+<div class="paragraph">
+<p>Some licenses restrict how software may be re-distributed. By declaring the restrictions, package tools can automatically refrain from e.g. placing binary packages on FTP sites.</p>
+</div>
+<div class="paragraph">
+<p>There are four possible restrictions, which are the cross product of sources (distfiles) and binaries not being placed on FTP sites and CD-ROMs. Because this is rarely the exact language in any license, and because non-Free licenses tend to be different from each other, pkgsrc adopts a definition of FTP and CD-ROM. "FTP" means making the source or binary file available over the Internet at no charge. "CD-ROM" means making the source or binary available on some kind of media, together with other source and binary packages, which is sold for a distribution charge.</p>
+</div>
+<div class="paragraph">
+<p>In order to encode these restrictions, the package system defines five make variables that can be set to note these restrictions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>RESTRICTED</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This variable should be set whenever a restriction exists (regardless of its kind). Set this variable to a string containing the reason for the restriction. It should be understood that those wanting to understand the restriction	will have to read the license, and perhaps seek advice of counsel.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NO_BIN_ON_CDROM</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Binaries may not be placed on CD-ROM containing other binary packages, for which a distribution charge may be made. In this case, set this variable to	<code>${RESTRICTED}</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NO_BIN_ON_FTP</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Binaries may not made available on the Internet without	charge. In this case, set this variable to <code>${RESTRICTED}</code>.  If this variable is set, binary packages will not be included on ftp.NetBSD.org.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NO_SRC_ON_CDROM</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Distfiles may not be placed on CD-ROM, together with other distfiles, for which a fee may be charged. In this case, set this variable to <code>${RESTRICTED}</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NO_SRC_ON_FTP</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Distfiles may not made available via FTP at no charge. In this case, set this variable to <code>${RESTRICTED}</code>. If this variable is set, the distfile(s) will not be mirrored on ftp.NetBSD.org.</p>
+</div>
+<div class="paragraph">
+<p>Please note that packages will be removed from pkgsrc when the distfiles are not distributable and cannot be obtained for a period of one full quarter branch. Packages with manual/interactive fetch must have a maintainer and it is his/her responsibility to ensure this.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_5_handling_dependencies">21.1.5. Handling dependencies</h3>
+<div class="paragraph">
+<p>Your package may depend on some other package being present,and there are various ways of expressing this dependency.pkgsrc supports the <code>DEPENDS</code>, <code>BUILD_DEPENDS</code>, <code>TOOL_DEPENDS</code>, and <code>TEST_DEPENDS</code> definitions, the <code>USE_TOOLS</code> definition, as well as dependencies via <code>buildlink3.mk</code>, which is the preferred way to handle dependencies, and which uses the variables named above. See <a href="https://www.netbsd.org/docs/pkgsrc/buildlink.html">Chapter 18, Buildlink methodology</a> for more information.</p>
+</div>
+<div class="paragraph">
+<p>The basic difference is that the <code>DEPENDS</code> definition registers that pre-requisite in the binary package so it will be pulled in when the binary package is later installed, whilst the <code>BUILD_DEPENDS</code>, <code>TOOL_DEPENDS</code>, and <code>TEST_DEPENDS</code> definitions do not, marking a dependency that is only needed for building or testing the resulting package. See also <a href="https://www.netbsd.org/docs/pkgsrc/creating.html">Chapter 14, Creating a new pkgsrc package from scratch</a> for more information.</p>
+</div>
+<div class="paragraph">
+<p>This means that if you only need a package present whilst you are building or testing, it should be noted as a <code>TOOL_DEPENDS</code>, <code>BUILD_DEPENDS</code>, or <code>TEST_DEPENDS</code>. When cross-compiling, <code>TOOL_DEPENDS</code> are <em>native</em> packages, i.e. packages for the architecture where the package is built; <code>BUILD_DEPENDS</code> are <em>target</em> packages, i.e., packages for the architecture for which the package is built.</p>
+</div>
+<div class="paragraph">
+<p>The format for a <code>DEPENDS</code>, <code>BUILD_DEPENDS</code>, <code>TOOL_DEPENDS</code>, and <code>TEST_DEPENDS</code> definition is:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;pre-req-package-name&gt;:../../&lt;category&gt;/&lt;pre-req-package&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Please note that the “pre-req-package-name” may include any of the wildcard version numbers recognized by <a href="https://man.NetBSD.org/NetBSD-9.2/i386/pkg_info.1">pkg_info(1)</a>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If your package needs another package&#8217;s binaries or libraries to build and run, and if that package has a <code>buildlink3.mk</code> file available, use it:</p>
+<div class="literalblock">
+<div class="content">
+<pre>.include "../../graphics/jpeg/buildlink3.mk"</pre>
+</div>
+</div>
+</li>
+<li>
+<p>If your package needs another package&#8217;s binaries or libraries only for building, and if that package has a <code>buildlink3.mk</code> file available, use it:</p>
+<div class="literalblock">
+<div class="content">
+<pre>.include "../../graphics/jpeg/buildlink3.mk"</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>but set <code>BUILDLINK_DEPMETHOD.<em>jpeg</code></em>?=build to make it a build dependency only. This case is rather rare.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If your package needs binaries from another package to build, use the <code>TOOL_DEPENDS</code> definition:</p>
+<div class="literalblock">
+<div class="content">
+<pre>TOOL_DEPENDS+= itstool-[0-9]*:../../textproc/itstool</pre>
+</div>
+</div>
+</li>
+<li>
+<p>If your package needs static libraries to link against, header files to include, etc. from another package to build, use the <code>BUILD_DEPENDS</code> definition.</p>
+</li>
+<li>
+<p>If your package needs a library with which to link and there is no <code>buildlink3.mk</code> file available, create one. Using <code>DEPENDS</code> won&#8217;t be sufficient because the include files and libraries will be hidden from the compiler.</p>
+</li>
+<li>
+<p>If your package needs some executable to be able to run correctly and if there&#8217;s no <code>buildlink3.mk</code> file, this is specified using the <code>DEPENDS</code> variable. The <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/print/lyx/index.html"><code>print/lyx</code></a> package needs to be able to execute the latex binary from the tex-latex-bin package when it runs, and that is specified:</p>
+<div class="literalblock">
+<div class="content">
+<pre>DEPENDS+=        tex-latex-bin-[0-9]*:../../print/tex-latex-bin</pre>
+</div>
+</div>
+</li>
+<li>
+<p>If your package includes a test suite that has extra dependencies only required for this purpose (frequently this can be run as a “make test” target), use the <code>TEST_DEPENDS</code> variable.</p>
+</li>
+<li>
+<p>You can use wildcards in package dependencies. Note that such wildcard dependencies are retained when creating binary packages. The dependency is checked when installing the binary package and any package which matches the pattern will be	used. Wildcard dependencies should be used with care.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The “-[0-9]* "should be used instead of “-<strong>” to avoid potentially ambiguous matches such as “tk-postgresql” matching a “tk-</strong>” <code>DEPENDS</code>.</p>
+</div>
+<div class="paragraph">
+<p>wildcards can also be used to specify that a package will only build against a certain minimum version of a pre-requisite:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DEPENDS+=       ImageMagick&gt;=6.0:../../graphics/ImageMagick</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This means that the package will build using version 6.0 of ImageMagick or newer. Such a dependency may be warranted if, for example, the command line options of an executable have changed.</p>
+</div>
+<div class="paragraph">
+<p>If you need to depend on minimum versions of libraries, set <code>BUILDLINK_API_DEPENDS.<em>pkg</code></em> to the appropriate pattern before including its <code>buildlink3.mk</code> file, e.g.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>BUILDLINK_API_DEPENDS.jpeg+=    jpeg&gt;=9.0
+.include "../../graphics/jpeg/buildlink3.mk"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For security fixes, please update the package vulnerabilities file. See <a href="https://www.netbsd.org/docs/pkgsrc/fixes.html#security-handling">Section 21.1.9, “Handling packages with security problems”</a> for more information.</p>
+</div>
+<div class="paragraph">
+<p>If your package needs files from another package to build, add the relevant distribution files to <code>DISTFILES</code>, so they will be extracted automatically. See the <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/print/ghostscript/index.html"><code>print/ghostscript</code></a> package for an example. (It relies on the jpeg sources being present in source form during the build.)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_6_handling_conflicts_with_other_packages">21.1.6. Handling conflicts with other packages</h3>
+<div class="paragraph">
+<p>Your package may conflict with other packages a user might already have installed on his system, e.g. if your package installs the same set of files as another package in the pkgsrc tree or has the same <code>PKGNAME</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example, <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/x11/libXaw3d/index.html"><code>x11/libXaw3d</code></a> and <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/x11/Xaw-Xpm/index.html"><code>x11/Xaw-Xpm</code></a> install the same shared library, thus you set in <code>pkgsrc/x11/libXaw3d/Makefile</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CONFLICTS=      Xaw-Xpm-[0-9]*</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and in <code>pkgsrc/x11/Xaw-Xpm/Makefile</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CONFLICTS=      libXaw3d-[0-9]*</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://man.NetBSD.org/NetBSD-9.2/i386/pkg_add.1">pkg_add(1)</a> is able to detect attempts to install packages that conflict with existing packages and abort. However, in many situations this is too late in the process. Binary package managers will not know about the conflict until they attempt to install the package after already downloading it and all its dependencies. Users may also waste time building a package and its dependencies only to find out at the end that it conflicts with another package they have installed.</p>
+</div>
+<div class="paragraph">
+<p>To avoid these issues <code>CONFLICTS</code> entries should be added in all cases where it is known that packages conflict with each other. These <code>CONFLICTS</code> entries are exported in <a href="https://man.NetBSD.org/NetBSD-9.2/i386/pkg_summary.5">pkg_summary(5)</a> files and consumed by binary package managers to inform users that packages cannot be installed onto the target system.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_7_packages_that_cannot_or_should_not_be_built">21.1.7. Packages that cannot or should not be built</h3>
+<div class="paragraph">
+<p>There are several reasons why a package might be instructed to not build under certain circumstances. If the package builds and runs on most platforms, the exceptions should be noted with <code>BROKEN_ON_PLATFORM</code>. If the package builds and runs on a small handful of platforms, set <code>BROKEN_EXCEPT_ON_PLATFORM</code> instead. Both <code>BROKEN_ON_PLATFORM</code> and <code>BROKEN_EXCEPT_ON_PLATFORM</code> are OS triples (OS-version-platform) that can use glob-style wildcards.</p>
+</div>
+<div class="paragraph">
+<p>If a package is not appropriate for some platforms (as opposed to merely broken), a different set of variables should be used as this affects failure reporting and statistics. If the package is appropriate for most platforms, the exceptions should be noted with <code>NOT_FOR_PLATFORM</code>. If the package is appropriate for only a small handful of platforms (often exactly one), set <code>ONLY_FOR_PLATFORM</code> instead. Both <code>ONLY_FOR_PLATFORM</code> and <code>NOT_FOR_PLATFORM</code> are OS triples (OS-version-platform) that can use glob-style wildcards.</p>
+</div>
+<div class="paragraph">
+<p>Some packages are tightly bound to a specific version of an operating system, e.g. LKMs or <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/sysutils/lsof/index.html"><code>sysutils/lsof</code></a>. Such binary packages are not backwards compatible with other versions of the OS, and should be uploaded to a version specific directory on the FTP server. Mark these packages by setting <code>OSVERSION_SPECIFIC</code> to “yes”. This variable is not currently used by any of the package system internals, but may be used in the future.</p>
+</div>
+<div class="paragraph">
+<p>If the package should be skipped (for example, because it provides functionality already provided by the system), set <code>PKG_SKIP_REASON</code> to a descriptive message. If the package should fail because some preconditions are not met, set <code>PKG_FAIL_REASON</code> to a descriptive message.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_8_packages_which_should_not_be_deleted_once_installed">21.1.8. Packages which should not be deleted, once installed</h3>
+<div class="paragraph">
+<p>To ensure that a package may not be deleted, once it has been installed, the <code>PKG_PRESERVE</code> definition should be set in the package Makefile. This will be carried into any binary package that is made from this pkgsrc entry. A “preserved” package will not be deleted using <a href="https://man.NetBSD.org/NetBSD-9.2/i386/pkg_delete.1">pkg_delete(1)</a> unless the “-f” option is used.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_9_handling_packages_with_security_problems">21.1.9. Handling packages with security problems</h3>
+<div class="paragraph">
+<p>When a vulnerability is found, this should be noted in <code>localsrc/security/advisories/pkg-vulnerabilities</code>. Entries in that file consist of three parts:
+* package version pattern</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>type of vulnerability (please cut&#8217;n&#8217;paste an existing one where possible)</p>
+</li>
+<li>
+<p>URL providing additional information about the issue</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For the package version pattern please always use `&lt;' to mark an upper bound (not `&#8656;'!). This will avoid possible problems due unrelated <code>PKGREVISION</code> bumps not related to security fixes. Lower bounds can be added too, using '&gt;' or '&gt;='. For example, “<code>foo&gt;=1&lt;1.2</code>” would mark versions 1.0 (included) to 1.2 (excluded) of “<code>foo</code>” as affected by the security issue.</p>
+</div>
+<div class="paragraph">
+<p>Entries should always be added at the bottom of the file.</p>
+</div>
+<div class="paragraph">
+<p>When fixing packages, please modify the upper bound of the corresponding entry. To continue the previous example, if a fix was backported to version 1.1nb2, change the previous pattern to “<code>foo&gt;=1&lt;1.1nb2</code>”.</p>
+</div>
+<div class="paragraph">
+<p>To locally test a package version pattern against a <code>PKGNAME</code> you can use the <strong>pkg_admin pmatch</strong> command.</p>
+</div>
+<div class="paragraph">
+<p>The URL should be as permanent as possible and provide as much information about the issue as possible. CVE entries are preferred.</p>
+</div>
+<div class="paragraph">
+<p>After committing that file, ask <a href="mailto:pkgsrc-security@NetBSD.org">pkgsrc-security@NetBSD.org</a> to update the file on ftp.NetBSD.org.</p>
+</div>
+<div class="paragraph">
+<p>After fixing the vulnerability by a patch, its <code>PKGREVISION</code> should be increased (this is of course not necessary if the problem is fixed by using a newer release of the software), and the pattern in the pkg-vulnerabilities file must be updated.</p>
+</div>
+<div class="paragraph">
+<p>Also, if the fix should be applied to the stable pkgsrc branch, be sure to submit a pullup request!</p>
+</div>
+<div class="paragraph">
+<p>Binary packages already on ftp.NetBSD.org will be handled semi-automatically by a weekly cron job.</p>
+</div>
+<div class="paragraph">
+<p>In case a security issue is disputed, please contact <a href="mailto:pkgsrc-security@NetBSD.org">pkgsrc-security@NetBSD.org</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_10_how_to_handle_incrementing_versions_when_fixing_an_existing_package">21.1.10. How to handle incrementing versions when fixing an existing package</h3>
+<div class="paragraph">
+<p>When making fixes to an existing package it can be useful to change the version number in <code>PKGNAME</code>. To avoid conflicting with future versions by the original author, a “nb1”, “nb2”, &#8230;&#8203; suffix can be used on package versions by setting <code>PKGREVISION=1</code> (2, &#8230;&#8203;). The “nb” is treated like a “.” by the package tools. e.g.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTNAME=       foo-17.42
+PKGREVISION=    9</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will result in a <code>PKGNAME</code> of “foo-17.42nb9”. If you want to use the original value of <code>PKGNAME</code> without the “nbX” suffix, e.g. for setting <code>DIST_SUBDIR</code>, use <code>PKGNAME_NOREV</code>.</p>
+</div>
+<div class="paragraph">
+<p>When a new release of the package is released, the <code>PKGREVISION</code> should be removed, e.g. on a new minor release of the above package, things should be like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTNAME=       foo-17.43</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>PKGREVISION</code> should be incremented for any non-trivial change in the resulting binary package.  Without a <code>PKGREVISION</code> bump, someone with the previous version installed has no way of knowing that their package is out of date. Thus, changes without increasing <code>PKGREVISION</code> are essentially labeled "this is so trivial that no reasonable person would want to upgrade", and this is the rough test for when increasing <code>PKGREVISION</code> is appropriate. Examples of changes that do not merit increasing <code>PKGREVISION</code> are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Changing <code>HOMEPAGE</code>, <code>MAINTAINER</code>, <code>OWNER</code>, or comments in Makefile.</p>
+</li>
+<li>
+<p>Changing build variables if the resulting binary package is the same.</p>
+</li>
+<li>
+<p>Changing <code>DESCR</code>.</p>
+</li>
+<li>
+<p>Adding <code>PKG_OPTIONS</code> if the default options don&#8217;t change.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Examples of changes that do merit an increase to <code>PKGREVISION</code> include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Security fixes</p>
+</li>
+<li>
+<p>Changes or additions to a patch file</p>
+</li>
+<li>
+<p>Changes to the <code>PLIST</code></p>
+</li>
+<li>
+<p>A dependency is changed or renamed.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>PKGREVISION must also be incremented when dependencies have ABI changes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_1_11_substituting_variable_text_in_the_package_files_the_subst_framework">21.1.11. Substituting variable text in the package files (the SUBST framework)</h3>
+<div class="paragraph">
+<p>When you want to replace the same text in multiple files, or multiple times in the same file, it is cumbersome to maintain a patch file for this. This is where the SUBST framework steps in. It provides an easy-to-use interface for replacing text in files. It just needs the following information:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In which phase of the package build cycle should the replacement happen?</p>
+</li>
+<li>
+<p>In which files should the replacement happen?</p>
+</li>
+<li>
+<p>Which text should be replaced with what?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This information is encoded in a block of <code>SUBST</code> variables. A minimal example is:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>SUBST_CLASSES+=         paths
+SUBST_STAGE.paths=      pre-configure
+SUBST_FILES.paths=      src/*.c
+SUBST_SED.paths=        -e 's,/usr/local,${PREFIX},g'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Translated into English, it means: In the pre-configure stage (that is, after applying the patches from the patches/ directory and before running the configure script and the portability check), replace the text <code>/usr/local</code> with the content of the variable <code>PREFIX</code>.</p>
+</div>
+<div class="paragraph">
+<p>Each SUBST block starts by appending an identifier to <code>SUBST_CLASSES</code> (note the <code>+=</code>). This identifier can be chosen freely by the package. If there should ever be duplicate identifiers, the pkgsrc infrastructure will catch this and fail early, so don&#8217;t worry about name collisions.</p>
+</div>
+<div class="paragraph">
+<p>Except for <code>SUBST_CLASSES</code>, all variables in a SUBST block are parameterized using this identifier. In the remainder of this section, these parameterized variables are written as <code>SUBST_STAGE.*</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>SUBST_CLASSES+=         paths
+SUBST_STAGE.paths=      pre-configure
+SUBST_MESSAGE.paths=    Fixing absolute paths.
+SUBST_FILES.paths=      src/*.c
+SUBST_FILES.paths+=     scripts/*.sh
+SUBST_SED.paths=        -e 's,"/usr/local,"${PREFIX},g'
+SUBST_SED.paths+=       -e 's,"/var/log,"${VARBASE}/log,g'
+SUBST_VARS.paths=       LOCALBASE PREFIX PKGVERSION</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To get a complete picture about the SUBST substitutions, run <strong>bmake show-all-subst</strong>. If something doesn&#8217;t work as expected, run pkglint on the package, which detects several typical mistakes surrounding the SUBST blocks. For any questions that might remain after this, have a look at <code>mk/subst.mk</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_21_1_11_1_choosing_the_time_where_the_substitutions_happen">21.1.11.1. Choosing the time where the substitutions happen</h4>
+<div class="paragraph">
+<p>The <code>SUBST_STAGE.*</code> is one of {pre,do,post}-{extract,patch,configure,build,test,install}. Of these, <code>pre-configure</code> is used most often, by far. The most popular stages are, in chronological order:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>post-extract</code></dt>
+<dd>
+<p>The substitutions are applied immediately after the distfiles are extracted. Running <strong>bmake extract</strong> on the package will leave no traces of the original files.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>When the substitution applies to files for which there is also a patch in the <code>patches/</code> directory, this means that the patches will be computed based on the result of the substitution. When these patches are sent to the upstream maintainer later, to be fixed in the upstream package, these patches may no longer match what the upstream author is used to. Because of this, <code>pre-configure</code> is often a better choice.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>pre-configure</code></dt>
+<dd>
+<p>The substitutions are applied after the patches from the <code>patches/</code> directory. This makes it possible to run <strong>bmake patch</strong> on the package, after which the patches can be edited using the tools pkgvi and mkpatches from the <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkgdif/index.html"><code>pkgtools/pkgdiff</code></a> package.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>When updating the patches, it is helpful to explicitly separate the <strong>bmake patch</strong> from the <strong>bmake configure</strong>, and to only edit the patches between these commands. Otherwise the substitutions from the SUBST block will end up in the patch file. When this happens in really obvious ways, pkglint will complain about patches that contain a hard-coded <code>/usr/pkg</code> instead of the correct and intended <code>@PREFIX@</code>, but it can only detect these really obvious cases.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>do-configure</code></dt>
+<dd>
+<p>This stage should only be used if the package defines a <code>pre-configure</code> action itself, and the substitution must happen after that. Typical examples are packages that use the <code>pre-configure</code> stage to regenerate the GNU configure script from <code>configure.ac</code>.</p>
+</dd>
+<dt class="hdlist1"><code>post-configure</code></dt>
+<dd>
+<p>This stage is used to fix up any mistakes by the configure stage.</p>
+</dd>
+<dt class="hdlist1"><code>pre-build</code></dt>
+<dd>
+<p>This stage should only be used for substitutions that are clearly related to building the package, not for fixing the configuration. Substitutions for pathnames (such as replacing <code>/usr/local</code> with <code>${PREFIX}</code>) or user names (such as replacing <code>@MY_USER@</code> with the actual username) belong in pre-configure or post-configure instead.</p>
+</dd>
+<dt class="hdlist1"><code>post-build</code></dt>
+<dd>
+<p>Just as with pre-build, this stage should only be used for substitutions that are clearly related to building the package, not for fixing the configuration. Substitutions for pathnames (such as replacing <code>/usr/local</code> with <code>${PREFIX}</code>) or user names (such as replacing <code>@MY_USER@</code> with the actual username) belong in pre-configure or post-configure instead.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>A typical use is to update pkg-config files to include the rpath compiler options.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>pre-install</code></dt>
+<dd>
+<p>In general, the install phase should be as simple as possible. As with the pre-build and post-build stages, it should not be used to fix pathnames or user names, these belong in pre-configure instead. There are only few legitimate use cases for applying substitutions in this stage.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_1_11_2_choosing_the_files_where_the_substitutions_happen">21.1.11.2. Choosing the files where the substitutions happen</h4>
+<div class="paragraph">
+<p>The <code>SUBST_FILES.*</code> variable contains a list of filename patterns. These patterns are relative to <code>WRKSRC</code> since that is where most substitutions happen. A typical example is:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>SUBST_FILES.path=       Makefile */Makefile */*/Makefile *.[ch]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above patterns, especially the last, are quite broad. The SUBST implementation checks that each filename pattern that is mentioned here has an effect. For example, if none of the <code>* /*/Makefile</code> files contains the patterns to be found and substituted, that filename pattern is redundant and should be left out. By default, the SUBST framework will complain with an error message. If the text to be substituted occurs in some of the files from a single pattern, but not in all of them, that is totally ok, and the SUBST framework will only print an INFO message for those files.</p>
+</div>
+<div class="paragraph">
+<p>If there is a good reason for having redundant filename patterns, set <code>SUBST_NOOP_OK.*</code> to <code>yes</code>.</p>
+</div>
+<div class="paragraph">
+<p>Another popular way of choosing the files for the substitutions is via a shell command, like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>C_FILES_CMD=            cd ${WRKSRC} &amp;&amp; ${FIND} . -name '*.c'
+SUBST_FILES.path=       ${C_FILES_CMD:sh}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The variable name <code>C_FILES_CMD</code> in this example is freely chosen and independent of the SUBST framework.</p>
+</div>
+<div class="paragraph">
+<p>In this variant, the <code>SUBST_FILES.<strong></code> variable lists each file individually. Thereby chances are higher that there are filename patterns in which no substitution happens. Since the SUBST framework cannot know whether the filename patterns in <code>SUBST_FILES.</strong></code> have been explicitly listed in the Makefile (where any redundant filename pattern would be suspicious) or been generated by a shell command (in which redundant filename patterns are more likely and to be expected), it will complain about these redundant filename patterns. Therefore, SUBST blocks that use a shell command to generate the list of filename patterns often need to set <code>SUBST_NOOP_OK.*</code> to <code>yes</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_1_11_3_choosing_what_to_substitute">21.1.11.3. Choosing what to substitute</h4>
+<div class="paragraph">
+<p>In most cases, the substitutions are given using one or more <a href="http://man.NetBSD.org/NetBSD-9.2/i386/sed.1">sed(1)</a> commands, like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>SUBST_SED.path=         -e 's|/usr/local|${PREFIX}|g'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each of the sed commands needs to be preceded by the <code>-e</code> option and should be specified on a line of its own, to avoid hiding short sed commands at the end of a line.</p>
+</div>
+<div class="paragraph">
+<p>Since the sed commands often contain shell metacharacters as the separator (the <code>|</code> in the above example), it is common to enclose them in single quotes.</p>
+</div>
+<div class="paragraph">
+<p>A common substitution is to replace placeholders of the form <code>@VARNAME@</code> with their pkgsrc counterpart variable <code>${VARNAME}</code>. A typical example is:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>SUBST_VARS.path=        PREFIX</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This type of substitutions is typically done by the GNU configure scripts during the do-configure stage, but in some cases these need to be overridden. The same pattern is also used when a package defines patches that replace previously hard-coded paths like <code>/usr/local</code> with a <code>@PREFIX@</code> placeholder first, which then gets substituted by the actual <code>${PREFIX}</code> in the pre-configure stage. In many of these cases, it works equally well to just use the SUBST framework to directly replace <code>/usr/local</code> with <code>${PREFIX}</code>, thereby omitting the intermediate patch file.</p>
+</div>
+<div class="paragraph">
+<p>If the above is not flexible enough, it is possible to not use sed at all for the substitution but to specify an entirely different command, like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>SUBST_FILTER_CMD.path=  LC_ALL=C ${TR} -d '\r'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is used for the few remaining packages in which the distributed files use Windows-style line endings that need to be converted to UNIX-style line endings.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_1_11_4_other_subst_variables">21.1.11.4. Other SUBST variables</h4>
+<div class="paragraph">
+<p>When a SUBST block is applied during a package build, a message is logged. The default message is fine for most purposes but can be overridden by setting <code>SUBST_MESSAGE.*</code> to an individual message.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_21_2_the_fetch_phase">21.2. The fetch phase</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_21_2_1_packages_whose_distfiles_arent_available_for_plain_downloading">21.2.1. Packages whose distfiles aren&#8217;t available for plain downloading</h3>
+<div class="paragraph">
+<p>If you need to download from a dynamic URL you can set <code>DYNAMIC_MASTER_SITES</code> and a <strong>make fetch</strong> will call <code>files/getsite.sh</code> with the name of each file to download as an argument, expecting it to output the URL of the directory from which to download it. <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/graphics/ns-cult3d/index.html"><code>graphics/ns-cult3d</code></a> is an example of this usage.</p>
+</div>
+<div class="paragraph">
+<p>If the download can&#8217;t be automated, because the user must submit personal information to apply for a password, or must pay for the source, or whatever, you can set <code>FETCH_MESSAGE</code> to a list of lines that are displayed to the user before aborting the build. Example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>FETCH_MESSAGE=  "Please download the files"
+FETCH_MESSAGE+= "    "${DISTFILES:Q}
+FETCH_MESSAGE+= "manually from "${MASTER_SITES:Q}"."</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_2_2_how_to_handle_modified_distfiles_with_the_old_name">21.2.2. How to handle modified distfiles with the 'old' name</h3>
+<div class="paragraph">
+<p>Sometimes authors of a software package make some modifications after the software was released, and they put up a new distfile without changing the package&#8217;s version number. If a package is already in pkgsrc at that time, the checksum will no longer match. The contents of the new distfile should be compared against the old one before changing anything, to make sure the distfile was really updated on purpose, and that no trojan horse or so crept in. Please mention that the distfiles were compared and what was found in your commit message.</p>
+</div>
+<div class="paragraph">
+<p>Then, the correct way to work around this is to set <code>DIST_SUBDIR</code> to a unique directory name, usually based on <code>PKGNAME_NOREV</code> (but take care with python or ruby packages, where <code>PKGNAME</code> includes a variable prefix). All <code>DISTFILES</code> and <code>PATCHFILES</code> for this package will be put in that subdirectory of the local distfiles directory. (See <a href="http://netbsd.org/docs/pkgsrc/fixes.html#bumping-pkgrevision">Section 21.1.10, “How to handle incrementing versions when fixing an existing package”</a> for more details.) In case this happens more often, <code>PKGNAME</code> can be used (thus including the <code>nbX</code> suffix) or a date stamp can be appended, like <code>${PKGNAME_NOREV}-YYYYMMDD</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>DIST_SUBDIR</code> is also used when a distfile&#8217;s name does not contain a version and the distfile is apt to change. In cases where the likelihood of this is very small, <code>DIST_SUBDIR</code> might not be required. Additionally, <code>DIST_SUBDIR</code> must not be removed unless the distfile name changes, even if a package is being moved or renamed.</p>
+</div>
+<div class="paragraph">
+<p>Do not forget regenerating the <code>distinfo</code> file after that, since it contains the <code>DIST_SUBDIR</code>path in the filenames. Also, increase the PKGREVISION if the installed package is different. Furthermore, a mail to the package&#8217;s authors seems appropriate telling them that changing distfiles after releases without changing the file names is not good practice.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_2_3_packages_hosted_on_github_com">21.2.3. Packages hosted on github.com</h3>
+<div class="paragraph">
+<p>Helper methods exist for packages hosted on github.com which will often have distfile names that clash with other packages, for example <code>1.0.tar.gz</code>. Use one of the three recipes from below:</p>
+</div>
+<div class="sect3">
+<h4 id="_21_2_3_1_fetch_based_on_a_tagged_release">21.2.3.1. Fetch based on a tagged release</h4>
+<div class="paragraph">
+<p>If your distfile URL looks similar to <code><a href="https://github.com/username/example/archive/v1.0.zip" class="bare">https://github.com/username/example/archive/v1.0.zip</a></code>, then you are packaging a tagged release.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTNAME=       example-1.0
+MASTER_SITES=   ${MASTER_SITE_GITHUB:=username/}
+#GITHUB_PROJECT= example    # can be omitted if same as DISTNAME
+GITHUB_TAG=     v${PKGVERSION_NOREV}
+EXTRACT_SUFX=   .zip</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_2_3_2_fetch_based_on_a_specific_commit_before_the_first_release">21.2.3.2. Fetch based on a specific commit before the first release</h4>
+<div class="paragraph">
+<p>If your distfile looks similar to <code><a href="https://github.com/username/example/archive/988881adc9fc3655077dc2d4d757d480b5ea0e11" class="bare">https://github.com/username/example/archive/988881adc9fc3655077dc2d4d757d480b5ea0e11</a></code> and is from a commit before the first release, then set the package version to 0.0.0.N, where N is the number of commits to the repository, and set GITHUB_TAG to the commit hash. This will (almost) ensure that the first tagged release will have a version greater than this one so that package upgrades will function properly.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTNAME=       example-0.0.0.347
+MASTER_SITES=   ${MASTER_SITE_GITHUB:=username/}
+#GITHUB_PROJECT= example    # can be omitted if same as DISTNAME
+GITHUB_TAG=     988881adc9fc3655077dc2d4d757d480b5ea0e11</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_2_3_3_fetch_based_on_a_specific_commit_after_a_release">21.2.3.3. Fetch based on a specific commit after a release</h4>
+<div class="paragraph">
+<p>If your distfile looks similar to <code><a href="https://github.com/username/example/archive/988881adc9fc3655077dc2d4d757d480b5ea0e11" class="bare">https://github.com/username/example/archive/988881adc9fc3655077dc2d4d757d480b5ea0e11</a></code> and is from a commit after a release, then include the last release version and the commit count since that release in the package version and set GITHUB_TAG to the commit hash. The latest release and commit count are shown in the output of "git describe --tags":</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># git clone https://github.com/username/example
+# cd example
+# git describe --tags
+1.2.3-5-g988881a</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTNAME=       example-1.2.3.5
+MASTER_SITES=   ${MASTER_SITE_GITHUB:=username/}
+#GITHUB_PROJECT= example    # can be omitted if same as DISTNAME
+GITHUB_TAG=     988881adc9fc3655077dc2d4d757d480b5ea0e11</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_2_3_4_fetch_based_on_release">21.2.3.4. Fetch based on release</h4>
+<div class="paragraph">
+<p>If your distfile URL looks similar to <code><a href="https://github.com/username/example/releases/download/rel-1.6/offensive-1.6.zip" class="bare">https://github.com/username/example/releases/download/rel-1.6/offensive-1.6.zip</a></code>, then you are packaging a release.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTNAME=       offensive-1.6
+PKGNAME=        ${DISTNAME:S/offensive/proper/}
+MASTER_SITES=   ${MASTER_SITE_GITHUB:=username/}
+GITHUB_PROJECT= example
+GITHUB_RELEASE= rel-${PKGVERSION_NOREV} # usually just set this to ${DISTNAME}
+EXTRACT_SUFX=   .zip</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_21_3_the_configure_phase">21.3. The configure phase</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_21_3_1_shared_libraries_libtool">21.3.1. Shared libraries - libtool</h3>
+<div class="paragraph">
+<p>pkgsrc supports many different machines, with different object formats like a.out and ELF, and varying abilities to do shared library and dynamic loading at all. To accompany this, varying commands and options have to be passed to the compiler, linker, etc. to get the Right Thing, which can be pretty annoying especially if you don&#8217;t have all the machines at your hand to test things. The <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/devel/libtool/index.html"><code>devel/libtool</code></a> pkg can help here, as it just “knows” how to build both static and dynamic libraries from a set of source files, thus being platform-independent.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s how to use libtool in a package in seven simple steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add <code>USE_LIBTOOL=yes</code> to the package Makefile.</p>
+</li>
+<li>
+<p>For library objects, use “${LIBTOOL} --mode=compile ${CC}” in place of “${CC}”. You could even add it to the definition of <code>CC</code>, if only libraries are being built in a given Makefile. This one command	will build both PIC and non-PIC library objects, so you need not	have separate shared and non-shared library rules.</p>
+</li>
+<li>
+<p>For the linking of the library, remove any “ar”, “ranlib”, and “ld -Bshareable” commands, and instead use:</p>
+<div class="literalblock">
+<div class="content">
+<pre>${LIBTOOL} --mode=link \
+${CC} -o ${.TARGET:.a=.la} \
+    ${OBJS:.o=.lo} \
+    -rpath ${PREFIX}/lib \
+    -version-info major:minor</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Note that the library is changed to have a <code>.la</code> extension, and the objects are changed to have a <code>.lo</code> extension. Change <code>OBJS</code> as necessary. This automatically creates all of the <code>.a</code>, <code>.so.major.minor</code>, and ELF symlinks (if necessary) in the build directory. Be sure to include “-version-info”, especially when major and minor are zero, as libtool will otherwise strip off the shared library version.</p>
+</div>
+<div class="paragraph">
+<p>From the libtool manual:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>So, libtool library versions are described by three integers:    CURRENT
+The most recent interface number that this library implements.
+REVISION
+The implementation number of the CURRENT interface.
+AGE
+The difference between the newest and oldest interfaces that
+this library implements.  In other words, the library implements
+all the interface numbers in the range from number `CURRENT -
+AGE' to `CURRENT'.
+If two libraries have identical CURRENT and AGE numbers, then the
+dynamic linker chooses the library with the greater REVISION number.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The “-release” option will produce different results for a.out and ELF (excluding symlinks) in only one case. An ELF library of the form “libfoo-release.so.<em>x</em>.<em>y</em>” will have a symlink of “libfoo.so.<em>x</em>.<em>y</em>” on an a.out platform. This is handled automatically.</p>
+</div>
+<div class="paragraph">
+<p>The “-rpath argument” is the install directory of the library being built.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>PLIST</code>, include only the <code>.la</code> file, the other files will be added automatically.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When linking shared object (<code>.so</code>)	files, i.e. files that are loaded via <a href="http://man.NetBSD.org/NetBSD-9.2/i386/dlopen.3">dlopen(3)</a>, NOT shared libraries, use “-module -avoid-version” to prevent them getting version tacked on.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The <code>PLIST</code> file gets the <code>foo.so</code> entry.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When linking programs that depend on these libraries <em>before</em> they are installed, preface the <a href="http://man.NetBSD.org/NetBSD-9.2/i386/cc.1">cc(1)</a> or <a href="http://man.NetBSD.org/NetBSD-9.2/i386/ld.1">ld(1)</a> line with “${LIBTOOL} --mode=link”, and it will find the correct libraries (static or shared), but please be aware that libtool will not allow you to specify a relative path in -L (such as “-L../somelib”), because it	expects you to change that argument to be the <code>.la</code> file. e.g.</p>
+<div class="literalblock">
+<div class="content">
+<pre>${LIBTOOL} --mode=link ${CC} -o someprog -L../somelib -lsomelib</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>should be changed to:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>${LIBTOOL} --mode=link ${CC} -o someprog ../somelib/somelib.la</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and it will do the right thing with the libraries.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When installing libraries, preface the install(1) or cp(1) command with “${LIBTOOL} --mode=install”, and change the library name to .la. e.g.</p>
+<div class="literalblock">
+<div class="content">
+<pre>${LIBTOOL} --mode=install ${BSD_INSTALL_LIB} ${SOMELIB:.a=.la} ${PREFIX}/lib</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This will install the static <code>.a</code>, shared library, any needed symlinks, and run <a href="http://man.NetBSD.org/NetBSD-9.2/i386/ldconfig.8">ldconfig(8)</a>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In your <code>PLIST</code>, include only the <code>.la</code> file (this is a change from previous behaviour).</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_3_2_using_libtool_on_gnu_packages_that_already_support_libtool">21.3.2. Using libtool on GNU packages that already support libtool</h3>
+<div class="paragraph">
+<p>Add <code>USE_LIBTOOL=yes</code> to the package Makefile. This will override the package&#8217;s own libtool in most cases.  For older libtool using packages,  libtool is made by ltconfig script during the do-configure step; you can check the libtool script location by doing <strong>make configure; find work*/ -name libtool</strong>.</p>
+</div>
+<div class="paragraph">
+<p><code>LIBTOOL_OVERRIDE</code> specifies which libtool scripts, relative to <code>WRKSRC</code>, to override.  By default, it is set to “libtool <strong>/libtool */</strong>/libtool”.  If this does not match the location of the package&#8217;s libtool script(s), set it as appropriate.</p>
+</div>
+<div class="paragraph">
+<p>If you do not need <code>*.a</code> static libraries built and installed, then use <code>SHLIBTOOL_OVERRIDE</code> instead.</p>
+</div>
+<div class="paragraph">
+<p>If your package makes use of the platform-independent library for loading dynamic shared objects, that comes with libtool (libltdl), you should include devel/libltdl/buildlink3.mk.</p>
+</div>
+<div class="paragraph">
+<p>Some packages use libtool incorrectly so that the package may not work or build in some circumstances. Some of the more common errors are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The inclusion of a shared object (-module) as a dependent library in an executable or library. This in itself isn&#8217;t a problem if one of two things has been done:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The shared object is named correctly, i.e. <code>libfoo.la</code>, not <code>foo.la</code></p>
+</li>
+<li>
+<p>The -dlopen option is used when linking an executable.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>The use of libltdl without the correct calls to initialisation routines. The function lt_dlinit() should be called and the macro <code>LTDL_SET_PRELOADED_SYMBOLS</code> included in executables.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_3_3_gnu_autoconfautomake">21.3.3. GNU Autoconf/Automake</h3>
+<div class="paragraph">
+<p>If a package needs GNU autoconf or automake to be executed to regenerate the <code>configure</code> script and <code>Makefile.in</code> makefile templates from <code>configure.ac</code> and <code>Makefile.am</code>, then they should be executed in a pre-configure target:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>USE_TOOLS+=	autoconf automake autoreconf
+GNU_CONFIGURE=	yes
+...
+pre-configure:
+        set -e; cd ${WRKSRC} &amp;&amp; autoreconf -fi
+...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Packages which use GNU Automake will sometimes require GNU Make (<code>gmake</code> in <code>USE_TOOLS</code>), but not always.  Note that autoreconf only needs to be executed if <code>configure.ac</code> or Makefiles are modified, or <code>configure</code> is not present.</p>
+</div>
+<div class="paragraph">
+<p>There are times when the configure process makes additional changes to the generated files, which then causes the build process to try to re-execute the automake sequence. This is prevented by touching various files in the configure stage. If this causes problems with your package you can set <code>AUTOMAKE_OVERRIDE=NO</code> in the package Makefile.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_3_4_meson_ninja">21.3.4. Meson / ninja</h3>
+<div class="paragraph">
+<p>Packages using Meson to configure need to include:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.include "../../devel/meson/build.mk"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In nearly all cases (any program with dependencies), pkg-config needs to be added to <code>USE_TOOLS</code>.  If the package installs translation files for non-English languages, also add msgfmt and xgettext:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>USE_TOOLS+=	pkg-config msgfmt xgettext</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If any options need to be passed to Meson, use <code>MESON_ARGS</code> instead of <code>CONFIGURE_ARGS</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>MESON_ARGS+=	-Dx11=false</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_21_4_programming_languages">21.4. Programming languages</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_21_4_1_c_c_and_fortran">21.4.1. C, C++, and Fortran</h3>
+<div class="paragraph">
+<p>Compilers for the C and C++ languages comes with the NetBSD base system. By default, pkgsrc assumes that a package is written in C and will hide all other compilers (via the wrapper framework, see <a href="http://netbsd.org/docs/pkgsrc/buildlink.html">Chapter 18, Buildlink methodology</a>).</p>
+</div>
+<div class="paragraph">
+<p>To declare which language&#8217;s compiler a package needs, set the <code>USE_LANGUAGES</code> variable. Allowed values currently are:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>   c99, c++, c++03, gnu++03, c++0x, gnu++0x, c++11, gnu++11,
+c++14, gnu++14, c++17, gnu++17, c++20, gnu++20, fortran,
+fortran77, java, objc, obj-c++, and ada.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(and any combination).  The default is “c”. Packages using GNU configure scripts, even if written in C++, usually need a C compiler for the configure phase.</p>
+</div>
+<div class="paragraph">
+<p>To express a general requirement on a specific C or C version, normally only ``GCC_REQD`` needs to be set. For example, GCC 7 includes support for C17, so if the package uses C++17 it should specify:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>GCC_REQD+=	7</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Language variants like ``c11`` for ``USE_LANGUAGES`` should only be specified if the package does not explicitly set ``-std=...`` when compiling (i.e. the package assumes the compiler defaults to C11 or some other standard).  This is usually a bug in the upstream build system.</p>
+</div>
+<div class="paragraph">
+<p>GCC version 5 includes support for C14, while GCC 4.7 includes more-or-less complete support for C11.  For more information, consult <a href="https://gcc.gnu.org/projects/cxx-status.html">GCC&#8217;s own documentation on programming language support.</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_4_2_java">21.4.2. Java</h3>
+<div class="paragraph">
+<p>If a program is written in Java, use the Java framework in pkgsrc. The package must include <code>../../mk/java-vm.mk</code>.This Makefile fragment provides the following variables:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>USE_JAVA</code> defines if a build dependency on the JDK is added. If <code>USE_JAVA</code> is set to “run”, then there is only a runtime dependency on the JDK. The default is “yes”, which also adds a build dependency on the JDK.</p>
+</li>
+<li>
+<p>Set <code>USE_JAVA2</code> to declare that a package needs a Java2 implementation. The supported values are “yes”, “1.4”, and “1.5”. “yes” accepts any Java2 implementation, “1.4” insists on versions 1.4 or above, and “1.5” only accepts versions 1.5 or above. This variable is not set by default.</p>
+</li>
+<li>
+<p><code>PKG_JAVA_HOME</code> is automatically set to the runtime location of the used Java implementation dependency. It may be used to set <code>JAVA_HOME</code> to a good value if the program needs this variable to be defined.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_4_3_go">21.4.3. Go</h3>
+<div class="paragraph">
+<p>If a program is written in Go and has any dependencies on other Go modules, have the package include <code>../../lang/go/go-module.mk</code>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Generate a list of those dependencies with <strong>make clean &amp;&amp; make patch &amp;&amp; make show-go-modules &gt; go-modules.mk</strong>.</p>
+</li>
+<li>
+<p>Prepend <code>.include "go-modules.mk"</code> to any other <code>.include</code>s.</p>
+</li>
+<li>
+<p>Incorporate these modules in <code>distinfo</code> with <strong>make makesum</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_4_4_rust">21.4.4. Rust</h3>
+<div class="paragraph">
+<p>If a program is written in Rust and uses Cargo to build, have the package include <code>../../lang/rust/cargo.mk</code>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Generate a list of those dependencies with <strong>make CARGO_ARGS="build --release" build &amp;&amp; make print-cargo-depends &gt; cargo-depends.mk</strong>.</p>
+</li>
+<li>
+<p>Prepend <code>.include "cargo-depends.mk"</code> to any other <code>.include</code>s.</p>
+</li>
+<li>
+<p>Incorporate these modules in <code>distinfo</code> with <strong>make makesum</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_4_5_packages_containing_perl_scripts">21.4.5. Packages containing Perl scripts</h3>
+<div class="paragraph">
+<p>If your package contains interpreted Perl scripts, add “perl” to the <code>USE_TOOLS</code> variable and set <code>REPLACE_PERL</code> to ensure that the proper interpreter path is set. <code>REPLACE_PERL</code> should contain a list of scripts, relative to <code>WRKSRC</code>, that you want adjusted. Every occurrence of <code>*/bin/perl</code> in a she-bang line will be replaced with the full path to the Perl executable.</p>
+</div>
+<div class="paragraph">
+<p>If a particular version of Perl is needed, set the <code>PERL5_REQD</code> variable to the version number. The default is “5.0”.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="http://netbsd.org/docs/pkgsrc/fixes.html#perl-modules">Section 21.6.6, “Packages installing Perl modules”</a> for information about handling Perl modules.</p>
+</div>
+<div class="paragraph">
+<p>There is also the <code>REPLACE_PERL6</code> variable for the language now known as Raku.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_4_6_packages_containing_shell_scripts">21.4.6. Packages containing shell scripts</h3>
+<div class="paragraph">
+<p><code>REPLACE_SH</code>, <code>REPLACE_BASH</code>, <code>REPLACE_CSH</code>, and <code>REPLACE_KSH</code> can be used to replace shell she-bangs in files. Please use the appropriate one, preferring <code>REPLACE_SH</code> when this shell is sufficient. Each should contain a list of scripts, relative to <code>WRKSRC</code>, that you want adjusted. Every occurrence of the matching shell in a she-bang line will be replaced with the full path to the shell executable. When using <code>REPLACE_BASH</code>, don&#8217;t forget to add <code>bash</code> to <code>USE_TOOLS</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_4_7_other_programming_languages">21.4.7. Other programming languages</h3>
+<div class="paragraph">
+<p>There are further similar REPLACE variables available, e.g., <code>REPLACE_AWK</code> for packages containing awk scripts, and <code>REPLACE_R</code> for R. These two, like the others noted above, have their actions defined centrally in <code>mk/configure/replace-interpreter.mk</code>. Other languages define the actions of these variables within their own dedicated part of the tree, e.g., <code>REPLACE_PHP</code> is actioned in <code>lang/php/phpversion.mk</code>, and <code>REPLACE_PYTHON</code> is actioned in <code>lang/python/application.mk</code>. For other languages, consult the mk files found within their specific directories (the naming convention varies), or check the list found in <a href="http://netbsd.org/docs/pkgsrc/help-topics.html">Appendix E, Help topics</a>.</p>
+</div>
+<div class="paragraph">
+<p>Currently, special handling for other languages varies in pkgsrc. If a compiler package provides a <code>buildlink3.mk</code> file, include that, otherwise just add a (build) dependency on the appropriate compiler package.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_21_5_the_build_phase">21.5. The build phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The most common failures when building a package are that some platforms do not provide certain header files, functions or libraries, or they provide the functions in a library that the	original package author didn&#8217;t know. To work around this, you can rewrite the source code in most cases so that it does not use the missing functions or provides a replacement function.</p>
+</div>
+<div class="sect2">
+<h3 id="_21_5_1_compiling_c_and_c_code_conditionally">21.5.1. Compiling C and C++ code conditionally</h3>
+<div class="paragraph">
+<p>If a package already comes with a GNU configure script, the	preferred way to fix the build failure is to change the configure script, not the code. In the other cases, you can	utilize the C preprocessor, which defines certain macros depending on the operating system and hardware architecture it	compiles for. These macros can be queried using for example	#if defined(<em>__i386). Almost every operating	system, hardware architecture and compiler has its own macro. For example, if the macros __GNUC__</em>, __i386__ and __NetBSD__ are all defined, you know that you are using NetBSD on an i386 compatible CPU, and your compiler is GCC.</p>
+</div>
+<div class="paragraph">
+<p>The list of the following macros for hardware and operating system depends on the compiler that is used. For example, if you want to conditionally compile code on Solaris, don&#8217;t use <em>__sun__</em> , as the SunPro compiler	does not define it. Use __sun instead.</p>
+</div>
+<div class="sect4">
+<h5 id="_21_5_1_1_c_preprocessor_macros_to_identify_the_operating_system">21.5.1.1. C preprocessor macros to identify the operating system</h5>
+<div class="paragraph">
+<p>To distinguish between specific NetBSD versions, you should use the following code.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#ifdef __NetBSD__
+#include &lt;sys/param.h&gt;
+#if __NetBSD_Prereq__(9,99,17)
+/* use a newer feature */
+#else
+/* older code */
+#endif
+#endif
+#ifndef _WIN32
+/* Unix-like specific code */
+#endif</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To distinguish between 4.4 BSD-derived systems and the rest of the world, you should use the following code.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#include &lt;sys/param.h&gt;
+#if (defined(BSD) &amp;&amp; BSD &gt;= 199306)
+/* BSD-specific code goes here */
+#else
+/* non-BSD-specific code goes here */
+#endif</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also test for the following macros:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Cygwin      __CYGWIN__
+DragonFly   __DragonFly__
+FreeBSD     __FreeBSD__
+Haiku       __HAIKU__
+Interix     __INTERIX
+IRIX        __sgi (TODO: get a definite source for this)
+Linux       __linux
+Mac OS X    __APPLE__
+MirBSD      __MirBSD__ (__OpenBSD__ is also defined)
+Minix3      __minix
+NetBSD      __NetBSD__
+OpenBSD     __OpenBSD__
+Solaris     sun, __sun</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_21_5_1_2_c_preprocessor_macros_to_identify_the_hardware_architecture">21.5.1.2. C preprocessor macros to identify the hardware architecture</h5>
+<div class="literalblock">
+<div class="content">
+<pre>i386        i386, __i386, __i386__
+x86-64      __amd64__, __x86_64__
+ARM         __arm__
+MIPS        __mips
+SPARC       sparc, __sparc
+PowerPC     __powerpc</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_21_5_1_3_c_preprocessor_macros_to_identify_the_compiler">21.5.1.3. C preprocessor macros to identify the compiler</h5>
+<div class="literalblock">
+<div class="content">
+<pre>GCC         __GNUC__ (major version), __GNUC_MINOR__
+MIPSpro     _COMPILER_VERSION (0x741 for MIPSpro 7.41)
+SunPro      __SUNPRO_C (0x570 for Sun C 5.7)
+SunPro C++  __SUNPRO_CC (0x580 for Sun C++ 5.8)</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_5_2_how_to_handle_compiler_bugs">21.5.2. How to handle compiler bugs</h3>
+<div class="paragraph">
+<p>Some source files trigger bugs in the compiler, based on combinations of compiler version and architecture and almost always relation to optimisation being enabled. Common symptoms are gcc internal errors or never finishing compiling a	file.</p>
+</div>
+<div class="paragraph">
+<p>Typically, a workaround involves testing the <code>MACHINE_ARCH</code> and compiler version, disabling optimisation for that combination of file, <code>MACHINE_ARCH</code> and compiler.</p>
+</div>
+<div class="paragraph">
+<p>This used to be a big problem in the past, but is rarely needed now as compiler technology has matured. If you still need to add a compiler specific workaround, please do so in the file <code>hacks.mk</code> and describe the symptom and	compiler version as detailed as possible.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_5_3_no_such_file_or_directory">21.5.3. No such file or directory</h3>
+<div class="paragraph">
+<p>Compilation sometimes fails with an error message like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.../x11/gtk3/work/gtk+-3.24.12/gdk/gdktypes.h:35:10:
+fatal error: pango/pango.h: No such file or directory</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The proper way to fix this problem depends on the type of the header, which is described in the following sections.</p>
+</div>
+<div class="sect3">
+<h4 id="_21_5_3_1_headers_from_other_packages">21.5.3.1. Headers from other packages</h4>
+<div class="paragraph">
+<p>If the header name looks like it comes from a different package, that other package should be included via the buildlink3 framework.</p>
+</div>
+<div class="paragraph">
+<p>First, look whether the header is somewhere in the buildlink3 directory below <code>WRKDIR</code>. In the above case of the missing Pango header:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ find work/.buildlink/ -print | grep -F pango/pango.h</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the case of Pango, the output is:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>work/.buildlink/include/pango-1.0/pango/pango.h</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the <code>pango/pango.h</code> file were placed directly in the <code>.buildlink</code> directory, it would have been found automatically. There is an extra <code>pango-1.0</code> path component though, which means that the compiler command line must contain an option of the form <code>-I${BUILDLINK3_PREFIX.pango}/include/pango-1.0</code>. In most cases this option is generated by the configure script, which can be examined using:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ $ grep -o '[-]I[^[:space:]]*/pango[^[:space:]]*' work/*/Makefile
+-I/usr/pkg/include/pango-1.0
+-I/usr/pkg/include/pango-1.0
+-I/usr/pkg/include/pango-1.0
+-I/usr/pkg/include/pango-1.0
+-I/usr/pkg/include/pango-1.0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This looks good. These options are transformed by the buildlink wrapper to refer to the correct path inside <code>work/.buildlink</code>.</p>
+</div>
+<div class="paragraph">
+<p>Since the compilation fails though, examine the compiler command lines in <code>work/.work.log</code> to see whether the <code>-I</code> option is included in the particular command line.</p>
+</div>
+<div class="paragraph">
+<p>To further analyze the situation, run <strong>bmake build-env</strong>, which sets up an interactive, realistic environment including all the pkgsrc wrapper commands and environment variables. From there, try to compile some simple example programs that use the header.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_5_3_2_headers_generated_during_the_build">21.5.3.2. Headers generated during the build</h4>
+<div class="paragraph">
+<p>If the name of the header seems to come from the package itself, and if the build is run with parallel jobs, the package may have some undeclared dependencies between the <code>.c</code> and the <code>.h</code> files, and a C file is compiled before its required header is generated.</p>
+</div>
+<div class="paragraph">
+<p>To see whether the build runs with parallel jobs, run <strong>bmake show-all-build | grep JOBS</strong>. Its output looks like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>usr   MAKE_JOBS=              7
+pkg   MAKE_JOBS_SAFE          # undefined
+def   _MAKE_JOBS_N=           7</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case the pkgsrc user has asked pkgsrc to build packages with 7 jobs in parallel (<code>MAKE_JOBS</code>). The package could have disabled parallel builds by setting <code>MAKE_JOBS_SAFE</code> to <code>no</code>, but in this case it hasn&#8217;t.</p>
+</div>
+<div class="paragraph">
+<p>To see whether the build failure is caused by parallel builds, first save the exact error message and a bit of context, maybe you need it later for reporting a bug. Next, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>MAKE_JOBS_SAFE=no bmake clean build</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If that succeeds, <a href="https://www.NetBSD.org/cgi-bin/sendpr.cgi?gndb=netbsd">file a bug report</a> against the pkgsrc package, including the exact error message and the contents of your <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_5_3_3_symlinks">21.5.3.3. Symlinks</h4>
+<div class="paragraph">
+<p>Pkgsrc does not work reliably if any of <code>LOCALBASE</code>, <code>VARBASE</code> or <code>WRKDIR</code> contains a symlink. Since 2019Q2, the pkgsrc bootstrap program prevents installing pkgsrc in symlink-based directories. Existing pkgsrc installations are not checked for symlinks though.</p>
+</div>
+<div class="paragraph">
+<p>The "No such file or directory" error messages are a typical symptom of symlinks, and it&#8217;s quite difficult to find out that this is the actual cause.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_5_3_4_stale_working_directories">21.5.3.4. Stale working directories</h4>
+<div class="paragraph">
+<p>When building a hierarchy of packages, it may happen that one package is built and then pkgsrc is updated. This situation can provoke various hard to diagnose build errors. To clean up the situation:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ (cd ../../ &amp;&amp; cat mk/bsd.pkg.mk &gt;/dev/null &amp;&amp; rm -rf */*/work)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(The only purpose of the <code>bsd.pkg.mk</code> is to prevent running this command in the wrong directory.)</p>
+</div>
+<div class="paragraph">
+<p>If you have set <code>WRKOBJDIR</code> in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>, remove that directory as well.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_21_5_3_5_other_possible_reasons">21.5.3.5. Other possible reasons</h4>
+<div class="paragraph">
+<p>On platforms other than BSD, third-party packages are installed in <code>/usr/include</code>, together with the base system. This means that pkgsrc cannot distinguish between headers provided by the base system (which it needs) and headers from third-party packages (which are often included in pkgsrc as well). This can lead to subtle version mismatches.</p>
+</div>
+<div class="paragraph">
+<p>In pkgsrc installations that have been active for several years, it may happen that some files are manually deleted. To exclude this unlikely reason, run <strong>pkg_admin check</strong>.</p>
+</div>
+<div class="paragraph">
+<p>It may help to run <strong>pkg_admin rebuild-tree</strong> to check/fix dependencies.</p>
+</div>
+<div class="paragraph">
+<p>If all of the above doesn&#8217;t help, see <a href="http://netbsd.org/docs/pkgsrc/help-user.html">Chapter 2, Getting help</a> for contact information. Be prepared to describe what you have tried so far and what any error messages were.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_5_4_undefined_reference_to">21.5.4. Undefined reference to “&#8230;&#8203;”</h3>
+<div class="paragraph">
+<p>This error message often means that a package did not link to a shared library it needs. The following functions are known to cause this error message over and over.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Function</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Library</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Affected platforms</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accept, bind, connect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-lsocket</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Solaris</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crypt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-lcrypt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DragonFly, NetBSD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dlopen, dlsym</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-ldl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linux</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gethost*</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-lnsl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Solaris</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inet_aton</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-lresolv</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Solaris</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nanosleep, sem_*, timer_*</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-lrt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Solaris</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">openpty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-lutil</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linux</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To fix these linker errors, it is often sufficient to add <code>LIBS.<em>OperatingSystem+= -lfoo</em></code> to the package <code>Makefile</code> and then run <strong>bmake clean; bmake</strong>.</p>
+</div>
+<div class="sect3">
+<h4 id="_21_5_4_1_the_sunpro_compiler_and_inline_functions">21.5.4.1. The SunPro compiler and inline functions</h4>
+<div class="paragraph">
+<p>When you are using the SunPro compiler, there is another possibility. That compiler cannot handle the following code:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>extern int extern_func(int);
+static inline int
+inline_func(int x)
+{
+        return extern_func(x);
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>int main(void)
+{
+        return 0;
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It generates the code for <code>inline_func</code> even if that function is never used. This code then refers to <code>extern_func</code>, which can usually not be resolved. To solve this problem you can try to tell the package to disable inlining of functions.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_5_5_running_out_of_memory">21.5.5. Running out of memory</h3>
+<div class="paragraph">
+<p>Sometimes packages fail to build because the compiler runs into an operating system specific soft limit. With the <code>UNLIMIT_RESOURCES</code> variable pkgsrc can be told to unlimit the resources. The allowed values are any combination of “cputime”, “datasize”, “memorysize”, “stacksize” and “virtualsize”. Setting this variable is similar to running the shell builtin <strong>ulimit</strong> command to raise the maximum data segment size or maximum stack size of a process, respectively, to their hard limits.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_21_6_the_install_phase">21.6. The install phase</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_21_6_1_creating_needed_directories">21.6.1. Creating needed directories</h3>
+<div class="paragraph">
+<p>The BSD-compatible <strong>install</strong> supplied with some operating systems cannot create more than one directory at a time. As such, you should call <code>${INSTALL_*_DIR}</code> like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>${INSTALL_DATA_DIR} ${PREFIX}/dir1
+${INSTALL_DATA_DIR} ${PREFIX}/dir2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Instead of running the <strong>install</strong> commands directly, you can also append “dir1 dir2” to the <code>INSTALLATION_DIRS</code> variable, which will automatically do the right thing.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_2_where_to_install_documentation">21.6.2. Where to install documentation</h3>
+<div class="paragraph">
+<p>In general, documentation should be installed into <code>${PREFIX}/share/doc/${PKGBASE}</code> or <code>${PREFIX}/share/doc/${PKGNAME_NOREV}</code> (the latter includes the version number of the package).</p>
+</div>
+<div class="paragraph">
+<p>Many modern packages using GNU autoconf allow to set the directory where HTML documentation is installed with the “--with-html-dir” option. Sometimes using this flag is needed because otherwise the documentation ends up in <code>${PREFIX}/share/doc/html</code> or other places. In pkgsrc, the HTML documentation should go into the package-specific directory, just like any other documentation.</p>
+</div>
+<div class="paragraph">
+<p>An exception to the above is that library API documentation generated with the <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/textproc/gtk-doc/index.html"><code>textproc/gtk-doc</code></a> tools, for use by special browsers (devhelp) should be left at their default location, which is <code>${PREFIX}/share/gtk-doc</code>.  Such documentation can be recognized from files ending in <code>.devhelp</code> or <code>.devhelp2</code>. (It is also acceptable to install such files in <code>${PREFIX}/share/doc/${PKGBASE}</code> or <code>${PREFIX}/share/doc/${PKGNAME}</code>; the <code>.devhelp*</code> file must be directly in that directory then, no additional subdirectory level is allowed in this case. This is usually achieved by using “--with-html-dir=${PREFIX}/share/doc”. <code>${PREFIX}/share/gtk-doc</code> is preferred though.)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_3_installing_highscore_files">21.6.3. Installing highscore files</h3>
+<div class="paragraph">
+<p>Certain packages, most of them in the games category, install a score file that allows all users on the system to record their highscores. In order for this to work, the binaries need to be installed setgid and the score files owned by the appropriate group and/or owner (traditionally the "games" user/group). Set <code>USE_GAMESGROUP</code> to yes to support this. The following variables, documented in more detail in <code>mk/defaults/mk.conf</code>, control this behaviour: <code>GAMEDATAMODE</code>, <code>GAMEDIRMODE</code>, <code>GAMES_GROUP</code>, <code>GAMEMODE</code>, <code>GAME_USER</code>. Other useful variables are: <code>GAMEDIR_PERMS</code>, <code>GAMEDATA_PERMS</code> and <code>SETGID_GAMES_PERMS</code>.</p>
+</div>
+<div class="paragraph">
+<p>An example that illustrates some of the variables described above is <code>games/moon-buggy</code>. <code>OWN_DIRS_PERMS</code> is used to properly set directory permissions of the directory where the scorefile is saved, <code>REQD_FILES_PERMS</code> is used to create a dummy scorefile (<code>mbscore</code>) with the proper permissions and <code>SPECIAL_PERMS</code> is used to install setgid the game binary:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>USE_GAMESGROUP=         yes
+BUILD_DEFS+=            VARBASE
+OWN_DIRS_PERMS+=        ${VARBASE}/games/moon-buggy ${GAMEDIR_PERMS}
+REQD_FILES_PERMS+=      /dev/null ${VARBASE}/games/moon-buggy/mbscore ${GAMEDATA_PERMS}
+SPECIAL_PERMS+=         ${PREFIX}/bin/moon-buggy ${SETGID_GAMES_PERMS}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Various <code>INSTALL_*</code> variables are also available: <code>INSTALL_GAME</code> to install setgid game binaries, <code>INSTALL_GAME_DIR</code> to install game directories that are needed to be accessed by setgid games and <code>INSTALL_GAME_DATA</code> to install scorefiles.</p>
+</div>
+<div class="paragraph">
+<p>A package should therefore never hard code file ownership or access permissions but rely on <code>*_PERMS</code> as described above or alternatively on <code>INSTALL_GAME</code>,   <code>INSTALL_GAME_DATA</code> and <code>INSTALL_GAME_DIR</code> to set these correctly.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_4_adding_destdir_support_to_packages">21.6.4. Adding DESTDIR support to packages</h3>
+<div class="paragraph">
+<p><code>DESTDIR</code> support means that a package installs into a staging directory, not the final location of the files. Then a binary package is created which can be used for installation as usual. There are two ways: Either the package must install as root (“destdir”) or the package can install as non-root user (“user-destdir”).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PKG_DESTDIR_SUPPORT</code> has to be set to “destdir” or “user-destdir”. By default <code>PKG_DESTDIR_SUPPORT</code> is set to “user-destdir” to help catching more potential packaging problems. If bsd.prefs.mk is included in the Makefile, <code>PKG_DESTDIR_SUPPORT</code> needs to be set before the inclusion.</p>
+</li>
+<li>
+<p>All installation operations have to be prefixed with <code>${DESTDIR}</code>.</p>
+</li>
+<li>
+<p>automake gets this DESTDIR mostly right automatically. Many manual rules and pre/post-install often are incorrect; fix them.</p>
+</li>
+<li>
+<p>If files are installed with special owner/group use <code>SPECIAL_PERMS</code>.</p>
+</li>
+<li>
+<p>In general, packages should support <code>UNPRIVILEGED</code> to be able to use DESTDIR.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_5_packages_with_hardcoded_paths_to_other_interpreters">21.6.5. Packages with hardcoded paths to other interpreters</h3>
+<div class="paragraph">
+<p>Your package may also contain scripts with hardcoded paths to other interpreters besides (or as well as) Perl.  To correct the full pathname to the script interpreter, you need to set the following definitions in your <code>Makefile</code> (we shall use <strong>tclsh</strong> in this example):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>REPLACE_INTERPRETER+=   tcl
+REPLACE.tcl.old=        .*/bin/tclsh
+REPLACE.tcl.new=        ${PREFIX}/bin/tclsh
+REPLACE_FILES.tcl=      # list of tcl scripts which need to be fixed,
+# relative to ${WRKSRC}, just as in REPLACE_PERL</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_6_packages_installing_perl_modules">21.6.6. Packages installing Perl modules</h3>
+<div class="paragraph">
+<p>Makefiles of packages providing perl5 modules should include the Makefile fragment <code>../../lang/perl5/module.mk</code>. It provides a <strong>do-configure</strong> target for the standard perl configuration for such modules as well as various hooks to tune this configuration. See comments in this file for details.</p>
+</div>
+<div class="paragraph">
+<p>Perl5 modules will install into different places depending on the version of perl used during the build process. To address this, pkgsrc will append lines to the <code>PLIST</code> corresponding to the files listed in the installed <code>.packlist</code> file generated by most perl5 modules. This is invoked by defining <code>PERL5_PACKLIST</code> to a space-separated list of packlist files relative to <code>PERL5_PACKLIST_DIR</code> (<code>PERL5_INSTALLVENDORARCH</code> by default), e.g.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PERL5_PACKLIST= auto/Pg/.packlist</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The perl5 config variables <code>installarchlib</code>, <code>installscript</code>, <code>installvendorbin</code>, <code>installvendorscript</code>, <code>installvendorarch</code>, <code>installvendorlib</code>, <code>installvendorman1dir</code>, and <code>installvendorman3dir</code> represent those locations in which components of perl5 modules may be installed, provided as variable with uppercase and prefixed with <code>PERL5_</code>, e.g. <code>PERL5_INSTALLARCHLIB</code> and may be used by perl5 packages that don&#8217;t have a packlist. These variables are also substituted for in the <code>PLIST</code> as uppercase prefixed with <code>PERL5_SUB_</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_7_packages_installing_info_files">21.6.7. Packages installing info files</h3>
+<div class="paragraph">
+<p>Some packages install info files or use the “makeinfo”  or “install-info” commands.  <code>INFO_FILES</code> should be defined in the package Makefile so that <code>INSTALL</code> and <code>DEINSTALL</code> scripts will be generated to handle registration of the info files in the Info directory file. The “install-info” command used for the info files registration is either provided by the system, or by a special purpose package automatically added as dependency if needed.</p>
+</div>
+<div class="paragraph">
+<p><code>PKGINFODIR</code> is the directory under <code>${PREFIX}</code> where info files are primarily located. <code>PKGINFODIR</code> defaults to “info” and can be overridden by the user.</p>
+</div>
+<div class="paragraph">
+<p>The info files for the package should be listed in the package <code>PLIST</code>; however any split info files need not be listed.</p>
+</div>
+<div class="paragraph">
+<p>A package which needs the “makeinfo” command at build time must add “makeinfo” to <code>USE_TOOLS</code> in its Makefile. If a minimum version of the “makeinfo” command is needed it should be noted with the <code>TEXINFO_REQD</code> variable in the package <code>Makefile</code>. By default, a minimum version of 3.12 is required. If the system does not provide a <strong>makeinfo</strong> command or if it does not match the required minimum, a build dependency on the <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/devel/gtexinfo/index.html"><code>devel/gtexinfo</code></a> package will be added automatically.</p>
+</div>
+<div class="paragraph">
+<p>The build and installation process of the software provided by the package should not use the <strong>install-info</strong> command as the registration of info files is the task of the package <code>INSTALL</code> script, and it must use the appropriate <strong>makeinfo</strong> command.</p>
+</div>
+<div class="paragraph">
+<p>To achieve this goal, the pkgsrc infrastructure creates overriding scripts for the <strong>install-info</strong> and <strong>makeinfo</strong> commands in a directory listed early in <code>PATH</code>.</p>
+</div>
+<div class="paragraph">
+<p>The script overriding <strong>install-info</strong> has no effect except the logging of a message. The script overriding <strong>makeinfo</strong> logs a message and according to the value of <code>TEXINFO_REQD</code> either runs the appropriate <strong>makeinfo</strong> command or exit on error.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_8_packages_installing_man_pages">21.6.8. Packages installing man pages</h3>
+<div class="paragraph">
+<p>All packages that install manual pages should install them into the same directory, so that there is one common place to look for them. In pkgsrc, this place is <code>${PREFIX}/${PKGMANDIR}</code>, and this expression should be used in packages. The default for <code>PKGMANDIR</code> is “<code>man</code>”. Another often-used value is “<code>share/man</code>”.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Note</strong>
+The support for a custom <code>PKGMANDIR</code> is far from complete.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>PLIST</code> files can just use <code>man/</code> as the top level directory for the man page file entries, and the pkgsrc framework will convert as needed. In all other places, the correct <code>PKGMANDIR</code> must be used.</p>
+</div>
+<div class="paragraph">
+<p>Packages that are configured with <code>GNU_CONFIGURE</code> set as “yes”, by default will use the <code>./configure</code> --mandir switch to set where the man pages should be installed. The path is <code>GNU_CONFIGURE_MANDIR</code> which defaults to <code>${PREFIX}/${PKGMANDIR}</code>.</p>
+</div>
+<div class="paragraph">
+<p>Packages that use <code>GNU_CONFIGURE</code> but do not use --mandir, can set <code>CONFIGURE_HAS_MANDIR</code> to “no”. Or if the <code>./configure</code> script uses a non-standard use of --mandir, you can set <code>GNU_CONFIGURE_MANDIR</code> as needed.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="http://netbsd.org/docs/pkgsrc/plist.html#manpage-compression">Section 19.5, “Man page compression”</a> for information on installation of compressed manual pages.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_9_packages_installing_x11_fonts">21.6.9. Packages installing X11 fonts</h3>
+<div class="paragraph">
+<p>If a package installs font files, you will need to rebuild the fonts database in the directory where they get installed at installation and deinstallation time. This can be automatically done by using the pkginstall framework.</p>
+</div>
+<div class="paragraph">
+<p>You can list the directories where fonts are installed in the <code>FONTS_DIRS.<em>__type</code>__</em> variables, where __<code>type</code>_ can be one of “ttf”, “type1” or “x11”. Also make sure that the database file <code>fonts.dir</code> is not listed in the PLIST.</p>
+</div>
+<div class="paragraph">
+<p>Note that you should not create new directories for fonts; instead use the standard ones to avoid that the user needs to manually configure his X server to find them.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_10_packages_installing_sgml_or_xml_data">21.6.10. Packages installing SGML or XML data</h3>
+<div class="paragraph">
+<p>If a package installs SGML or XML data files that need to be registered in system-wide catalogs (like DTDs, sub-catalogs, etc.), you need to take some extra steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Include <code>../../textproc/xmlcatmgr/catalogs.mk</code> in your <code>Makefile</code>, which takes care of registering those files in system-wide catalogs at installation and deinstallation time.</p>
+</li>
+<li>
+<p>Set <code>SGML_CATALOGS</code> to the full path of any SGML catalogs installed by the package.</p>
+</li>
+<li>
+<p>Set <code>XML_CATALOGS</code> to the full path of any XML catalogs installed by the package.</p>
+</li>
+<li>
+<p>Set <code>SGML_ENTRIES</code> to individual entries to be added to the SGML catalog. These come in groups of three strings; see xmlcatmgr(1) for more information (specifically, arguments recognized by the 'add' action). Note that you will normally not use this variable.</p>
+</li>
+<li>
+<p>Set <code>XML_ENTRIES</code> to individual entries to be added to the XML catalog. These come in groups of three strings; see xmlcatmgr(1) for more information (specifically, arguments recognized by the 'add' action).  Note that you will normally not use this variable.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_11_packages_installing_extensions_to_the_mime_database">21.6.11. Packages installing extensions to the MIME database</h3>
+<div class="paragraph">
+<p>If a package provides extensions to the MIME database by installing <code>.xml</code> files inside <code>${PREFIX}/share/mime/packages</code>, you need to take some extra steps to ensure that the database is kept consistent with respect to these new files:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Include <code>../../databases/shared-mime-info/mimedb.mk</code> (avoid using the <code>buildlink3.mk</code> file from	this same directory, which is reserved for inclusion from other <code>buildlink3.mk</code> files). It takes care of rebuilding the MIME database at installation and deinstallation time, and disallows any access to it directly	from the package.</p>
+</li>
+<li>
+<p>Check the PLIST and remove any entries under the <code>share/mime</code> directory, <em>except</em> for files saved under <code>share/mime/packages</code>. The former are handled automatically by	the update-mime-database program, but the latter are package-dependent and must be removed by the package that installed them in the first place.</p>
+</li>
+<li>
+<p>Remove any <code>share/mime/*</code> directories from the PLIST. They will be handled by the shared-mime-info package.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_12_packages_using_intltool">21.6.12. Packages using intltool</h3>
+<div class="paragraph">
+<p>If a package uses intltool during its build, add <code>intltool</code> to the <code>USE_TOOLS</code>, which forces it to use the intltool package provided by pkgsrc, instead of the one bundled with the distribution file.</p>
+</div>
+<div class="paragraph">
+<p>This tracks intltool&#8217;s build-time dependencies and uses the latest available version; this way, the package benefits of any bug fixes that may have appeared since it was released.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_13_packages_installing_startup_scripts">21.6.13. Packages installing startup scripts</h3>
+<div class="paragraph">
+<p>If a package contains a rc.d script, it won&#8217;t be copied into the startup directory by default, but you can enable it, by adding the option <code>PKG_RCD_SCRIPTS=YES</code> in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>. This option will copy the scripts into <code>/etc/rc.d</code> when a package is installed, and it will automatically remove the scripts when the package is deinstalled.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_14_packages_installing_tex_modules">21.6.14. Packages installing TeX modules</h3>
+<div class="paragraph">
+<p>If a package installs TeX packages into the texmf tree, the <code>ls-R</code> database of the tree needs to be updated.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Note</strong></p>
+</div>
+<div class="paragraph">
+<p>Except the main TeX packages such as kpathsea, packages should install files into <code>${PREFIX}/share/texmf-dist</code>, not <code>${PREFIX}/share/texmf</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Include <code>../../print/kpathsea/texmf.mk</code>. This takes care of rebuilding the <code>ls-R</code> database at installation and deinstallation time.</p>
+</li>
+<li>
+<p>If your package installs files into a texmf tree other than the one at <code>${PREFIX}/share/texmf-dist</code>, set <code>TEX_TEXMF_DIRS</code> to the list of all texmf trees that need database update.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If your package also installs font map files that need to be registered using <strong>updmap</strong>, include <code>../../print/tex-tetex/map.mk</code> and set <code>TEX_MAP_FILES</code> and/or <code>TEX_MIXEDMAP_FILES</code> to the list of all such font map files. Then <strong>updmap</strong> will be run automatically at installation/deinstallation to enable/disable font map files for TeX output drivers.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Make sure that none of <code>ls-R</code> databases are included in <code>PLIST</code>, as they will be removed only by the kpathsea package.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_15_packages_supporting_running_binaries_in_emulation">21.6.15. Packages supporting running binaries in emulation</h3>
+<div class="paragraph">
+<p>There are some packages that provide libraries and executables for running binaries from a one operating system on a different one (if the latter supports it). One example is running Linux binaries on NetBSD.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/rpm2pkg/index.html"><code>pkgtools/rpm2pkg</code></a> helps in extracting and packaging Linux rpm packages.</p>
+</div>
+<div class="paragraph">
+<p>The <code>CHECK_SHLIBS</code> can be set to no to avoid the <strong>check-shlibs</strong> target, which tests if all libraries for each installed executable can be found by the dynamic linker. Since the standard dynamic linker is run, this fails for emulation packages, because the libraries used by the emulation are not in the standard directories.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_16_packages_installing_hicolor_icons">21.6.16. Packages installing hicolor icons</h3>
+<div class="paragraph">
+<p>If a package installs images under the <code>share/icons/hicolor</code> and/or updates the <code>share/icons/hicolor/icon-theme.cache</code> database, you need to take some extra steps to make sure that the shared theme directory is handled appropriately and that the cache database is rebuilt:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Include <code>../../graphics/hicolor-icon-theme/buildlink3.mk</code>.</p>
+</li>
+<li>
+<p>Check the <code>PLIST</code> and remove the entry that refers to the theme cache.</p>
+</li>
+<li>
+<p>Ensure that the PLIST does not remove the shared icon directories from the <code>share/icons/hicolor</code> hierarchy because they will be handled automatically.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The best way to verify that the PLIST is correct with respect to the last two points is to regenerate it using <strong>make print-PLIST</strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_21_6_17_packages_installing_desktop_files">21.6.17. Packages installing desktop files</h3>
+<div class="paragraph">
+<p>If a package installs <code>.desktop</code> files under <code>share/applications</code> and these include MIME information (MimeType key), you need to take extra steps to ensure that they are registered into the MIME database:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Include <code>../../sysutils/desktop-file-utils/desktopdb.mk</code>.</p>
+</li>
+<li>
+<p>Check the PLIST and remove the entry that refers to the <code>share/applications/mimeinfo.cache</code> file. It will be handled automatically.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The best way to verify that the PLIST is correct with respect to the last point is to regenerate it using <strong>make print-PLIST</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_21_7_marking_packages_as_having_problems">21.7. Marking packages as having problems</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In some cases one does not have the time to solve a problem immediately. In this case, one can plainly mark a package as broken. For this, one just sets the variable <code>BROKEN</code> to the reason why the package is broken (similar to the <code>PKG_FAIL_REASON</code> variable). A user trying to build the package will immediately be shown this message, and the build will not be even tried.</p>
+</div>
+<div class="paragraph">
+<p><code>BROKEN</code> packages are removed from pkgsrc in irregular intervals.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-07-07 06:24:23 UTC
+</div>
+</div>
+</body>
+</html>

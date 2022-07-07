@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Chapter 13. The build process</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<style>
+
+.previous {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #f1f1f1;
+    color: black;
+}
+.index {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #f1f1f1;
+    color: black;
+
+}
+.next {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #FF4500;
+    color: white;
+    float: right !important;}
+
+#myBtn {
+  #display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #FF4500; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
+}
+
+</style>
+<script>
+//Get the button
+var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+
+
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/components.html" class="previous">&laquo; Previous</a>
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/index.html" class="previous">&laquo; Index</a>
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/creating.html" class="next">Next &raquo;</a>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<div id="header">
+<h1>Chapter 13. The build process</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_13_1_introduction">13.1. Introduction</a></li>
+<li><a href="#_13_2_program_location">13.2. Program location</a></li>
+<li><a href="#_13_3_directories_used_during_the_build_process">13.3. Directories used during the build process</a></li>
+<li><a href="#_13_4_running_a_phase">13.4. Running a phase</a></li>
+<li><a href="#_13_5_the_fetch_phase">13.5. The fetch phase</a>
+<ul class="sectlevel2">
+<li><a href="#_13_5_1_what_to_fetch_and_where_to_get_it_from">13.5.1. What to fetch and where to get it from</a></li>
+<li><a href="#_13_5_2_how_are_the_files_fetched">13.5.2. How are the files fetched?</a></li>
+</ul>
+</li>
+<li><a href="#_13_6_the_checksum_phase">13.6. The checksum phase</a></li>
+<li><a href="#_13_7_the_extract_phase">13.7. The extract phase</a></li>
+<li><a href="#_13_8_the_patch_phase">13.8. The patch phase</a></li>
+<li><a href="#_13_9_the_tools_phase">13.9. The tools phase</a></li>
+<li><a href="#_13_10_the_wrapper_phase">13.10. The wrapper phase</a></li>
+<li><a href="#_13_11_the_configure_phase">13.11. The configure phase</a></li>
+<li><a href="#_13_12_the_build_phase">13.12. The build phase</a></li>
+<li><a href="#_13_13_the_test_phase">13.13. The test phase</a></li>
+<li><a href="#_13_14_the_install_phase">13.14. The install phase</a></li>
+<li><a href="#_13_15_the_package_phase">13.15. The package phase</a></li>
+<li><a href="#_13_16_cleaning_up">13.16. Cleaning up</a></li>
+<li><a href="#_13_17_other_helpful_targets">13.17. Other helpful targets</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_13_1_introduction">13.1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter gives a detailed description on how a package is built. Building a package is separated into different <em>phases</em> (for example <code>fetch</code>, <code>build</code>, <code>install</code>), all of which are described in the following sections. Each phase is split into so-called <em>stages</em>, which take the name of the containing phase, prefixed by one of <code>pre-</code>, <code>do-</code> or <code>post-</code>. (Examples are <code>pre-configure</code>, <code>post-build</code>.) Most of the actual work is done in the <code>do-*</code> stages.</p>
+</div>
+<div class="paragraph">
+<p>Never override the regular targets (like <code>fetch</code>), if you have to, override the <code>do-*</code> ones instead.</p>
+</div>
+<div class="paragraph">
+<p>The basic steps for building a program are always the same. First the program&#8217;s source (<em>distfile</em>) must be brought to the local system and then extracted. After any pkgsrc-specific patches to compile properly are applied, the software can be configured, then built (usually by compiling), and finally the generated binaries, etc. can be put into place on the system.</p>
+</div>
+<div class="paragraph">
+<p>To get more details about what is happening at each step, you can set the <code>PKG_VERBOSE</code> variable, or the <code>PATCH_DEBUG</code> variable if you are just interested in more details about the <em>patch</em> step.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_2_program_location">13.2. Program location</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before outlining the process performed by the NetBSD package system in the next section, here&#8217;s a brief discussion on where programs are installed, and which variables influence this.</p>
+</div>
+<div class="paragraph">
+<p>The automatic variable <code>PREFIX</code> indicates where all files of the final program shall be installed. It is usually set to <code>LOCALBASE</code> (<code>/usr/pkg</code>), or <code>CROSSBASE</code> for pkgs in the <code>cross</code> category. The value of <code>PREFIX</code> needs to be put into the various places in the program&#8217;s source where paths to these files are encoded. See <a href="http://netbsd.org/docs/pkgsrc/components.html#components.patches">Section 12.3, “<code>patches/*</code>”</a> and <a href="http://netbsd.org/docs/pkgsrc/fixes.html#fixes.libtool">Section 21.3.1, “Shared libraries - libtool”</a> for more details.</p>
+</div>
+<div class="paragraph">
+<p>When choosing which of these variables to use, follow the following rules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PREFIX</code> always points to the location where the current pkg will be installed. When referring to a pkg&#8217;s own installation path, use “${PREFIX}”.</p>
+</li>
+<li>
+<p><code>LOCALBASE</code> is where all pkgs are installed. If you need to construct a -I or -L argument	to the compiler to find includes and libraries installed by another pkg, use “${LOCALBASE}”. The name <code>LOCALBASE</code> stems from FreeBSD, which	installed all packages in <code>/usr/local</code>. As pkgsrc leaves <code>/usr/local</code> for the system administrator, this variable is a misnomer.</p>
+</li>
+<li>
+<p><code>X11BASE</code> is where the actual X11 distribution (from xsrc, etc.) is installed. When looking for	<em>standard</em> X11 includes (not those installed by a package), use “${X11BASE}”.</p>
+</li>
+<li>
+<p>X11-based packages using imake must set <code>USE_IMAKE</code> to be installed correctly under <code>LOCALBASE</code>.</p>
+</li>
+<li>
+<p>Within <code>${PREFIX}</code>, packages should install files according to <a href="http://man.NetBSD.org/NetBSD-9.2/i386/hier.7">hier(7)</a>, with the exception that manual pages go into <code>${PREFIX}/man</code>, not <code>${PREFIX}/share/man</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_3_directories_used_during_the_build_process">13.3. Directories used during the build process</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When building a package, various directories are used to store source files, temporary files, pkgsrc-internal files, and so on. These directories are explained here.</p>
+</div>
+<div class="paragraph">
+<p>Some of the directory variables contain relative pathnames. There are two common base directories for these relative directories: <code>PKGSRCDIR/PKGPATH</code> is used for directories that are pkgsrc-specific. <code>WRKSRC</code> is used for directories inside the package itself.</p>
+</div>
+<div class="paragraph">
+<p><code>PKGSRCDIR</code> This is an absolute pathname that points to the pkgsrc root directory. Generally, you don&#8217;t need it.</p>
+</div>
+<div class="paragraph">
+<p><code>PKGDIR</code> This is an absolute pathname that points to the current package.</p>
+</div>
+<div class="paragraph">
+<p><code>PKGPATH</code> This is a pathname relative to <code>PKGSRCDIR</code> that points to the current package.</p>
+</div>
+<div class="paragraph">
+<p><code>WRKDIR</code> This is an absolute pathname pointing to the directory where all work takes place. The distfiles are extracted to this directory. It also contains temporary directories and log files used by the various pkgsrc frameworks, like <em>buildlink</em> or the <em>wrappers</em>.</p>
+</div>
+<div class="paragraph">
+<p><code>WRKSRC</code> This is an absolute pathname pointing to the directory where the distfiles are extracted. It is usually a direct subdirectory of <code>WRKDIR</code>, and often it&#8217;s the only directory entry that isn&#8217;t hidden. This variable may be changed by a package <code>Makefile</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>CREATE_WRKDIR_SYMLINK</code> definition takes either the value <em>yes</em> or <em>no</em> and defaults to <em>no</em>. It indicates whether a symbolic link to the <code>WRKDIR</code> is to be created in the pkgsrc entry&#8217;s directory. If users would like to have their pkgsrc trees behave in a read-only manner, then the value of <code>CREATE_WRKDIR_SYMLINK</code> should be set to <em>no</em>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_4_running_a_phase">13.4. Running a phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can run a particular phase by typing <strong>make phase</strong>, where <em>phase</em> is the name of the phase. This will automatically run all phases that are required for this phase. The default phase is <code>build</code>, that is, when you run <strong>make</strong> without parameters in a package directory, the package will be built, but not installed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_5_the_fetch_phase">13.5. The fetch phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The first step in building a package is to fetch the distribution files (distfiles) from the sites that are providing them. This is the task of the <em>fetch</em> phase.</p>
+</div>
+<div class="sect2">
+<h3 id="_13_5_1_what_to_fetch_and_where_to_get_it_from">13.5.1. What to fetch and where to get it from</h3>
+<div class="paragraph">
+<p>In simple cases, <code>MASTER_SITES</code> defines all URLs from where the distfile, whose name is derived from the <code>DISTNAME</code> variable, is fetched. The more complicated cases are described below.</p>
+</div>
+<div class="paragraph">
+<p>The variable <code>DISTFILES</code> specifies the list of distfiles that have to be fetched. Its value defaults to <code>${DEFAULT_DISTFILES}</code> and its value is <code>${DISTNAME}${EXTRACT_SUFX}</code>, so that most packages don&#8217;t need to define it at all. <code>EXTRACT_SUFX</code> is <code>.tar.gz</code> by default, but can be changed freely. Note that if your package requires additional distfiles to the default one, you cannot just append the additional filenames using the <code>+=</code> operator, but you have write for example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTFILES=      ${DEFAULT_DISTFILES} additional-files.tar.gz</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each distfile is fetched from a list of sites, usually <code>MASTER_SITES</code>. If the package has multiple <code>DISTFILES</code> or multiple <code>PATCHFILES</code> from different sites, you can set <code>SITES.<em>distfile</code></em> to the list of URLs where the file <code><em>distfile</code></em> (including the suffix) can be found.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTFILES=      ${DISTNAME}${EXTRACT_SUFX}
+DISTFILES+=     foo-file.tar.gz
+SITES.foo-file.tar.gz= \
+https://www.somewhere.com/somehow/ \
+https://www.somewhereelse.com/mirror/somehow/</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When actually fetching the distfiles, each item from <code>MASTER_SITES</code> or <code>SITES.*</code> gets the name of each distfile appended to it, without an intermediate slash. Therefore, all site values have to end with a slash or other separator character. This allows for example to set <code>MASTER_SITES</code> to a URL of a CGI script that gets the name of the distfile as a parameter. In this case, the definition would look like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>MASTER_SITES=   https://www.example.com/download.cgi?file=</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The exception to this rule are URLs starting with a dash. In that case the URL is taken as is, fetched and the result stored under the name of the distfile. You can use this style for the case when the download URL style does not match the above common case. For example, if permanent download URL is a redirector to the real download URL, or the download file name is offered by an HTTP Content-Disposition header. In the following example, <code>foo-1.0.0.tar.gz</code> will be created instead of the default <code>v1.0.0.tar.gz</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTNAME=       foo-1.0.0
+MASTER_SITES=   -https://www.example.com/archive/v1.0.0.tar.gz</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>here are some predefined values for <code>MASTER_SITES</code>, which can be used in packages. The names of the variables should speak for themselves.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_APACHE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_BACKUP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_CRATESIO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_CYGWIN</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_DEBIAN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_FREEBSD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_FREEBSD_LOCAL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_GENTOO</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_GITHUB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_GNOME</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_GNU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_GNUSTEP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_HASKELL_HACKAGE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_IFARCHIVE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_KDE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_MOZILLA</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_MOZILLA_ALL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_MYSQL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_NETLIB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_OPENBSD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_OPENOFFICE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_OSDN</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_PERL_CPAN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_PGSQL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_PYPI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_RUBYGEMS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_R_CRAN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_SOURCEFORGE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_SUNSITE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_SUSE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_TEX_CTAN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_XCONTRIB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_XEMACS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MASTER_SITE_XORG</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Some explanations for the less self-explaining ones: <code>MASTER_SITE_BACKUP</code> contains backup sites for packages that are maintained in <a href="ftp://ftp.NetBSD.org/pub/pkgsrc/distfiles/%24%7BDIST_SUBDIR%7D">ftp://ftp.NetBSD.org/pub/pkgsrc/distfiles/${DIST_SUBDIR}</a>. <code>MASTER_SITE_LOCAL</code> contains local package source distributions that are maintained in <a href="ftp://ftp.NetBSD.org/pub/pkgsrc/distfiles/LOCAL_PORTS/">ftp://ftp.NetBSD.org/pub/pkgsrc/distfiles/LOCAL_PORTS/</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you choose one of these predefined sites, you may want to specify a subdirectory of that site. Since these macros may expand to more than one actual site, you <em>must</em> use the following construct to specify a subdirectory:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>MASTER_SITES=   ${MASTER_SITE_GNU:=subdirectory/name/}
+MASTER_SITES=   ${MASTER_SITE_SOURCEFORGE:=project_name/}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note the trailing slash after the subdirectory name.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_13_5_2_how_are_the_files_fetched">13.5.2. How are the files fetched?</h3>
+<div class="paragraph">
+<p>The <em>fetch</em> phase makes sure that all the distfiles exist in a local directory (<code>DISTDIR</code>, which can be set by the pkgsrc user). If the files do not exist, they are fetched using commands of the form</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>${FETCH_CMD} ${FETCH_BEFORE_ARGS} ${site}${file} ${FETCH_AFTER_ARGS}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>${site}</code> varies through several possibilities in turn: first, <code>MASTER_SITE_OVERRIDE</code> is tried, then the sites specified in either <code>SITES.file</code> if defined, else <code>MASTER_SITES</code> or <code>PATCH_SITES</code>, as applies, then finally the value of <code>MASTER_SITE_BACKUP</code>. The order of all except the first and the last can be optionally sorted by the user, via setting either <code>MASTER_SORT_RANDOM</code>, and <code>MASTER_SORT_AWK</code> or <code>MASTER_SORT_REGEX</code>.</p>
+</div>
+<div class="paragraph">
+<p>The specific command and arguments used depend on the <code>FETCH_USING</code> parameter. The example above is for <code>FETCH_USING=custom</code>.</p>
+</div>
+<div class="paragraph">
+<p>The distfiles mirror run by the NetBSD Foundation uses the <em>mirror-distfiles</em> target to mirror the distfiles, if they are freely distributable.  Packages setting <code>NO_SRC_ON_FTP</code> (usually to “${RESTRICTED}”) will not have their distfiles mirrored.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_6_the_checksum_phase">13.6. The checksum phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After the distfile(s) are fetched, their checksum is generated and compared with the checksums stored in the distinfo file. If the checksums don&#8217;t match, the build is aborted. This is to ensure the same distfile is used for building, and that the distfile wasn&#8217;t changed, e.g. by some malign force, deliberately changed distfiles on the master distribution site or network lossage.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_7_the_extract_phase">13.7. The extract phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When the distfiles are present on the local system, they need to be extracted, as they usually come in the form of some compressed archive format.</p>
+</div>
+<div class="paragraph">
+<p>By default, all <code>DISTFILES</code> are extracted. If you only need some of them, you can set the <code>EXTRACT_ONLY</code> variable to the list of those files.</p>
+</div>
+<div class="paragraph">
+<p>Extracting the files is usually done by a little program, <code>mk/extract/extract</code>, which already knows how to extract various archive formats, so most likely you will not need to change anything here. But if you need, the following variables may help you:</p>
+</div>
+<div class="paragraph">
+<p><code>EXTRACT_OPTS_{BIN,LHA,PAX,RAR,TAR,ZIP,ZOO}</code> Use these variables to override the default options for an extract command, which are defined in <code>mk/extract/extract</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>EXTRACT_USING</code> This variable can be set to <code>bsdtar</code>, <code>gtar</code>, <code>nbtar</code> (which is the default value), <code>pax</code>, or an absolute pathname pointing to the command with which tar archives should be extracted. It is preferred to choose bsdtar over gtar if NetBSD&#8217;s pax-as-tar is not good enough.</p>
+</div>
+<div class="paragraph">
+<p>If the <code>extract</code> program doesn&#8217;t serve your needs, you can also override the <code>EXTRACT_CMD</code> variable, which holds the command used for extracting the files. This command is executed in the <code>${WRKSRC}</code> directory. During execution of this command, the shell variable <code>extract_file</code> holds the absolute pathname of the file that is going to be extracted.</p>
+</div>
+<div class="paragraph">
+<p>And if that still does not suffice, you can override the <code>do-extract</code> target in the package Makefile.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_8_the_patch_phase">13.8. The patch phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After extraction, all the patches named by the <code>PATCHFILES</code>, those present in the patches subdirectory of the package as well as in $LOCALPATCHES/$PKGPATH (e.g. <code>/usr/local/patches/graphics/png</code>) are applied. Patchfiles ending in <code>.Z</code> or <code>.gz</code> are uncompressed before they are applied, files ending in <code>.orig</code> or <code>.rej</code> are ignored. Any special options to <a href="http://man.NetBSD.org/NetBSD-9.2/i386/patch.1">patch(1)</a> can be handed in <code>PATCH_DIST_ARGS</code>. See <a href="http://netbsd.org/docs/pkgsrc/components.html#components.patches">Section 12.3, “<code>patches/*</code>”</a> for more details.</p>
+</div>
+<div class="paragraph">
+<p>By default <a href="http://man.NetBSD.org/NetBSD-9.2/i386/patch.1">patch(1)</a> is given special arguments to make it fail if the expected text from the patch context is not found in the patched file. If that happens, fix the patch file by comparing it with the actual text in the file to be patched.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_9_the_tools_phase">13.9. The tools phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is covered in <a href="http://netbsd.org/docs/pkgsrc/tools.html">Chapter 17, Tools needed for building or running</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_10_the_wrapper_phase">13.10. The wrapper phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This phase creates wrapper programs for the compilers and linkers. The following variables can be used to tweak the wrappers.</p>
+</div>
+<div class="paragraph">
+<p><code>ECHO_WRAPPER_MSG</code> The command used to print progress messages. Does nothing by default. Set to <code>${ECHO}</code> to see the progress messages.</p>
+</div>
+<div class="paragraph">
+<p><code>WRAPPER_DEBUG</code> This variable can be set to <code>yes</code> (default) or <code>no</code>, depending on whether you want additional information in the wrapper log file.</p>
+</div>
+<div class="paragraph">
+<p><code>WRAPPER_UPDATE_CACHE</code> This variable can be set to <code>yes</code> or <code>no</code>, depending on whether the wrapper should use its cache, which will improve the speed. The default value is <code>yes</code>, but is forced to <code>no</code> if the platform does not support it.</p>
+</div>
+<div class="paragraph">
+<p><code>WRAPPER_REORDER_CMDS</code> A list of reordering commands. A reordering command has the form <code>reorder:l:<em>lib1</code></em>:<em><code>lib2</code></em> . It ensures that <code>-l<em>lib1</code></em> occurs before <code>-l<em>lib2</code></em>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_11_the_configure_phase">13.11. The configure phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Most pieces of software need information on the header files, system calls, and library routines which are available on the platform they run on. The process of determining this information is known as configuration, and is usually automated. In most cases, a script is supplied with the distfiles, and its invocation results in generation of header files, Makefiles, etc.</p>
+</div>
+<div class="paragraph">
+<p>If the package contains a configure script, this can be invoked by setting <code>HAS_CONFIGURE</code> to “yes”. If the configure script is a GNU autoconf script, you should set <code>GNU_CONFIGURE</code> to “yes” instead.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>do-configure</code> stage, a rough equivalent of the following command is run. See <code>mk/configure/configure.mk</code>, target <code>do-configure-script</code> for the exact definition.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.for dir in ${CONFIGURE_DIRS}
+    cd ${WRKSRC} &amp;&amp; cd ${dir} \
+    &amp;&amp; env ${CONFIGURE_ENV} \
+        ${CONFIG_SHELL} ${CONFIGURE_SCRIPT} ${CONFIGURE_ARGS}
+.endfor</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>CONFIGURE_DIRS</code> (default:“.”) is a list of pathnames relative to <code>WRKSRC</code>. In each of these directories, the configure script is run with the environment <code>CONFIGURE_ENV</code> and arguments <code>CONFIGURE_ARGS</code>. The variables <code>CONFIGURE_ENV</code>, <code>CONFIGURE_SCRIPT</code> (default: “./configure”) and <code>CONFIGURE_ARGS</code> may all be changed by the package.</p>
+</div>
+<div class="paragraph">
+<p>If the program uses the Perl way of configuration (mainly Perl modules, but not only), i.e. a file called <code>Makefile.PL</code>, it should include <code>../../lang/perl5/module.mk</code>. To set any parameter for <code>Makefile.PL</code> use the <code>MAKE_PARAMS</code> variable (e.g., <code>MAKE_PARAMS+=foo=bar</code></p>
+</div>
+<div class="paragraph">
+<p>If the program uses an <code>Imakefile</code> for configuration, the appropriate steps can be invoked by setting <code>USE_IMAKE</code> to “yes”. If you only need xmkmf, add it to <code>USE_TOOLS</code>. You can add variables to xmkmf&#8217;s environment by adding them to the <code>SCRIPTS_ENV</code> variable.</p>
+</div>
+<div class="paragraph">
+<p>If the program uses <code>cmake</code> for configuration, the appropriate steps can be invoked by setting <code>USE_CMAKE</code> to “yes”. You can add variables to cmake&#8217;s environment by adding them to the <code>CONFIGURE_ENV</code> variable and arguments to cmake by adding them to the <code>CMAKE_ARGS</code> variable. The top directory argument is given by the <code>CMAKE_ARG_PATH</code> variable, that defaults to “.” (relative to <code>CONFIGURE_DIRS</code>)</p>
+</div>
+<div class="paragraph">
+<p>If there is no configure step at all, set <code>NO_CONFIGURE</code> to “yes”.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_12_the_build_phase">13.12. The build phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For building a package, a rough equivalent of the following code is executed; see <code>mk/build/build.mk</code>, target <code>do-build</code> for the exact definition.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.for dir in ${BUILD_DIRS}
+    cd ${WRKSRC} &amp;&amp; cd ${dir} \
+    &amp;&amp; env ${MAKE_ENV} \
+        ${MAKE_PROGRAM} ${MAKE_FLAGS} ${BUILD_MAKE_FLAGS} \
+            -f ${MAKE_FILE} \
+            ${BUILD_TARGET}
+.endfor</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>BUILD_DIRS</code> (default:“.”) is a list of pathnames relative to <code>WRKSRC</code>. In each of these directories, <code>MAKE_PROGRAM</code> is run with the environment <code>MAKE_ENV</code> and arguments <code>BUILD_MAKE_FLAGS</code>. The variables <code>MAKE_ENV</code>, <code>BUILD_MAKE_FLAGS</code>, <code>MAKE_FILE</code> and <code>BUILD_TARGET</code> may all be changed by the package.</p>
+</div>
+<div class="paragraph">
+<p>The default value of <code>MAKE_PROGRAM</code> is “gmake” if <code>USE_TOOLS</code> contains “gmake”, “make” otherwise. The default value of <code>MAKE_FILE</code> is “Makefile”, and <code>BUILD_TARGET</code> defaults to “all”.</p>
+</div>
+<div class="paragraph">
+<p>If there is no build step at all, set <code>NO_BUILD</code> to “yes”.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_13_the_test_phase">13.13. The test phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>[TODO]</code></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_14_the_install_phase">13.14. The install phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once the build stage has completed, the final step is to install the software in public directories, so users can access the programs and files.</p>
+</div>
+<div class="paragraph">
+<p>In the <em>install</em> phase, a rough equivalent of the following code is executed; see <code>mk/install/install.mk</code>, target <code>do-install</code> for the exact definition. Additionally, before and after this code, several consistency checks are run against the files-to-be-installed, see <code>mk/check/*.mk</code> for details.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.for dir in ${INSTALL_DIRS}
+    cd ${WRKSRC} &amp;&amp; cd ${dir} \
+    &amp;&amp; env ${INSTALL_ENV} ${MAKE_ENV} \
+        ${MAKE_PROGRAM} ${MAKE_FLAGS} ${INSTALL_MAKE_FLAGS} \
+            -f ${MAKE_FILE} ${INSTALL_TARGET}
+.endfor</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The variable&#8217;s meanings are analogous to the ones in the <em>build</em> phase. <code>INSTALL_DIRS</code> defaults to <code>BUILD_DIRS</code>. <code>INSTALL_TARGET</code> is “install” by default, plus “install.man” if <code>USE_IMAKE</code> is defined and <code>NO_INSTALL_MANPAGES</code> is not defined.</p>
+</div>
+<div class="paragraph">
+<p>In the <em>install</em> phase, the following variables are useful. They are all variations of the <a href="http://man.NetBSD.org/NetBSD-9.2/i386/install.1">install(1)</a> command that have the owner, group and permissions preset. <code>INSTALL</code> is the plain install command. The specialized variants, together with their intended use, are:</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_PROGRAM_DIR</code> directories that contain binaries</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_SCRIPT_DIR</code>directories that contain scripts</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_LIB_DIR</code> directories that contain shared and static libraries</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_DATA_DIR</code> directories that contain data files</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_MAN_DIR</code> directories that contain man pages</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_GAME_DIR</code> directories that contain data files for games</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_PROGRAM</code> binaries that can be stripped from debugging symbols</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_SCRIPT</code> binaries that cannot be stripped</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_GAME</code> game binaries</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_LIB</code> shared and static libraries</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_DATA</code> data files</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_GAME_DATA</code> data files for games</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_MAN</code> man pages</p>
+</div>
+<div class="paragraph">
+<p>Some other variables are:</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALL_UNSTRIPPED</code> If set to <code>yes</code>, do not run <a href="http://man.NetBSD.org/NetBSD-9.2/i386/strip.1">strip(1)</a> when installing binaries. Any debugging sections and symbols present in binaries will be preserved.</p>
+</div>
+<div class="paragraph">
+<p><code>INSTALLATION_DIRS</code> A list of directories relative to <code>PREFIX</code> that are created by pkgsrc at the beginning of the <em>install</em> phase. The package is supposed to create all needed directories itself before installing files to it and list all other directories here.</p>
+</div>
+<div class="paragraph">
+<p>In the rare cases that a package shouldn&#8217;t install anything, set <code>NO_INSTALL</code> to “yes”. This is mostly relevant for packages in the <code>regress</code> category.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_15_the_package_phase">13.15. The package phase</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once the install stage has completed, a binary package of the installed files can be built. These binary packages can be used for quick installation without previous compilation, e.g. by the <strong>make bin-install</strong> or by using <strong>pkg_add</strong>.</p>
+</div>
+<div class="paragraph">
+<p>By default, the binary packages are created in <code>${PACKAGES}/All</code> and symlinks are created in <code>${PACKAGES}/<em>category</code></em>, one for each category in the <code>CATEGORIES</code> variable. <code>PACKAGES</code> defaults to <code>pkgsrc/packages</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_16_cleaning_up">13.16. Cleaning up</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once you&#8217;re finished with a package, you can clean the work directory by running <strong>make clean</strong>.  If you want to clean the work directories of all dependencies too, use <strong>make clean-depends</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_13_17_other_helpful_targets">13.17. Other helpful targets</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>pre/post-*</code></dt>
+<dd>
+<p>For any of the main targets described in the previous section (configure, build, install, etc.), two auxiliary targets exist with “pre-” and “post-” used as a prefix for the main target&#8217;s name. These targets are invoked before and after the main target is called, allowing extra configuration or installation steps be performed from a package&#8217;s Makefile, for example, which a program&#8217;s configure script or install target omitted.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>About 5% of the pkgsrc packages define their custom post-extract target, another 5% define pre-configure, and 10% define post-install. The other pre/post-* targets are defined even less often.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>do-* </code></dt>
+<dd>
+<p>Should one of the main targets do the wrong thing, and should there be no variable to fix this, you can redefine it with the <code>do-* </code> target. (Note that redefining the target itself instead of the <code>do-* </code> target is a bad idea, as the pre-* and post-* targets won&#8217;t be called anymore, etc.)</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>About 15% of the pkgsrc packages override the default do-install, the other do-* targets are overridden even less often.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>reinstall</code></dt>
+<dd>
+<p>If you did a <strong>make install</strong> and you noticed some file was not installed properly, you can repeat the installation with this target, which will ignore the “already installed” flag.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>This is the default value of <code>DEPENDS_TARGET</code> except in the case of <strong>make update</strong> and <strong>make package</strong>, where the defaults are “package” and “update”, respectively.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>deinstall</code></dt>
+<dd>
+<p>This target does a <a href="http://man.NetBSD.org/NetBSD-9.2/i386/pkg_delete.1">pkg_delete(1)</a> in the current directory, effectively de-installing the package. The following variables can be used to tune the behaviour:</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>PKG_VERBOSE</code> Add a "-v" to the <a href="http://man.NetBSD.org/NetBSD-9.2/i386/pkg_delete.1">pkg_delete(1)</a> command.</p>
+</div>
+<div class="paragraph">
+<p><code>DEINSTALLDEPENDS</code> Remove all packages that require (depend on) the given package. This can be used to remove any packages that may have been pulled in by a given package, e.g. if <strong>make deinstall DEINSTALLDEPENDS=1</strong> is done in <code>pkgsrc/x11/kde</code>, this is likely to remove whole KDE. Works by adding “-R” to the <a href="http://man.NetBSD.org/NetBSD-9.2/i386/pkg_delete.1">pkg_delete(1)</a> command line.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>bin-install</code></dt>
+<dd>
+<p>Install a binary package from local disk and via FTP from a list of sites (see the <code>BINPKG_SITES</code> variable), and do a <strong>make package</strong> if no binary package is available anywhere. The arguments given to <strong>pkg_add</strong> can be set via <code>BIN_INSTALL_FLAGS</code> e.g., to do verbose operation, etc.</p>
+</dd>
+<dt class="hdlist1"><code>install-clean</code></dt>
+<dd>
+<p>This target removes the state files for the "install" and later phases so that the "install" target may be re-invoked. This can be used after editing the PLIST to install the package without rebuilding it.</p>
+</dd>
+<dt class="hdlist1"><code>build-clean</code></dt>
+<dd>
+<p>This target removes the state files for the "build" and later phases so that the "build" target may be re-invoked.</p>
+</dd>
+<dt class="hdlist1"><code>update</code></dt>
+<dd>
+<p>This target causes the current package to be updated to the latest version. The package and all depending packages first get de-installed, then current versions of the corresponding packages get compiled and installed. This is similar to manually noting which packages are currently installed, then performing a series of <strong>make deinstall</strong> and <strong>make install</strong> (or whatever <code>UPDATE_TARGET</code> is set to) for these packages.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>You can use the “update” target to resume package updating in case a previous <strong>make update</strong> was interrupted for some reason. However, in this case, make sure you don&#8217;t call <strong>make clean</strong> or otherwise remove the list of dependent packages in <code>WRKDIR</code>. Otherwise, you lose the ability to automatically update the current package along with the dependent packages you have installed.</p>
+</div>
+<div class="paragraph">
+<p>Resuming an interrupted <strong>make update</strong> will only work as long as the package tree remains unchanged. If the source code for one of the packages to be updated has been changed, resuming <strong>make update</strong> will most certainly fail!</p>
+</div>
+<div class="paragraph">
+<p>The following variables can be used either on the command line or in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> to alter the behaviour of <strong>make update</strong>:</p>
+</div>
+<div class="paragraph">
+<p><code>UPDATE_TARGET</code> Install target to recursively use for the updated package and the dependent packages. Defaults to <code>DEPENDS_TARGET</code> if set, “install” otherwise for <strong>make update</strong>. Other good targets are “package” or “bin-install”. Do not set this to “update” or you will get stuck in an	endless loop!</p>
+</div>
+<div class="paragraph">
+<p><code>NOCLEAN</code> Don&#8217;t clean up after updating. Useful if you want to leave the work sources of the updated packages around for inspection or other purposes. Be sure you eventually clean up the source tree (see the “clean-update” target below) or you may run into troubles with old source code still lying around on your next <strong>make</strong> or <strong>make	update</strong>.</p>
+</div>
+<div class="paragraph">
+<p><code>REINSTALL</code> Deinstall each package before installing (making <code>DEPENDS_TARGET</code>). This may be necessary if the “clean-update” target (see below) was called after interrupting a running <strong>make update</strong>.</p>
+</div>
+<div class="paragraph">
+<p><code>DEPENDS_TARGET</code> Allows you to disable recursion and hardcode the target for packages. The default is “update” for the update target, facilitating a recursive update of prerequisite	packages. Only set <code>DEPENDS_TARGET</code> if you want to disable recursive updates. Use <code>UPDATE_TARGET</code> instead to just set a specific target for each package to be installed during <strong>make update</strong>(see above).</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>clean-update</code></dt>
+<dd>
+<p>Clean the source tree for all packages that would get updated if <strong>make update</strong> was called from the current directory. This target should not be used if the current package (or any of its depending packages) have already been de-installed (e.g., after calling <strong>make update</strong>) or you may lose some packages you intended to update. As a rule of thumb: only use this target <em>before</em> the first time you run <strong>make update</strong> and only if you have a dirty package tree (e.g., if you used <code>NOCLEAN</code>).</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>If you are unsure about whether your tree is clean, you can either perform a <strong>make clean</strong> at the top of the tree, or use the following sequence of commands from the directory of the package you want to update (<em>before</em> running <strong>make update</strong> for the first time, otherwise you lose all the packages you wanted to update!):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># make clean-update
+# make clean CLEANDEPENDS=YES
+# make update</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following variables can be used either on the command line or in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> to alter the behaviour of <strong>make clean-update</strong>:</p>
+</div>
+<div class="paragraph">
+<p><code>CLEAR_DIRLIST</code> After <strong>make clean</strong>, do not reconstruct the list of directories to update for this package. Only use this if <strong>make update</strong> successfully installed all packages you wanted to update. Normally, this is done automatically on <strong>make	update</strong>, but may have been suppressed by the <code>NOCLEAN</code> variable (see above).</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>replace</code></dt>
+<dd>
+<p>Update the installation of the current package. This differs from update in that it does not replace dependent packages. You will need to install <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkg_tarup/index.html"><code>pkgtools/pkg_tarup</code></a> for this target to work.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><em>Be careful when using this target!</em> There are no guarantees that dependent packages will still work, in particular they will most certainly break if you <strong>make replace</strong> a library package whose shared library major version changed between your installed version and the new one. For this reason, this target is not officially supported and only recommended for advanced users.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>info</code></dt>
+<dd>
+<p>This target invokes <a href="http://man.NetBSD.org/NetBSD-9.2/i386/pkg_info.1">pkg_info(1)</a> for the current package. You can use this to check which version of a package is installed.</p>
+</dd>
+<dt class="hdlist1"><code>index</code></dt>
+<dd>
+<p>This is a top-level command, i.e. it should be used in the <code>pkgsrc</code> directory. It creates a database of all packages in the local pkgsrc tree, including dependencies, comment, maintainer, and some other useful information.  Individual entries are created by running <strong>make describe</strong> in the packages' directories. This index file is saved as <code>pkgsrc/INDEX</code>. It can be displayed in verbose format by running <strong>make print-index</strong>. You can search in it with <strong>make search key=<em><code>something</code></em></strong>. You can extract a list of all packages that depend on a particular one by running <strong>make show-deps PKG=<em><code>somepackage</code></em></strong>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Running this command takes a very long time, some hours even on fast machines!</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>readme</code></dt>
+<dd>
+<p>This target generates a <code>index.html</code> file, which can be viewed using a browser such as <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/www/firefox/index.html"><code>www/firefox</code></a> or <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/www/links/index.html"><code>www/links</code></a>. The generated files contain references to any packages which are in the <code>PACKAGES</code> directory on the local host. The generated files can be made to refer to URLs based on <code>FTP_PKG_URL_HOST</code> and <code>FTP_PKG_URL_DIR</code>. For example, if I wanted to generate <code>index.html</code> files which pointed to binary packages on the local machine, in the directory <code>/usr/packages</code>, set <code>FTP_PKG_URL_HOST=file://localhost</code> and <code>FTP_PKG_URL_DIR=/usr/packages</code>. The <code>${PACKAGES}</code> directory and its subdirectories will be searched for all the binary packages.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The target can be run at the toplevel or in category directories, in which case it descends recursively.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>readme-all</code></dt>
+<dd>
+<p>This is a top-level command, run it in <code>pkgsrc</code>. Use this target to create a file <code>README-all.html</code> which contains a list of all packages currently available in the NetBSD Packages Collection, together with the category they belong to and a short description. This file is compiled from the <code>pkgsrc/*/index.html</code> files, so be sure to run this <em>after</em> a <strong>make readme</strong>.</p>
+</dd>
+<dt class="hdlist1"><code>cdrom-readme</code></dt>
+<dd>
+<p>This is very much the same as the “readme” target (see above), but is to be used when generating a pkgsrc tree to be written to a CD-ROM. This target also produces <code>index.html</code> files, and can be made to refer to URLs based on <code>CDROM_PKG_URL_HOST</code> and <code>CDROM_PKG_URL_DIR</code>.</p>
+</dd>
+<dt class="hdlist1"><code>show-distfiles</code></dt>
+<dd>
+<p>This target shows which distfiles and patchfiles are needed to build the package (<code>ALLFILES</code>, which contains all <code>DISTFILES</code> and <code>PATCHFILES</code>, but not <code>patches/*</code>).</p>
+</dd>
+<dt class="hdlist1"><code>show-downlevel</code></dt>
+<dd>
+<p>This target shows nothing if the package is not installed. If a version of this package is installed, but is not the version provided in this version of pkgsrc, then a warning message is displayed. This target can be used to show which of your installed packages are downlevel, and so the old versions can be deleted, and the current ones added.</p>
+</dd>
+<dt class="hdlist1"><code>show-pkgsrc-dir</code></dt>
+<dd>
+<p>This target shows the directory in the pkgsrc hierarchy from which the package can be built and installed. This may not be the same directory as the one from which the package was installed. This target is intended to be used by people who may wish to upgrade many packages on a single host, and can be invoked from the top-level pkgsrc Makefile by using the “show-host-specific-pkgs” target.</p>
+</dd>
+<dt class="hdlist1"><code>show-installed-depends</code></dt>
+<dd>
+<p>This target shows which installed packages match the current package&#8217;s <code>DEPENDS</code>. Useful if out of date dependencies are causing build problems.</p>
+</dd>
+<dt class="hdlist1"><code>print-build-depends-list</code></dt>
+<dd>
+<p>This target shows the list of packages that the current package depends on for building.</p>
+</dd>
+<dt class="hdlist1"><code>print-run-depends-list</code></dt>
+<dd>
+<p>This target shows the list of packages that the current package depends on for running.</p>
+</dd>
+<dt class="hdlist1"><code>check-shlibs</code></dt>
+<dd>
+<p>After a package is installed, check all its binaries and (on ELF platforms) shared libraries to see if they find the shared libs they need. Run by default if <code>PKG_DEVELOPER</code> is set in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</dd>
+<dt class="hdlist1"><code>print-PLIST</code></dt>
+<dd>
+<p>After a “make install” from a new or upgraded pkg, this prints out an attempt to generate a new <code>PLIST</code> from a <strong>find -newer work/.extract_done</strong>. An attempt is made to care for shared libs etc., but it is <em>strongly</em> recommended to review the result before putting it into <code>PLIST</code>. On upgrades, it&#8217;s useful to diff the output of this command against an already existing <code>PLIST</code> file.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>If the package installs files via <a href="http://man.NetBSD.org/NetBSD-9.2/i386/tar.1">tar(1)</a> or other methods that don&#8217;t update file access times, be sure to add these files manually to your <code>PLIST</code>, as the “find -newer” command used by this target won&#8217;t catch them!</p>
+</div>
+<div class="paragraph">
+<p>See <a href="http://netbsd.org/docs/pkgsrc/plist.html#print-PLIST">Section 19.3, “Tweaking output of <strong>make print-PLIST</strong>”</a> for more information on this target.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-07-07 06:24:23 UTC
+</div>
+</div>
+</body>
+</html>

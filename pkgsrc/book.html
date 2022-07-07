@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<meta name="author" content="The pkgsrc Developers">
+<title>The pkgsrc guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>The pkgsrc guide</h1>
+<div class="details">
+<span id="author" class="author">The pkgsrc Developers</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_chapter_1_what_is_pkgsrc">Chapter 1. What is pkgsrc?</a>
+<ul class="sectlevel1">
+<li><a href="#_1_1_introduction">1. 1.1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_1_1_1_why_pkgsrc">1.1. 1.1.1. Why pkgsrc?</a></li>
+<li><a href="#_1_1_2_supported_platforms">1.2. 1.1.2. Supported platforms</a></li>
+</ul>
+</li>
+<li><a href="#_1_2_overview">2. 1.2. Overview</a></li>
+<li><a href="#_1_3_terminology">3. 1.3. Terminology</a>
+<ul class="sectlevel2">
+<li><a href="#_1_3_1_roles_involved_in_pkgsrc">3.1. 1.3.1. Roles involved in pkgsrc</a></li>
+</ul>
+</li>
+<li><a href="#_1_4_typography">4. 1.4. Typography</a></li>
+</ul>
+</li>
+<li><a href="#_chapter_2_getting_help">Chapter 2. Getting help</a></li>
+<li><a href="#_chapter_3_where_to_get_pkgsrc_and_how_to_keep_it_up_to_date">Chapter 3. Where to get pkgsrc and how to keep it up-to-date</a>
+<ul class="sectlevel1">
+<li><a href="#_3_1_getting_pkgsrc_for_the_first_time">5. 3.1. Getting pkgsrc for the first time</a>
+<ul class="sectlevel2">
+<li><a href="#_3_1_1_as_tar_archive">5.1. 3.1.1. As tar archive</a></li>
+<li><a href="#_3_1_2_via_anonymous_cvs">5.2. 3.1.2. Via anonymous CVS</a></li>
+</ul>
+</li>
+<li><a href="#_3_2_keeping_pkgsrc_up_to_date">6. 3.2. Keeping pkgsrc up-to-date</a>
+<ul class="sectlevel2">
+<li><a href="#_3_2_1_via_tar_files">6.1. 3.2.1. Via tar files</a></li>
+<li><a href="#_3_2_2_via_cvs">6.2. 3.2.2. Via CVS</a>
+<ul class="sectlevel3">
+<li><a href="#_3_2_2_1_switching_between_different_pkgsrc_branches">6.2.1. 3.2.2.1. Switching between different pkgsrc branches</a></li>
+<li><a href="#_3_2_2_2_what_happens_to_my_changes_when_updating">6.2.2. 3.2.2.2. What happens to my changes when updating?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_chapter_4_using_pkgsrc_on_systems_other_than_netbsd">Chapter 4. Using pkgsrc on systems other than NetBSD</a>
+<ul class="sectlevel1">
+<li><a href="#_4_1_binary_distribution">7. 4.1. Binary distribution</a></li>
+<li><a href="#_4_2_bootstrapping_pkgsrc">8. 4.2. Bootstrapping pkgsrc</a></li>
+</ul>
+</li>
+<li><a href="#_chapter_5_using_pkgsrc">Chapter 5. Using pkgsrc</a>
+<ul class="sectlevel1">
+<li><a href="#_5_1_using_binary_packages">9. 5.1. Using binary packages</a>
+<ul class="sectlevel2">
+<li><a href="#_5_1_1_finding_binary_packages">9.1. 5.1.1. Finding binary packages</a></li>
+<li><a href="#_5_1_2_installing_binary_packages">9.2. 5.1.2. Installing binary packages</a></li>
+<li><a href="#_5_1_3_updating_packages">9.3. 5.1.3. Updating packages</a></li>
+<li><a href="#_5_1_4_deinstalling_packages">9.4. 5.1.4. Deinstalling packages</a></li>
+<li><a href="#_5_1_5_getting_information_about_installed_packages">9.5. 5.1.5. Getting information about installed packages</a></li>
+<li><a href="#_5_1_6_checking_for_security_vulnerabilities_in_installed_packages">9.6. 5.1.6. Checking for security vulnerabilities in installed packages</a></li>
+<li><a href="#_5_1_7_finding_if_newer_versions_of_your_installed_packages_are_in_pkgsrc">9.7. 5.1.7. Finding if newer versions of your installed packages are in pkgsrc</a></li>
+<li><a href="#_5_1_8_other_administrative_functions">9.8. 5.1.8. Other administrative functions</a></li>
+</ul>
+</li>
+<li><a href="#_5_2_building_packages_from_source">10. 5.2. Building packages from source</a>
+<ul class="sectlevel2">
+<li><a href="#_5_2_1_requirements">10.1. 5.2.1. Requirements</a></li>
+<li><a href="#_5_2_2_fetching_distfiles">10.2. 5.2.2. Fetching distfiles</a></li>
+<li><a href="#_5_2_3_how_to_build_and_install">10.3. 5.2.3. How to build and install</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_chapter_6_configuring_pkgsrc">Chapter 6. Configuring pkgsrc</a>
+<ul class="sectlevel1">
+<li><a href="#_6_1_general_configuration">11. 6.1. General configuration</a></li>
+<li><a href="#_6_2_variables_affecting_the_build_process">12. 6.2. Variables affecting the build process</a></li>
+<li><a href="#_6_3_variables_affecting_the_installation_process">13. 6.3. Variables affecting the installation process</a></li>
+<li><a href="#_6_4_selecting_and_configuring_the_compiler">14. 6.4. Selecting and configuring the compiler</a>
+<ul class="sectlevel2">
+<li><a href="#_6_4_1_selecting_the_compiler">14.1. 6.4.1. Selecting the compiler</a></li>
+<li><a href="#_6_4_2_additional_flags_to_the_compiler_cflags">14.2. 6.4.2. Additional flags to the compiler (CFLAGS)</a></li>
+<li><a href="#_6_4_3_additional_flags_to_the_linker_ldflags">14.3. 6.4.3. Additional flags to the linker (LDFLAGS)</a></li>
+</ul>
+</li>
+<li><a href="#_6_5_developeradvanced_settings">15. 6.5. Developer/advanced settings</a></li>
+<li><a href="#_6_6_selecting_build_options">16. 6.6. Selecting Build Options</a></li>
+</ul>
+</li>
+<li><a href="#_chapter_7_creating_binary_packages">Chapter 7. Creating binary packages</a>
+<ul class="sectlevel1">
+<li><a href="#_7_1_building_a_single_binary_package">17. 7.1. Building a single binary package</a></li>
+<li><a href="#_7_2_settings_for_creation_of_binary_packages">18. 7.2. Settings for creation of binary packages</a></li>
+</ul>
+</li>
+<li><a href="#_chapter_8_creating_binary_packages_for_everything_in_pkgsrc_bulk_builds">Chapter 8. Creating binary packages for everything in pkgsrc (bulk builds)</a>
+<ul class="sectlevel1">
+<li><a href="#_8_1_preparations">19. 8.1. Preparations</a></li>
+<li><a href="#_8_2_running_a_bulk_build">20. 8.2. Running a bulk build</a>
+<ul class="sectlevel2">
+<li><a href="#_8_2_1_configuration">20.1. 8.2.1. Configuration</a></li>
+</ul>
+</li>
+<li><a href="#_8_3_requirements_of_a_full_bulk_build">21. 8.3. Requirements of a full bulk build</a></li>
+<li><a href="#_8_4_bulk_build_variants">22. 8.4. Bulk build variants</a>
+<ul class="sectlevel2">
+<li><a href="#_8_4_1_detect_unknown_configure_options">22.1. 8.4.1. Detect unknown configure options</a></li>
+<li><a href="#_8_4_2_detect_classes_of_bugs_by_forcing_compiler_warnings">22.2. 8.4.2. Detect classes of bugs by forcing compiler warnings</a></li>
+<li><a href="#_8_4_3_force_compiler_options_only_in_the_build_phase">22.3. 8.4.3. Force compiler options only in the build phase</a></li>
+<li><a href="#_8_4_4_use_custom_directories">22.4. 8.4.4. Use custom directories</a></li>
+<li><a href="#_8_4_5_turn_warnings_into_errors">22.5. 8.4.5. Turn warnings into errors</a></li>
+<li><a href="#_8_4_6_reject_packages_for_which_pkglint_reports_errors">22.6. 8.4.6. Reject packages for which pkglint reports errors</a></li>
+<li><a href="#_8_4_7_reject_packages_that_contain_forbidden_strings">22.7. 8.4.7. Reject packages that contain forbidden strings</a></li>
+<li><a href="#_8_4_8_reject_packages_whose_self_test_fails">22.8. 8.4.8. Reject packages whose self-test fails</a></li>
+<li><a href="#_8_4_9_reject_packages_that_use_undefined_shell_variables">22.9. 8.4.9. Reject packages that use undefined shell variables</a></li>
+<li><a href="#_8_4_10_turn_off_verbose_logging">22.10. 8.4.10. Turn off verbose logging</a></li>
+</ul>
+</li>
+<li><a href="#_8_5_creating_a_multiple_cd_rom_packages_collection">23. 8.5. Creating a multiple CD-ROM packages collection</a>
+<ul class="sectlevel2">
+<li><a href="#_8_5_1_example_of_cdpack">23.1. 8.5.1. Example of cdpack</a></li>
+</ul>
+</li>
+<li><a href="#_example_index">Example Index</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Unresolved directive in book.adoc - include::preface.adoc[]</p>
+</div>
+<div class="paragraph">
+<p>Unresolved directive in book.adoc - include::colophon.adoc[]</p>
+</div>
+<div class="paragraph">
+<p>Unresolved directive in book.adoc - include::dedication.adoc[]</p>
+</div>
+<div class="paragraph">
+<p>Unresolved directive in book.adoc - include::glossary.adoc[]</p>
+</div>
+</div>
+</div>
+<h1 id="_chapter_1_what_is_pkgsrc" class="sect0">Chapter 1. What is pkgsrc?</h1>
+<div class="sect1">
+<h2 id="_1_1_introduction">1. 1.1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There is a lot of software freely available for Unix-based systems, which is usually available in form of the source code. Before such software can be used, it needs to be configured to the local system, compiled and installed, and this is exactly what The NetBSD Packages Collection (pkgsrc) does. pkgsrc also has some basic commands to handle binary packages, so that not every user has to build the packages for himself, which is a time-costly task.</p>
+</div>
+<div class="paragraph">
+<p>pkgsrc currently contains several thousand packages, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/www/apache24/index.html"><code>www/apache24</code></a> - The Apache
+web server</p>
+</li>
+<li>
+<p><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/www/firefox/index.html"><code>www/firefox</code></a> - The Firefox
+web browser</p>
+</li>
+<li>
+<p><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/gnome/index.html"><code>meta-pkgs/gnome</code></a> - The GNOME
+Desktop Environment</p>
+</li>
+<li>
+<p><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/kde4/index.html"><code>meta-pkgs/kde4</code></a> - The K
+Desktop Environment</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>… just to name a few.</p>
+</div>
+<div class="paragraph">
+<p>pkgsrc has built-in support for handling varying dependencies, such as pthreads and X11, and extended features such as IPv6 support on a range of platforms.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_1_1_why_pkgsrc">1.1. 1.1.1. Why pkgsrc?</h3>
+<div class="paragraph">
+<p>pkgsrc provides the following key features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Easy building of software from source as well as the creation
+and installation of binary packages. The source and latest
+patches are retrieved from a master or mirror download site, checksum
+verified, then built on your system. Support for binary-only
+distributions is available for both native platforms and NetBSD
+emulated platforms.</p>
+</li>
+<li>
+<p>All packages are installed in a consistent directory tree,
+including binaries, libraries, man pages and other
+documentation.</p>
+</li>
+<li>
+<p>Tracking of package dependencies automatically, including when
+performing updates, to ensure required packages are installed. The
+configuration files of various packages are handled automatically during
+updates, so local changes are preserved.</p>
+</li>
+<li>
+<p>Like NetBSD, pkgsrc is designed with portability in mind and
+consists of highly portable code. This allows the greatest speed of
+development when porting to a new platform. This portability also
+ensures that pkgsrc is <em>consistent across all
+platforms</em>.</p>
+</li>
+<li>
+<p>The installation prefix, acceptable software licenses,
+international encryption requirements and build-time options for a
+large number of packages are all set in a simple, central
+configuration file.</p>
+</li>
+<li>
+<p>The entire source (not including the distribution files) is
+freely available under a BSD license, so you may extend and adapt
+pkgsrc to your needs. Support for local packages and patches is
+available right out of the box, so you can configure it specifically
+for your environment.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following principles are basic to pkgsrc:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>“It should only work if it&#8217;s right.”&#8201;&#8212;&#8201;That means, if a package contains bugs, it&#8217;s better to find
+them and to complain about them rather than to just install the package
+and hope that it works. There are numerous checks in pkgsrc that try to
+find such bugs: static analysis tools (<a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/pkglint/index.html"><code>pkgtools/pkglint</code></a>), build-time checks (portability
+of shell scripts), and post-installation checks (installed files,
+references to shared libraries, script interpreters).</p>
+</li>
+<li>
+<p>“If it works, it should work everywhere”&#8201;&#8212;&#8201;Like NetBSD has been ported to many hardware architectures,
+pkgsrc has been ported to many operating systems. Care is taken that
+packages behave the same on all platforms.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_1_1_2_supported_platforms">1.2. 1.1.2. Supported platforms</h3>
+<div class="paragraph">
+<p>pkgsrc consists of both a source distribution and a binary
+distribution for these operating systems. After retrieving the required
+source or binaries, you can be up and running with pkgsrc in just
+minutes!</p>
+</div>
+<div class="paragraph">
+<p>pkgsrc was derived from FreeBSD&#8217;s ports system, and
+      initially developed for NetBSD only. Since then, pkgsrc has
+      grown a lot, and now supports the following platforms:</p>
+</div>
+<div class="paragraph">
+<p><strong>Table 1.1. Platforms supported by pkgsrc</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Platform</th>
+<th class="tableblock halign-left valign-top">Date Support Added</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.NetBSD.org/">NetBSD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aug 1997</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://wwws.sun.com/software/solaris/">Solaris</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mar 1999</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.Solaris">README.Solaris</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.kernel.org/">Linux</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jun 1999</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.Linux">README.Linux</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.apple.com/macos/">Darwin / Mac OS X / OS X / macOS</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 2001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.macOS">README.macOS</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.freebsd.org/">FreeBSD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 2002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.FreeBSD">README.FreeBSD</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.openbsd.org/">OpenBSD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 2002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.OpenBSD">README.OpenBSD</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.sgi.com/software/irix/">IRIX</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dec 2002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.IRIX">README.IRIX</a>
+	<a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.IRIX5.3">README.IRIX5.3</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BSD/OS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dec 2003</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www-1.ibm.com/servers/aix/">AIX</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dec 2003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.AIX">README.AIX</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.microsoft.com/windows/sfu/">Interix</a>
+          (Microsoft Windows Services for Unix)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mar 2004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.Interix">README.Interix</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.dragonflybsd.org/">DragonFlyBSD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oct 2004</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.tru64.org/">OSF/1</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 2004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.OSF1">README.OSF1</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.hp.com/products1/unix/">HP-UX</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apr 2007</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.HPUX">README.HPUX</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.haiku-os.org/">Haiku</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sep 2010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.Haiku">README.Haiku</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mirbsd.org/">MirBSD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jan 2011</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.minix3.org/">Minix3</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nov 2011</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.Minix3">README.Minix3</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cygwin.com/">Cygwin</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mar 2013</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.Cygwin">README.Cygwin</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.debian.org/ports/kfreebsd-gnu/">GNU/kFreeBSD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jul 2013</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.GNUkFreeBSD">README.GNUkFreeBSD</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.bitrig.org/">Bitrig</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jun 2014</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/bootstrap/README.Bitrig">README.Bitrig</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_2_overview">2. 1.2. Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document is divided into three parts. The first,
+	<a href="http://netbsd.org/docs/pkgsrc/users-guide.html">The pkgsrc user&#8217;s guide</a>,
+	describes how one can use one of the packages in the Package
+	Collection, either by installing a precompiled binary package,
+	or by building one&#8217;s own copy using the NetBSD package system.
+	The second part, <a href="http://netbsd.org/docs/pkgsrc/developers-guide.html">The pkgsrc developer&#8217;s guide</a>, explains how to prepare a
+	package so it can be easily built by other NetBSD users without
+	knowing about the package&#8217;s building details. The third part,
+	<a href="http://netbsd.org/docs/pkgsrc/infrastructure.html">The pkgsrc infrastructure internals</a>
+	is intended for those who want to understand how pkgsrc is
+	implemented.</p>
+</div>
+<div class="paragraph">
+<p>This document is available in various formats:
+	<a href="http://netbsd.org/docs/pkgsrc/index.html">HTML</a>, <a href="http://netbsd.org/docs/pkgsrc/pkgsrc.pdf">PDF</a>, <a href="http://netbsd.org/docs/pkgsrc/pkgsrc.ps">PS</a>, <a href="http://netbsd.org/docs/pkgsrc/pkgsrc.txt">TXT</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_3_terminology">3. 1.3. Terminology</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There has been a lot of talk about “ports”, “packages”, etc. so far. Here is a description of all the terminology used within this document.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Package</dt>
+<dd>
+<p>A set of files and building instructions that describe what&#8217;s necessary to build a certain piece of software using pkgsrc. Packages are traditionally stored under /usr/pkgsrc, but may be stored in any location, referred to as PKGSRCDIR.</p>
+</dd>
+<dt class="hdlist1">The NetBSD package system</dt>
+<dd>
+<p>This is the former name of “pkgsrc”. It is part of the NetBSD operating system and can be bootstrapped to run on non-NetBSD operating systems as well. It handles building (compiling), installing, and removing of packages.</p>
+</dd>
+<dt class="hdlist1">Distfile</dt>
+<dd>
+<p>This term describes the file or files that are provided by the author of the piece of software to distribute his work. All the changes necessary to build on NetBSD are reflected in the corresponding package. Usually the distfile is in the form of a compressed tar-archive, but other types are possible, too. Distfiles are usually stored below /usr/pkgsrc/distfiles.</p>
+</dd>
+<dt class="hdlist1">Port</dt>
+<dd>
+<p>This is the term used by FreeBSD and OpenBSD people for what we call a package. In NetBSD terminology, “port” refers to a different architecture.</p>
+</dd>
+<dt class="hdlist1">Precompiled/binary package</dt>
+<dd>
+<p>A set of binaries built with pkgsrc from a distfile and stuffed together in a single .tgz file so it can be installed on machines of the same machine architecture without the need to recompile. Packages are usually generated in /usr/pkgsrc/packages; there is also an archive on ftp.NetBSD.org.
+    Sometimes, this is referred to by the term “package” too, especially in the context of precompiled packages.</p>
+</dd>
+<dt class="hdlist1">Program</dt>
+<dd>
+<p>The piece of software to be installed which will be constructed from all the files in the distfile by the actions defined in the corresponding package.</p>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="_1_3_1_roles_involved_in_pkgsrc">3.1. 1.3.1. Roles involved in pkgsrc</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">pkgsrc users</dt>
+<dd>
+<p>The pkgsrc users are people who use the packages provided by pkgsrc. Typically they are system administrators.The people using the software that is inside the packages (maybe called “end users”) are not covered by the pkgsrc guide.There are two kinds of pkgsrc users: Some only want to install pre-built binary packages. Others build the pkgsrc packages from source, either for installing them directly or for building binary packages themselves. For pkgsrc users <a href="http://netbsd.org/docs/pkgsrc/users-guide.html">Part I, “The pkgsrc user&#8217;s guide”</a> should provide all necessary documentation.</p>
+</dd>
+<dt class="hdlist1">package maintainers</dt>
+<dd>
+<p>A package maintainer creates packages as described in <a href="http://netbsd.org/docs/pkgsrc/developers-guide.html">Part II, “The pkgsrc developer&#8217;s guide”</a>.</p>
+</dd>
+<dt class="hdlist1">infrastructure developers</dt>
+<dd>
+<p>These people are involved in all those files that live in the mk/ directory and below. Only these people should need to read through <a href="http://netbsd.org/docs/pkgsrc/infrastructure.html">Part III, “The pkgsrc infrastructure internals”</a>might be curious, too.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_4_typography">4. 1.4. Typography</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When giving examples for commands, shell prompts are used to show if the command should/can be issued as root, or if “normal” user privileges are sufficient. We use a # for root&#8217;s shell prompt, a % for users' shell prompt, assuming they use the C-shell or tcsh and a $ for bourne shell and derivatives.</p>
+</div>
+<div class="paragraph">
+<div class="title">Next</div>
+<p>Chapter 2. Getting help <a href="#">The pkgsrc guide</a></p>
+</div>
+</div>
+</div>
+<h1 id="_chapter_2_getting_help" class="sect0">Chapter 2. Getting help</h1>
+<div class="openblock partintro">
+<div class="content">
+<div class="paragraph">
+<p>To get help when using pkgsrc, the definitive source is this
+	document, the pkgsrc guide. If you don&#8217;t find anything here,
+	there are alternatives:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The built-in pkgsrc help, which is available after bootstrapping
+pkgsrc. Run <strong>bmake help topic=…</strong> to get
+help for any topic, such as a variable name like
+<code>BUILD_DEFS</code>, a make target like
+<strong>do-build</strong>, a missing C or C++ function like
+<strong>strcasecmp</strong> or any other topic.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The available help topics are listed in <a href="http://netbsd.org/docs/pkgsrc/help-topics.html">Appendix E, Help topics</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To see the value of a single variable, run <strong>bmake
+show-var VARNAME=<em><code>X</code></em></strong>.</p>
+</li>
+<li>
+<p>To see the values of the most common variables, run
+<strong>bmake show-all</strong>. These variables are grouped by
+topic. To see the variables for a single topic, run
+<strong>bmake
+show-all-<em><code>topic</code></em></strong>, for example
+<strong>bmake show-all-fetch</strong>.</p>
+</li>
+<li>
+<p>The pkgsrc-users mailing list, to which
+<a href="https://www.NetBSD.org/mailinglists/#pkgsrc-users">you
+can subscribe</a> and then <a href="mailto:pkgsrc-users@NetBSD.org">ask your
+questions</a>.</p>
+</li>
+<li>
+<p>The #pkgsrc IRC channel, which is accessible
+<a href="https://webchat.freenode.net/">via a web browser</a>
+or by using a specialized chat program such as
+<a href="http://xchat.org/">XChat</a>.
+Pick any user name and join the channel #pkgsrc.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Next</div>
+<p>Chapter 3. Where to get pkgsrc and how to keep it up-to-date <a href="#">The pkgsrc guide</a></p>
+</div>
+<div class="paragraph">
+<div class="title">Previous</div>
+<p>Chapter 1. What is pkgsrc? <a href="#">The pkgsrc guide</a></p>
+</div>
+</div>
+</div>
+<h1 id="_chapter_3_where_to_get_pkgsrc_and_how_to_keep_it_up_to_date" class="sect0">Chapter 3. Where to get pkgsrc and how to keep it up-to-date</h1>
+<div class="openblock partintro">
+<div class="content">
+Before you download and extract the files, you need to decide where you want to extract them. When using pkgsrc as root user, pkgsrc is usually installed in <code>/usr/pkgsrc</code>. You are though free to install the sources and binary packages wherever you want in your filesystem, provided that the pathname does not contain white-space or other characters that are interpreted specially by the shell and some other programs. A safe bet is to use only letters, digits, underscores and dashes.
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_1_getting_pkgsrc_for_the_first_time">5. 3.1. Getting pkgsrc for the first time</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before you download any pkgsrc files, you should decide whether you want the <em>current</em> branch or the <em>stable</em> branch. The latter is forked on a 	quarterly basis from the current branch and only gets modified for security updates. The names of the stable branches are built from the year and the quarter, for example <code>2021Q4</code>.</p>
+</div>
+<div class="paragraph">
+<p>The second step is to decide <em>how</em> you want to download pkgsrc. You can get it as a tar file or via CVS. Both ways are described here.</p>
+</div>
+<div class="paragraph">
+<p>Note that tar archive contains CVS working copy.
+Thus you can switch to using CVS at any later time.</p>
+</div>
+<div class="sect2">
+<h3 id="_3_1_1_as_tar_archive">5.1. 3.1.1. As tar archive</h3>
+<div class="paragraph">
+<p>The primary download location for all pkgsrc files is <a href="https://cdn.NetBSD.org/pub/pkgsrc/">https://cdn.NetBSD.org/pub/pkgsrc/</a> or <a href="ftp://ftp.NetBSD.org/pub/pkgsrc/">ftp://ftp.NetBSD.org/pub/pkgsrc/</a> (it points to the same location). There are a number of subdirectories for different purposes,which are described in detail in <a href="http://netbsd.org/docs/pkgsrc/ftp-layout.html">Appendix D, Directory layout of the pkgsrc FTP server</a>.</p>
+</div>
+<div class="paragraph">
+<p>The tar archive for the current branch is in the directory <code>current</code> and is called <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc.tar.gz"><code>pkgsrc.tar.gz</code></a>. It is autogenerated weekly.</p>
+</div>
+<div class="paragraph">
+<p>To save download time we provide bzip2- and	xz-compressed archives which are published at <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc.tar.bz2"><code>pkgsrc.tar.bz2</code></a> and <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc.tar.xz"><code>pkgsrc.tar.xz</code></a> respectively.</p>
+</div>
+<div class="paragraph">
+<p>You can fetch the same files using FTP.</p>
+</div>
+<div class="paragraph">
+<p>The tar file for the stable branch 2021Q4 is in the	directory <code>pkgsrc-2021Q4</code> and is also called <a href="https://cdn.NetBSD.org/pub/pkgsrc/pkgsrc-2021Q4/pkgsrc.tar.gz"><code>pkgsrc.tar.gz</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>To download the latest pkgsrc stable tarball, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ftp ftp://ftp.NetBSD.org/pub/pkgsrc/pkgsrc-2021Q4/pkgsrc.tar.gz</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you prefer, you can also fetch it using "wget", "curl", or your web browser.</p>
+</div>
+<div class="paragraph">
+<p>Then, extract it with:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ tar -xzf pkgsrc.tar.gz -C /usr</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will create the directory <code>pkgsrc/</code> in <code>/usr/</code> and all the package source will be stored under <code>/usr/pkgsrc/</code>.</p>
+</div>
+<div class="paragraph">
+<p>To download pkgsrc-current, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ftp ftp://ftp.NetBSD.org/pub/pkgsrc/current/pkgsrc.tar.gz</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_1_2_via_anonymous_cvs">5.2. 3.1.2. Via anonymous CVS</h3>
+<div class="paragraph">
+<p>To fetch a specific pkgsrc stable branch, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cd /usr &amp;&amp; cvs -q -z2 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -r pkgsrc-2021Q4 -P pkgsrc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will create the directory <code>pkgsrc/</code>in your <code>/usr/</code> directory and all the package source will be stored under <code>/usr/pkgsrc/</code>.</p>
+</div>
+<div class="paragraph">
+<p>To fetch the pkgsrc current branch, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cd /usr &amp;&amp; cvs -q -z2 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Refer to the <a href="https://www.NetBSD.org/mirrors/#anoncvs">list of available mirrors</a> to choose a faster CVS mirror, if needed.</p>
+</div>
+<div class="paragraph">
+<p>If you get error messages from <code>rsh</code>, you need to set CVS_RSH variable. E.g.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cd /usr &amp;&amp; env CVS_RSH=ssh cvs -q -z2 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Refer to documentation on your command shell how to set CVS_RSH=ssh permanently.For Bourne shells, you can set it in your <code>.profile</code> or better globally in <code>/etc/profile</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># set CVS remote shell command
+CVS_RSH=ssh
+export CVS_RSH</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, CVS doesn&#8217;t do things like most people would expect it to do. But there is a way to convince CVS, by creating a file called <code>.cvsrc</code> in your home directory and saving the following lines to it. This file will save you lots of headache and some bug reports, so we strongly recommend it. You can find an explanation of this file in the CVS documentation.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># recommended CVS configuration file from the pkgsrc guide
+cvs -q
+checkout -P
+update -dP
+diff -upN
+rdiff -u
+release -d</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_2_keeping_pkgsrc_up_to_date">6. 3.2. Keeping pkgsrc up-to-date</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The preferred way to keep pkgsrc up-to-date is via CVS (which also works if you have first installed it via a tar file). It saves bandwidth and hard disk activity, compared to downloading the tar file again.</p>
+</div>
+<div class="sect2">
+<h3 id="_3_2_1_via_tar_files">6.1. 3.2.1. Via tar files</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<strong>WARNING</strong>. When updating from a tar file, you first need to completely remove the old pkgsrc directory. Otherwise those files that have been removed from pkgsrc in the mean time will not be removed on your local disk, resulting in inconsistencies. When removing the old files, any changes that you have done to the pkgsrc files will be lost after updating. Therefore updating via CVS is strongly recommended.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that by default the distfiles and the binary packages are saved in the pkgsrc tree, so don&#8217;t forget to rescue them before updating. You can also configure pkgsrc to store distfiles and packages in directories outside the pkgsrc tree by setting the <code>DISTDIR</code> and <code>PACKAGES</code> variables. See <a href="http://netbsd.org/docs/pkgsrc/configuring.html">Chapter 6, Configuring pkgsrc</a> for the details.</p>
+</div>
+<div class="paragraph">
+<p>To update pkgsrc from a tar file, download the tar file as explained above. Then, make sure that you have not made any changes to the files in the pkgsrc directory. Remove the pkgsrc	directory and extract the new tar file. Done.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_2_2_via_cvs">6.2. 3.2.2. Via CVS</h3>
+<div class="paragraph">
+<p>To update pkgsrc via CVS, change to the <code>pkgsrc</code> directory and run cvs:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cd /usr/pkgsrc &amp;&amp; cvs update -dP</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you get error messages from <code>rsh</code>, you need to set CVS_RSH variable as described above. E.g.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cd /usr/pkgsrc &amp;&amp; env CVS_RSH=ssh cvs up -dP</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_2_2_1_switching_between_different_pkgsrc_branches">6.2.1. 3.2.2.1. Switching between different pkgsrc branches</h4>
+<div class="paragraph">
+<p>When updating pkgsrc, the CVS program keeps track of the branch you selected. But if you, for whatever reason, want to switch from the stable branch to the current one, you can do it by adding the option “-A” after the “update” keyword. To switch from the current branch back to the stable branch, add the “-rpkgsrc-2021Q4” option.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_2_2_2_what_happens_to_my_changes_when_updating">6.2.2. 3.2.2.2. What happens to my changes when updating?</h4>
+<div class="paragraph">
+<p>When you update pkgsrc, the CVS program will only touch those files that are registered in the CVS repository. That means that any packages that you created on your own will stay unmodified. If you change files that are managed by CVS, later updates will try to merge your changes with those that have been done by others. See the CVS manual, chapter “update” for details.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_chapter_4_using_pkgsrc_on_systems_other_than_netbsd" class="sect0">Chapter 4. Using pkgsrc on systems other than NetBSD</h1>
+<div class="sect1">
+<h2 id="_4_1_binary_distribution">7. 4.1. Binary distribution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="http://netbsd.org/docs/pkgsrc/using.html#using-pkg">Section 5.1, “Using binary packages”</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_4_2_bootstrapping_pkgsrc">8. 4.2. Bootstrapping pkgsrc</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>pkgsrc can be bootstrapped for use in two different modes: privileged and unprivileged one. In unprivileged mode in contrast to privileged one all programs are installed under one particular user and cannot utilise privileged operations (packages don&#8217;t create special users and all special file permissions like setuid are ignored).</p>
+</div>
+<div class="paragraph">
+<p>Installing the bootstrap kit from source should be as simple as:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># env CVS_RSH=ssh cvs -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc
+# cd pkgsrc/bootstrap
+# ./bootstrap</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To bootstrap in unprivileged mode pass “--unprivileged” flag to <strong>bootstrap</strong></p>
+</div>
+<div class="paragraph">
+<p>By default, in privileged mode pkgsrc uses <code>/usr/pkg</code> for <em>prefix</em> where programs will be installed in, and <code>/usr/pkg/pkgdb</code> for the package database directory where pkgsrc will do its internal bookkeeping,<code>/var</code> is used as <em>varbase</em>,where packages install their persistent data. In unprivileged mode pkgsrc uses <code>~/pkg</code> for <em>prefix</em>, <code>~/pkg/pkgdb</code> for the package database, and <code>~/pkg/var</code> for <em>varbase</em>.</p>
+</div>
+<div class="paragraph">
+<p>You can change default layout using command-line arguments. Run “./bootstrap --help” to get details.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The bootstrap installs a <strong>bmake</strong> tool. Use this <strong>bmake</strong> when building via pkgsrc. For examples in this guide, use <strong>bmake</strong> instead of “make”.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is possible to bootstrap multiple instances of pkgsrc using non-intersecting directories. Use <strong>bmake</strong> corresponding to the installation you&#8217;re working with to build and install packages.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<h1 id="_chapter_5_using_pkgsrc" class="sect0">Chapter 5. Using pkgsrc</h1>
+<div class="openblock partintro">
+<div class="content">
+Basically, there are two ways of using pkgsrc. The first is to only install the package tools and to use binary packages that someone else has prepared. This is the “pkg” in pkgsrc. The second way is to install the “src” of pkgsrc, too. Then you are able to build your own packages, and you can still use binary packages from someone else.
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_1_using_binary_packages">9. 5.1. Using binary packages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>On the <a href="https://cdn.NetBSD.org/">cdn.NetBSD.org</a> site and mirrors, there are collections of binary packages, ready to be installed. These binary packages have been built using the default settings for the directories, that is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/usr/pkg</code> for <code>LOCALBASE</code>, where most of the files are installed,</p>
+</li>
+<li>
+<p><code>/usr/pkg/etc</code> for configuration files,</p>
+</li>
+<li>
+<p><code>/var</code> for <code>VARBASE</code>, where those files are installed that may change after installation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you cannot use these directories for whatever reasons (maybe because you&#8217;re not root), you cannot use these binary packages, but have to build the packages yourself, which is explained in <a href="http://netbsd.org/docs/pkgsrc/platforms.html#bootstrapping-pkgsrc">Section 4.2, “Bootstrapping pkgsrc”</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_5_1_1_finding_binary_packages">9.1. 5.1.1. Finding binary packages</h3>
+<div class="paragraph">
+<p>To install binary packages, you first need to know from where
+    to get them. The first place where you should look is on the main
+    pkgsrc CDN in the directory <a href="https://cdn.NetBSD.org/pub/pkgsrc/packages/"><code>/pub/pkgsrc/packages</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>This directory contains binary packages for multiple
+    platforms. First, select your operating system. (Ignore the
+    directories with version numbers attached to it, they just exist for
+    legacy reasons.) Then, select your hardware architecture, and in the
+    third step, the OS version and the “version” of pkgsrc.</p>
+</div>
+<div class="paragraph">
+<p>In this directory, you often find a file called <code>bootstrap.tar.gz</code> which contains the package management tools. If the file is missing, it is likely that your operating system already provides those tools. Download the file and extract it in the <code>/</code> directory. It will create the directories <code>/usr/pkg</code> (containing the tools for managing binary packages and the database of installed packages).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_1_2_installing_binary_packages">9.2. 5.1.2. Installing binary packages</h3>
+<div class="paragraph">
+<p>In the directory from the last section, there is a subdirectory called <code>All/</code>, which contains all the binary packages that are available for the platform, excluding those that may not be distributed via HTTP or FTP.</p>
+</div>
+<div class="paragraph">
+<p>To install packages directly from an FTP or HTTP server, run the following commands in a Bourne-compatible shell (be sure to <strong>su</strong> to root first):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
+# PKG_PATH="https://cdn.NetBSD.org/pub/pkgsrc/packages"
+# PKG_PATH="$PKG_PATH/OPSYS/ARCH/VERSIONS/All/"
+# export PATH PKG_PATH
+# pkg_add pkgin</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Instead of URLs, you can also use local paths, for example if you are installing from a set of CDROMs, DVDs or an NFS-mounted repository. If you want to install packages from multiple sources, you can separate them by a semicolon in <code>PKG_PATH</code>.</p>
+</div>
+<div class="paragraph">
+<p>After these preparations, installing a package is very easy:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># pkgin search nginx
+nginx-1.19.6         Lightweight HTTP server and mail proxy server
+nginx-1.18.0nb8      Lightweight HTTP server and mail proxy server
+# pkgin install zsh nginx-1.19.6 vim</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that <strong>pkgin</strong> is a user-friendly frontend to the <strong>pkg_</strong>* tools.</p>
+</div>
+<div class="paragraph">
+<p>Any prerequisite packages needed to run the package in question will be installed, too, assuming they are present in the repository.</p>
+</div>
+<div class="paragraph">
+<p>After you&#8217;ve installed packages, be sure to have <code>/usr/pkg/bin</code> and <code>/usr/pkg/sbin</code> in your <code>PATH</code> so you can actually start the just installed program.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_1_3_updating_packages">9.3. 5.1.3. Updating packages</h3>
+<div class="paragraph">
+<p>To update binary packages, it is recommended that you use <strong>pkgin upgrade</strong>. This will compare the remote package repository to your locally installed packages and safely replace any older packages.</p>
+</div>
+<div class="paragraph">
+<p>Note that pkgsrc is released as quarterly branches. If you are updating to a newer quarterly branch of pkgsrc, you may need to adjust the repository in <code>/usr/pkg/etc/pkgin/repositories.conf</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_1_4_deinstalling_packages">9.4. 5.1.4. Deinstalling packages</h3>
+<div class="paragraph">
+<p>To deinstall a package, it does not matter whether it was installed from source code or from a binary package. Neither the <strong>pkgin</strong> or the <strong>pkg_delete</strong> command need to know.</p>
+</div>
+<div class="paragraph">
+<p>To delete a package, you can just run <strong>pkgin remove <em>package-name</em></strong>. The package name can be given with or without version number.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_1_5_getting_information_about_installed_packages">9.5. 5.1.5. Getting information about installed packages</h3>
+<div class="paragraph">
+<p>The <strong>pkg_info</strong> shows information about installed packages or binary package files. As with other management tools, it works with packages installed from source or binaries.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_1_6_checking_for_security_vulnerabilities_in_installed_packages">9.6. 5.1.6. Checking for security vulnerabilities in installed packages</h3>
+<div class="paragraph">
+<p>The pkgsrc Security Team and Packages Groups maintain a list of known vulnerabilities to packages which are (or have been) included in pkgsrc.  The list is available from the NetBSD CDN at <a href="https://cdn.NetBSD.org/pub/NetBSD/packages/vulns/pkg-vulnerabilities">https://cdn.NetBSD.org/pub/NetBSD/packages/vulns/pkg-vulnerabilities</a>.</p>
+</div>
+<div class="paragraph">
+<p>Please note that not every "vulnerability" with a CVE assignment is exploitable in every configuration. Some bugs are marked as active simply because an fix was not marked as such.Operating system specific hardening and mitigation features may also reduce the impact of bugs.</p>
+</div>
+<div class="paragraph">
+<p>Through <strong>pkg_admin fetch-pkg-vulnerabilities</strong>, this list can be downloaded automatically, and a security audit of all packages installed on a system can take place.</p>
+</div>
+<div class="paragraph">
+<p>There are two components to auditing. The firs step, <strong>pkg_admin fetch-pkg-vulnerabilities</strong>, is for downloading the list of vulnerabilities from the NetBSD FTP site. The second step, <strong>pkg_admin audit</strong>, checks to see if any of your installed packages are vulnerable.  If a package is vulnerable, you will see output similar to the following:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Package samba-2.0.9 has a local-root-shell vulnerability, see
+https://www.samba.org/samba/whatsnew/macroexploit.html</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may wish to have the <a href="https://cdn.NetBSD.org/pub/pkgsrc/distfiles/vulnerabilities">vulnerabilities</a> file downloaded daily so that it remains current. This may be done by adding an appropriate entry to the root users <a href="http://man.NetBSD.org/NetBSD-9.2/i386/crontab.5">crontab(5)</a> entry. For example the entry</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Download vulnerabilities file
+0 3 * * * /usr/pkg/sbin/pkg_admin fetch-pkg-vulnerabilities &gt;/dev/null 2&gt;&amp;1
+# Audit the installed packages and email results to root
+9 3 * * * /usr/pkg/sbin/pkg_admin audit |mail -s "Installed package audit result" \
+         root &gt;/dev/null 2&gt;&amp;1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will update the vulnerability list every day at 3AM, followed by an audit at 3:09AM. The result of the audit are then emailed to root. On NetBSD this may be accomplished instead by adding the following line to <code>/etc/daily.conf</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>fetch_pkg_vulnerabilities=YES</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to fetch the vulnerability list from the daily security script. The system is set to audit the packages by default but can be set explicitly, if desired (not required), by adding the following line to <code>/etc/security.conf</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>check_pkg_vulnerabilities=YES</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>see <a href="http://man.NetBSD.org/NetBSD-9.2/i386/daily.conf.5">daily.conf(5)</a> and <a href="http://man.NetBSD.org/NetBSD-9.2/i386/security.conf.5">security.conf(5)</a> for more details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_1_7_finding_if_newer_versions_of_your_installed_packages_are_in_pkgsrc">9.7. 5.1.7. Finding if newer versions of your installed packages are in pkgsrc</h3>
+<div class="paragraph">
+<p>Install <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/lintpkgsrc/index.html"><code>pkgtools/lintpkgsrc</code></a> and run <strong>lintpkgsrc</strong> with the “-i” argument to check if any packages are stale, e.g.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>% lintpkgsrc -i
+...
+Version mismatch: 'tcsh' 6.09.00 vs 6.10.00</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_1_8_other_administrative_functions">9.8. 5.1.8. Other administrative functions</h3>
+<div class="paragraph">
+<p>The <strong>pkg_admin</strong> executes various administrative functions on the package system.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_2_building_packages_from_source">10. 5.2. Building packages from source</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After obtaining pkgsrc, the <code>pkgsrc</code> directory now contains a set of packages, organized into categories. You can browse the online index of packages, or run <strong>make readme</strong> from the <code>pkgsrc</code>directory to build local <code>README.html</code> files for all packages, viewable with any web browser such as <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/www/lynx/index.html"><code>www/lynx</code></a> or <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/www/firefox/index.html"><code>www/firefox</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>The default <em>prefix</em> for installed packages is <code>/usr/pkg</code>. If you wish to change this, you should do so by setting <code>LOCALBASE</code> in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>. You should not try to use multiple different <code>LOCALBASE</code> definitions on the same system (inside a chroot is an exception).</p>
+</div>
+<div class="paragraph">
+<p>The rest of this chapter assumes that the package is already in pkgsrc. If it is not, see <a href="http://netbsd.org/docs/pkgsrc/developers-guide.html">Part II, “The pkgsrc developer&#8217;s guide”</a> for instructions how to create your own packages.</p>
+</div>
+<div class="sect2">
+<h3 id="_5_2_1_requirements">10.1. 5.2.1. Requirements</h3>
+<div class="paragraph">
+<p>To build packages from source, you need a working C compiler. On NetBSD, you need to install the "comp” and the “text” distribution sets. If you want to build X11-related packages, the “xbase” and “xcomp” distribution sets are required, too.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_2_2_fetching_distfiles">10.2. 5.2.2. Fetching distfiles</h3>
+<div class="paragraph">
+<p>The first step for building a package is downloading the distfiles (i.e. the unmodified source). If they have not yet been downloaded, pkgsrc will fetch them automatically.</p>
+</div>
+<div class="paragraph">
+<p>If you have all files that you need in the <code>distfiles</code> directory, you don&#8217;t need to connect. If the distfiles are on CD-ROM, you can mount the CD-ROM on <code>/cdrom</code> and add:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DISTDIR=/cdrom/pkgsrc/distfiles</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to your <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>By default a list of distribution sites will be randomly intermixed to prevent huge load on servers which holding popular packages (for example, SourceForge.net mirrors). Thus, every time when you need to fetch yet another distfile all the mirrors will be tried in new (random) order. You can turn this feature off by setting <code>MASTER_SORT_RANDOM=NO</code> (for <code>PKG_DEVELOPER</code>s it&#8217;s already disabled).</p>
+</div>
+<div class="paragraph">
+<p>You can overwrite some of the major distribution sites to fit to sites that are close to your own.  By setting one or two variables you can modify the order in which the master sites are accessed. <code>MASTER_SORT</code> contains a whitespace delimited list of domain suffixes. <code>MASTER_SORT_REGEX</code> is even more flexible, it contains a whitespace delimited list of regular expressions.  It has higher priority than <code>MASTER_SORT</code>.  Have a look at <code>pkgsrc/mk/defaults/mk.conf</code> to find some examples.  This may save some of your bandwidth and time.</p>
+</div>
+<div class="paragraph">
+<p>You can change these settings either in your shell&#8217;s environment, or, if you want to keep the settings, by editing the <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> file, and adding the definitions there.</p>
+</div>
+<div class="paragraph">
+<p>If a package depends on many other packages (such as <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/meta-pkgs/kde4/index.html"><code>meta-pkgs/kde4</code></a>), the build process may alternate between periods of downloading source, and compiling. To ensure you have all the source downloaded initially you can run the command:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>% make fetch-list | sh</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which will output and run a set of shell commands to fetch the necessary files into the <code>distfiles</code> directory. You can also choose to download the files manually.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_2_3_how_to_build_and_install">10.3. 5.2.3. How to build and install</h3>
+<div class="paragraph">
+<p>Once the software has downloaded, any patches will be applied, then it will be compiled for you. This may take some time depending on your computer, and how many other packages the software depends on and their compile time.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If using bootstrap or pkgsrc on a non-NetBSD system, use the pkgsrc <strong>bmake</strong> command instead of "make” in the examples in this guide.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example, type</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>% cd misc/figlet
+% make</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>at the shell prompt to build the various components of the package.</p>
+</div>
+<div class="paragraph">
+<p>The next stage is to actually install the newly compiled program onto your system. Do this by entering:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>% make install</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>while you are still in the directory for whatever package you are installing.</p>
+</div>
+<div class="paragraph">
+<p>Installing the package on your system may require you to be root.  However, pkgsrc has a <em>just-in-time-su</em> feature, which allows you to only become root for the actual installation step.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s it, the software should now be installed and setup for use. You can now enter:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>% make clean</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to remove the compiled files in the work directory, as you shouldn&#8217;t need them any more. If other packages were also added to your system (dependencies) to allow your program to compile, you can tidy these up also with the command:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>% make clean-depends</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Taking the figlet utility as an example, we can install it on our system by building as shown in <a href="http://netbsd.org/docs/pkgsrc/logs.html">Appendix C, Build logs</a>.</p>
+</div>
+<div class="paragraph">
+<p>The program is installed under the default root of the packages tree - <code>/usr/pkg</code>. Should this not conform to your tastes, set the <code>LOCALBASE</code> variable in your environment, and it will use that value as the root of your packages tree. So, to use <code>/usr/local</code>, set <code>LOCALBASE=/usr/local</code> in your environment.Please note that you should use a directory which is dedicated to packages and not shared with other programs (i.e., do not try and use <code>LOCALBASE=/usr</code>).  Also, you should not try to add any of your own files or directories (such as <code>src/</code>, <code>obj/</code>, or <code>pkgsrc/</code>) below the <code>LOCALBASE</code> tree. This is to prevent possible conflicts between programs and other files installed by the package system and whatever else may have been installed there.</p>
+</div>
+<div class="paragraph">
+<p>Some packages look in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> to alter some configuration options at build time. Have a look at <code>pkgsrc/mk/defaults/mk.conf</code> to get an overview of what will be set there by default. Environment variables such as <code>LOCALBASE</code> can be set in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> to save having to remember to set them each time you want to use pkgsrc.</p>
+</div>
+<div class="paragraph">
+<p>Occasionally, people want to “look under the covers” to see what is going on when a package is building or being installed. This may be for debugging purposes, or out of simple curiosity. A number of utility values have been added to help with this.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If you invoke the <a href="http://man.NetBSD.org/NetBSD-9.2/i386/make.1">make(1)</a> command with <code>PKG_DEBUG_LEVEL=2</code>, then a huge amount of information will be displayed. For example,</p>
+<div class="literalblock">
+<div class="content">
+<pre>make patch PKG_DEBUG_LEVEL=2</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>will show all the commands that are invoked, up to and including the “patch” stage.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If you want to know the value of a certain <a href="http://man.NetBSD.org/NetBSD-9.2/i386/make.1">make(1)</a> definition, then the <code>VARNAME</code> definition should be used, in conjunction with the show-var target. e.g. to show the expansion of the <a href="http://man.NetBSD.org/NetBSD-9.2/i386/make.1">make(1)</a> variable <code>LOCALBASE</code>:</p>
+<div class="literalblock">
+<div class="content">
+<pre>% make show-var VARNAME=LOCALBASE
+/usr/pkg
+%</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you want to install a binary package that you&#8217;ve either created yourself (see next section), that you put into pkgsrc/packages manually or that is located on a remote FTP server, you can use the "bin-install" target. This target will install a binary package - if available - via <a href="http://man.NetBSD.org/NetBSD-9.2/i386/pkg_add.1">pkg_add(1)</a>, else do a <strong>make package</strong>.  The list of remote FTP sites searched is kept in the variable <code>BINPKG_SITES</code>, which defaults to ftp.NetBSD.org. Any flags that should be added to <a href="http://man.NetBSD.org/NetBSD-9.2/i386/pkg_add.1">pkg_add(1)</a> can be put into <code>BIN_INSTALL_FLAGS</code>.  See <code>pkgsrc/mk/defaults/mk.conf</code> for more details.</p>
+</div>
+<div class="paragraph">
+<p>A final word of warning: If you set up a system that has a non-standard setting for <code>LOCALBASE</code>, be sure to set that before any packages are installed, as you cannot use several directories for the same purpose. Doing so will result in pkgsrc not being able to properly detect your installed packages, and fail miserably. Note also that precompiled binary packages are usually built with the default <code>LOCALBASE</code> of <code>/usr/pkg</code>, and that you should <em>not</em> install any if you use a non-standard <code>LOCALBASE</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_chapter_6_configuring_pkgsrc" class="sect0">Chapter 6. Configuring pkgsrc</h1>
+<div class="openblock partintro">
+<div class="content">
+<div class="paragraph">
+<p>The whole pkgsrc system is configured in a single file, usually called <code>mk.conf</code>. In which directory pkgsrc looks for that file depends on the installation. On NetBSD, when you use <a href="http://man.NetBSD.org/NetBSD-9.2/i386/make.1">make(1)</a> from the base system, it is in the directory <code>/etc/</code>. In all other cases the default location is <code>${PREFIX}/etc/</code>, depending on where you told the bootstrap program to install the binary packages.</p>
+</div>
+<div class="paragraph">
+<p>The format of the configuration file is that of the usual BSD-style <code>Makefile</code>s. The whole pkgsrc configuration is done by setting variables in this file. Note that you can define all kinds of variables, and no special error checking (for example for spelling mistakes) takes place.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_1_general_configuration">11. 6.1. General configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following variables apply to all pkgsrc packages. A complete list of the variables that can be configured by the user is available in <code>mk/defaults/mk.conf</code>, together with some comments that describe each variable&#8217;s intent.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>LOCALBASE</code>: Where packages will be installed. The default is <code>/usr/pkg</code>. Do not mix binary packages with different <code>LOCALBASE</code>s!</p>
+</li>
+<li>
+<p><code>CROSSBASE</code>: Where “cross” category packages will be installed. The default is <code>${LOCALBASE}/cross</code>.</p>
+</li>
+<li>
+<p><code>X11BASE</code>: Where X11 is installed on the system. The default is <code>/usr/X11R7</code>.</p>
+</li>
+<li>
+<p><code>DISTDIR</code>: Where to store the downloaded copies of the original source distributions used for building pkgsrc packages. The default is <code>${PKGSRCDIR}/distfiles</code>.</p>
+</li>
+<li>
+<p><code>PKG_DBDIR</code>: Where the database about installed packages is stored.  The default is <code>/usr/pkg/pkgdb</code>.</p>
+</li>
+<li>
+<p><code>MASTER_SITE_OVERRIDE</code>: If set, override the packages' <code>MASTER_SITES</code> with this value.</p>
+</li>
+<li>
+<p><code>MASTER_SITE_BACKUP</code>: Backup location(s) for distribution files and patch files if not found locally or in <code>${MASTER_SITES}</code> or <code>${PATCH_SITES}</code> respectively.The defaults is <code><a href="ftp://ftp.NetBSD.org/pub/pkgsrc/distfiles/${DIST_SUBDIR}/" class="bare">ftp://ftp.NetBSD.org/pub/pkgsrc/distfiles/${DIST_SUBDIR}/</a></code>.</p>
+</li>
+<li>
+<p><code>BINPKG_SITES</code>: List of sites carrying binary pkgs. <em><code>rel</code></em> and <em><code>arch</code></em> are replaced with OS release (“2.0”, etc.) and architecture (“mipsel”, etc.).</p>
+</li>
+<li>
+<p><code>ACCEPTABLE_LICENSES</code>: List of acceptable licenses. License names are case-sensitive. Whenever you try to build a package whose license is not in this list, you will get an error message. If the license condition is simple enough, the error message will include specific instructions on how to change this variable.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_2_variables_affecting_the_build_process">12. 6.2. Variables affecting the build process</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>PACKAGES</code>: The top level directory for the binary packages. The default is <code>${PKGSRCDIR}/packages</code>.</p>
+</li>
+<li>
+<p><code>WRKOBJDIR</code>: The top level directory where, if defined, the separate working directories will get created, and symbolically linked to from <code>${WRKDIR}</code> (see below). This is useful for building packages on several architectures, then <code>${PKGSRCDIR}</code> can be NFS-mounted while <code>${WRKOBJDIR}</code>is local to every architecture. (It should be noted that <code>PKGSRCDIR</code> should not be set by the user&#8201;&#8212;&#8201;it is an internal definition which refers to the root of the pkgsrc tree. It is possible to have many pkgsrc tree instances.)</p>
+</li>
+<li>
+<p><code>LOCALPATCHES</code>: Directory for local patches that aren&#8217;t part of pkgsrc. See <a href="http://netbsd.org/docs/pkgsrc/components.html#components.patches">Section 12.3, “<code>patches/*</code>”</a> for more information.</p>
+</li>
+<li>
+<p><code>PKGMAKECONF</code>: Location of the <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> file used by a package&#8217;s BSD-style Makefile. If this is not set, <code>MAKECONF</code> is set to <code>/dev/null</code> to avoid picking up settings used by builds in <code>/usr/src</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_3_variables_affecting_the_installation_process">13. 6.3. Variables affecting the installation process</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>PKGSRC_KEEP_BIN_PKGS</code>: By default, binary packages of built packages are preserved in <code>${PACKAGES}/All</code>. Setting this variable to "no" prevents this.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Packages have to support installation into a subdirectory of <code>WRKDIR</code>. This allows a package to be built, before the actual filesystem is touched. DESTDIR support exists in two variations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Basic DESTDIR support means that the package installation and packaging is still run as root.</p>
+</li>
+<li>
+<p>Full DESTDIR support can run the complete build, installation and packaging as normal user. Root privileges are only needed to add packages.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>With basic DESTDIR support, <strong>make clean</strong> needs to be run as root.</p>
+</div>
+<div class="paragraph">
+<p>Considering the <code>foo/bar</code> package, DESTDIR full support can be tested using the following commands</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ id
+uid=1000(myusername) gid=100(users) groups=100(users),0(wheel)
+$ mkdir $HOME/packages
+$ cd $PKGSRCDIR/foo/bar</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Verify <code>DESTDIR</code> full support, no root privileges should be needed</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ make stage-install</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create a package without root privileges</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ make PACKAGES=$HOME/packages package</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the following command, you must be able to gain root privileges using <a href="http://man.NetBSD.org/NetBSD-9.2/i386/su.1">su(1)</a></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ make PACKAGES=$HOME/packages install</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, as a simple user</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ make clean</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_4_selecting_and_configuring_the_compiler">14. 6.4. Selecting and configuring the compiler</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_6_4_1_selecting_the_compiler">14.1. 6.4.1. Selecting the compiler</h3>
+<div class="paragraph">
+<p>By default, pkgsrc will use GCC to build packages. This may be overridden by setting the following variables in /etc/mk.conf:</p>
+</div>
+<div class="paragraph">
+<p><code>PKGSRC_COMPILER</code>:</p>
+</div>
+<div class="paragraph">
+<p>This is a list of values specifying the chain of compilers to invoke when building packages. Valid values are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ccc</code>: Compaq C Compilers (Tru64)</p>
+</li>
+<li>
+<p><code>ccache</code>: compiler cache (chainable)</p>
+</li>
+<li>
+<p><code>clang</code>: Clang C and Objective-C compiler</p>
+</li>
+<li>
+<p><code>distcc</code>: distributed C/C++ (chainable)</p>
+</li>
+<li>
+<p><code>f2c</code>: Fortran 77 to C compiler (chainable)</p>
+</li>
+<li>
+<p><code>icc</code>: Intel C++ Compiler (Linux)</p>
+</li>
+<li>
+<p><code>ido</code>: SGI IRIS Development Option cc (IRIX 5)</p>
+</li>
+<li>
+<p><code>gcc</code>: GNU C/C++ Compiler</p>
+</li>
+<li>
+<p><code>hp</code>: HP-UX C/aC++ compilers</p>
+</li>
+<li>
+<p><code>mipspro</code>: Silicon Graphics, Inc. MIPSpro (n32/n64)</p>
+</li>
+<li>
+<p><code>mipspro-ucode</code>: Silicon Graphics, Inc. MIPSpro (o32)</p>
+</li>
+<li>
+<p><code>sunpro</code>: Sun Microsystems, Inc. WorkShip/Forte/Sun ONE Studio</p>
+</li>
+<li>
+<p><code>xlc</code>: IBM&#8217;s XL C/C++ compiler suite</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The default is “<code>gcc</code>”. You can use <code>ccache</code> and/or <code>distcc</code> with an appropriate <code>PKGSRC_COMPILER</code> setting, e.g. “<code>ccache gcc</code>”. This variable should always be terminated with a value for a real compiler. Note that only one real compiler should be listed (e.g. “<code>sunpro gcc</code>” is not allowed).</p>
+</div>
+<div class="paragraph">
+<p><code>GCC_REQD</code>: This specifies the minimum version of GCC to use when building packages. If the system GCC doesn&#8217;t satisfy this requirement, then pkgsrc will build and install one of the GCC packages to use instead.</p>
+</div>
+<div class="paragraph">
+<p><code>PYTHON_VERSION_DEFAULT</code>: Specifies which version of python to use when several options are available.</p>
+</div>
+<div class="paragraph">
+<p><code>PKGSRC_FORTRAN</code>: Specifies the Fortran compiler to use.  The default is <code>gfortran</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>GFORTRAN_VERSION</code>: If <code>PKGSRC_FORTRAN = gfortran</code> is used, this option specifies which version to use.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_6_4_2_additional_flags_to_the_compiler_cflags">14.2. 6.4.2. Additional flags to the compiler (CFLAGS)</h3>
+<div class="paragraph">
+<p>If you wish to set the <code>CFLAGS</code> variable, please make sure to use the <code>+=</code> operator instead of the <code>=</code> operator:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CFLAGS+=        -your -flags</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using <code>CFLAGS=</code> (i.e. without the “+”) may lead to problems with packages that need to add their own flags.  You may want to take a look at the <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/devel/cpuflags/index.html"><code>devel/cpuflags</code></a> package if you&#8217;re interested in optimization specifically for the current CPU.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_6_4_3_additional_flags_to_the_linker_ldflags">14.3. 6.4.3. Additional flags to the linker (LDFLAGS)</h3>
+<div class="paragraph">
+<p>If you want to pass flags to the linker, both in the configure step and the build step, you can do this in two ways. Either set <code>LDFLAGS</code> or <code>LIBS</code>. The difference between the two is that <code>LIBS</code> will be appended to the command line, while <code>LDFLAGS</code> come earlier. <code>LDFLAGS</code> is pre-loaded with rpath settings for ELF machines depending on the setting of <code>USE_IMAKE</code> or the inclusion of <code>mk/x11.buildlink3.mk</code>.  As with <code>CFLAGS</code>, if you do not wish to override these settings, use the <code>+=</code> operator:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>LDFLAGS+=        -your -linkerflags</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_5_developeradvanced_settings">15. 6.5. Developer/advanced settings</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>PKG_DEVELOPER</code>: Run some sanity checks that package developers want:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>make sure patches apply with zero fuzz</p>
+</li>
+<li>
+<p>run check-shlibs to see that all binaries will find their shared libs.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>PKG_DEBUG_LEVEL</code>: The level of debugging output which is displayed whilst making and installing the package. The default value for this is 0, which will not display the commands as they are executed (normal, default, quiet operation); the value 1 will display all shell commands before their invocation, and the value 2 will display both the shell commands before their invocation, as well as their actual execution progress with <strong>set -x</strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_6_6_selecting_build_options">16. 6.6. Selecting Build Options</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some packages have build time options, usually to select between different dependencies, enable optional support for big dependencies or enable experimental features.</p>
+</div>
+<div class="paragraph">
+<p>To see which options, if any, a package supports, and which options are mutually exclusive, run <strong>make show-options</strong>, for example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>The following options are supported by this package:
+    ssl      Enable SSL support.
+Exactly one of the following gecko options is required:
+    firefox  Use firefox as gecko rendering engine.
+    mozilla  Use mozilla as gecko rendering engine.
+At most one of the following database options may be selected:
+    mysql    Enable support for MySQL database.
+    pgsql    Enable support for PostgreSQL database.
+These options are enabled by default: firefox
+These options are currently enabled: mozilla ssl</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following variables can be defined in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> to select which options to enable for a package: <code>PKG_DEFAULT_OPTIONS</code>, which can be used to select or disable options for all packages that support them, and <code>PKG_OPTIONS.<em>pkgbase</code></em>, which can be used to select or disable options specifically for package <em><code>pkgbase</code></em>.  Options listed in these variables are selected, options preceded by “-” are disabled. A few examples:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ grep "PKG.*OPTION" mk.conf
+PKG_DEFAULT_OPTIONS=    -arts -dvdread -esound
+PKG_OPTIONS.kdebase=    debug -sasl
+PKG_OPTIONS.apache=     suexec</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is important to note that options that were specifically suggested by the package maintainer must be explicitly removed if you do not wish to include the option.  If you are unsure you can view the current state with <strong>make show-options</strong>.</p>
+</div>
+<div class="paragraph">
+<p>The following settings are consulted in the order given, and the last setting that selects or disables an option is used:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>the default options as suggested by the package maintainer</p>
+</li>
+<li>
+<p>the options implied by the settings of legacy variables (see below)</p>
+</li>
+<li>
+<p><code>PKG_DEFAULT_OPTIONS</code></p>
+</li>
+<li>
+<p><code>PKG_OPTIONS.<em>pkgbase</code></em></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>For groups of mutually exclusive options, the last option selected is used, all others are automatically disabled. If an option of the group is explicitly disabled, the previously selected option, if any, is used. It is an error if no option from a required group of options is selected, and building the package will fail.</p>
+</div>
+<div class="paragraph">
+<p>Before the options framework was introduced, build options were selected by setting a variable (often named <code>USE<em>_FOO</code></em>) in <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> for each option. To ease transition to the options framework for the user, these legacy variables are converted to the appropriate options setting (<code>PKG_OPTIONS.<em>pkgbase</code></em>) automatically. A warning is issued to prompt the user to update <a href="http://netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> to use the options framework directly. Support for the legacy variables will be removed eventually.</p>
+</div>
+</div>
+</div>
+<h1 id="_chapter_7_creating_binary_packages" class="sect0">Chapter 7. Creating binary packages</h1>
+<div class="sect1">
+<h2 id="_7_1_building_a_single_binary_package">17. 7.1. Building a single binary package</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once you have built and installed a package, you can create a <em>binary package</em> which can be installed on another system with <a href="http://man.NetBSD.org/NetBSD-9.2/i386/pkg_add.1">pkg_add(1)</a>.This saves having to build the same package on a group of hosts and wasting CPU time. It also provides a simple means for others to install your package, should you distribute it.</p>
+</div>
+<div class="paragraph">
+<p>To create a binary package, change into the appropriate directory in pkgsrc, and run <strong>make package</strong>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ cd misc/figlet
+$ make package</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will build and install your package (if not already done), and then build a binary package from what was installed. You can then use the <strong>pkg_</strong>* tools to manipulate it.Binary packages are created by default in <code>/usr/pkgsrc/packages</code>, in the form of a gzipped tar file. See <a href="http://netbsd.org/docs/pkgsrc/logs.html#logs.package">Section C.2, “Packaging figlet”</a> for a continuation of the above <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/misc/figlet/index.html"><code>misc/figlet</code></a> example.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="http://netbsd.org/docs/pkgsrc/submit.html">Chapter 23, Submitting and Committing</a> for information on how to submit such a binary package.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_7_2_settings_for_creation_of_binary_packages">18. 7.2. Settings for creation of binary packages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="http://netbsd.org/docs/pkgsrc/build.html#build.helpful-targets">Section 13.17, “Other helpful targets”</a>.</p>
+</div>
+</div>
+</div>
+<h1 id="_chapter_8_creating_binary_packages_for_everything_in_pkgsrc_bulk_builds" class="sect0">Chapter 8. Creating binary packages for everything in pkgsrc (bulk builds)</h1>
+<div class="openblock partintro">
+<div class="content">
+For a number of reasons, you may want to build binary packages for a large selected set of packages in pkgsrc, or even for all pkgsrc packages. For instance, when you have multiple machines that should run the same software, it is wasted time if they all build their packages themselves from source. Or you may want to build a list of packages you want and check them before deploying onto production systems. There is a way of getting a set of binary packages: the bulk build system, or pbulk ("p" stands for "parallel"). This chapter describes how to set it up.
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_1_preparations">19. 8.1. Preparations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First of all, you have to decide whether you build all packages
+or a limited set of them. Full bulk builds usually consume a lot more resources, both space and time, than builds for some practical sets of packages. A number of particularly heavy packages exist that are not actually interesting to a wide audience. (The approximate resource consumption for a full bulk build is given in section <a href="https://www.netbsd.org/docs/pkgsrc/bulk.html#bulk.req">Section 8.3, “Requirements of a full bulk build”</a>.) For limited bulk builds you need to make a list of packages you want to build.
+Note that all their dependencies will be built, so you don&#8217;t need to track them manually.</p>
+</div>
+<div class="paragraph">
+<p>During bulk builds various packages are installed and deinstalled
+in <code>/usr/pkg</code> (or whatever <code>LOCALBASE</code> is), so make sure that you don&#8217;t need any package during the builds. Essentially, you should provide a fresh system, either a chroot environment
+or something even more restrictive, depending on what the operating system provides, or dedicate the whole physical machine. As a useful side effect this makes sure that bulk builds cannot break anything in your system. There have been numerous cases where certain packages tried to install files outside the
+<code>LOCALBASE</code> or wanted to edit some files in <code>/etc</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_2_running_a_bulk_build">20. 8.2. Running a bulk build</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Running a bulk build works roughly as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First, build the pbulk infrastructure in a fresh pkgsrc location.</p>
+</li>
+<li>
+<p>Then, build each of the packages from a clean installation directory using the infrastructure.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_8_2_1_configuration">20.1. 8.2.1. Configuration</h3>
+<div class="paragraph">
+<p>To simplify configuration, we provide the helper script <code>mk/pbulk/pbulk.sh</code>.</p>
+</div>
+<div class="paragraph">
+<p>In order to use it, prepare a clear system (real one, chroot environment, jail, zone, virtual machine). Configure network access to fetch distribution files. Create a user with name "pbulk".</p>
+</div>
+<div class="paragraph">
+<p>Fetch and extract pkgsrc. Use a command like one of these:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># (cd /usr &amp;&amp; ftp -o - https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc.tar.gz | tar -zxf-)
+# (cd /usr &amp;&amp; fetch -o - https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc.tar.gz | tar -zxf-)
+# (cd /usr &amp;&amp; cvs -Q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot get -P pkgsrc)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or any other way that fits (e.g., curl, wget).</p>
+</div>
+<div class="paragraph">
+<p>Deploy and configure pbulk tools, e.g.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># sh pbulk.sh -n # use native make, no bootstrap kit needed (for use on NetBSD)
+# sh pbulk.sh -n -c mk.conf.frag # native, apply settings from given mk.conf fragment
+# sh pbulk.sh -nlc mk.conf.frag # native, apply settings, configure for limited build</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>mk.conf.frag</code> is a fragment of <code>mk.conf</code> that contains settings you want to apply to packages you build. For instance,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>PKG_DEVELOPER=          yes     # perform more checks
+X11_TYPE=               modular # use pkgsrc X11
+SKIP_LICENSE_CHECK=     yes     # accept all licences (useful
+                                # when building all packages)</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If configured for limited list, replace the list in <code>/usr/pbulk/etc/pbulk.list</code> with your list of packages, one per line without empty lines or comments. E.g.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>www/firefox
+mail/thunderbird
+misc/libreoffice4</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At this point you can also review configuration in <code>/usr/pbulk/etc</code> and make final amendments, if wanted.</p>
+</div>
+<div class="paragraph">
+<p>Start it:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># /usr/pbulk/bin/bulkbuild</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After it finishes, you&#8217;ll have <code>/mnt</code> filled with distribution files, binary packages, and reports, plain text summary in <code>/mnt/bulklog/meta/report.txt</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>pbulk.sh</code> script does not cover all possible use cases. While being ready to run, it serves as a good starting point to understand and build more complex setups. The script is kept small enough for better understanding.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>pbulk.sh</code> script supports running unprivileged bulk build and helps configuring distributed bulk builds. Distributed bulk builds support either building in worker chroots (each node is a path to a different chroot) that replicate the target system, including the pbulk prefix,
+or remote machines (each node is an IP address that must be accessible over SSH without a password).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_3_requirements_of_a_full_bulk_build">21. 8.3. Requirements of a full bulk build</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A complete bulk build requires lots of disk space. Some of the disk space can be read-only, some other must be writable. Some can be on remote filesystems (such as NFS) and some should be local. Some can be temporary filesystems, others must survive a sudden reboot.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>70 GB for the distfiles (read-write, remote, temporary)</p>
+</li>
+<li>
+<p>60 GB for the binary packages (read-write, remote, permanent)</p>
+</li>
+<li>
+<p>1 GB for the pkgsrc tree (read-only, remote, permanent)</p>
+</li>
+<li>
+<p>5 GB for <code>LOCALBASE</code> (read-write, local, temporary)</p>
+</li>
+<li>
+<p>10 GB for the log files (read-write, remote, permanent)</p>
+</li>
+<li>
+<p>5 GB for temporary files (read-write, local, temporary)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_4_bulk_build_variants">22. 8.4. Bulk build variants</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To ensure that pkgsrc packages work in different configurations, it makes sense to run non-default bulk builds from time to time. This section lists some ideas for bulk builds that intentionally let packages fail if they don&#8217;t follow the pkgsrc style.</p>
+</div>
+<div class="sect2">
+<h3 id="_8_4_1_detect_unknown_configure_options">22.1. 8.4.1. Detect unknown configure options</h3>
+<div class="paragraph">
+<p>Add the following line to <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>GNU_CONFIGURE_STRICT=   yes</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When a package fails this additional check, the most common cause is that the configure option was valid for an older version of the package but does not apply anymore. In that case, just remove it.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_2_detect_classes_of_bugs_by_forcing_compiler_warnings">22.2. 8.4.2. Detect classes of bugs by forcing compiler warnings</h3>
+<div class="paragraph">
+<p>The job of a compiler is not restricted to producing executable code, most compilers also detect typical programming mistakes. The pkgsrc compiler wrappers make it easy to force compiler options when the package is built. This can be used to find typical bugs across all packages that are in pkgsrc. By reporting these bugs upstream, the packages will be more reliable with the next updates.</p>
+</div>
+<div class="paragraph">
+<p>Add some of the following lines to <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CFLAGS+=        -Werror=char-subscripts
+CFLAGS+=        -Werror=implicit-function-declaration</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When a package fails to build using these stricter compiler options, document the circumstances in which the compiler produced the error message. This includes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform (<code>MACHINE_PLATFORM</code>)</p>
+</li>
+<li>
+<p>The source file</p>
+</li>
+<li>
+<p>An excerpt of the code. GCC and Clang already do this as part of the diagnostic.</p>
+</li>
+<li>
+<p>The exact error message from the compiler.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a package produces these error messages, but the package is fine, record this in your local <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>, like this, to skip this check in the next builds:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.if ${PKGPATH} == category/package
+# Version ${VERSION} failed on ${MACHINE_PLATFORM}:
+# error message
+# code
+# Reason why the code does not need to be fixed.
+BUILDLINK_TRANSFORM+=   rm:-Werror=char-subscripts
+.endif</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the error messages from the compiler are valid and the code needs to be fixed, prepare a local patch (see <code>LOCALPATCHES</code>) and report the bug to the upstream authors of the package, providing them with the information you collected above.</p>
+</div>
+<div class="paragraph">
+<p>Patches that are not essential for the package to work should only be reported upstream but not committed to pkgsrc, to make future updates easier.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_3_force_compiler_options_only_in_the_build_phase">22.3. 8.4.3. Force compiler options only in the build phase</h3>
+<div class="paragraph">
+<p>When adding custom compiler flags via <code>CFLAGS</code>, these apply to all phases of the package build process. Especially in the configure phase, adding <code>-Werror</code> leads to wrong decisions. The GNU configure scripts feed many small test programs to the C compiler to see whether certain headers are available, functions are defined in a library and programs can be run. In many cases these programs would not survive a strict compiler run with <code>-Wall -Wextra -Werror</code>.</p>
+</div>
+<div class="paragraph">
+<p>The pkgsrc infrastructure is flexible enough to support compiler options being added between the <code>configure</code> and <code>build</code> phases. It&#8217;s a little more complicated than the other examples in this section but still easy enough.</p>
+</div>
+<div class="paragraph">
+<p>The basic idea is to use the pkgsrc compiler wrapper to inject the desired compiler options. The compiler wrapper&#8217;s original task is to hide
+unwanted directories of include files and to normalize compiler options.
+It does this by wrapping the compiler command and rewriting the command
+line. To see this in action, run <strong>bmake patch</strong> in a package directory and examine the <code>work/.cwrappers/config</code> directory. It contains individual configurations for the C compiler and the related tools.The
+plan is to find a hook between the configure and build phases, and to
+modify these configuration files at that point.</p>
+</div>
+<div class="paragraph">
+<p>To find this hook, have a look at <code>mk/build/build.mk</code>, which contains among others the <code>pre-build-checks-hook</code>. The word <code>checks</code> doesn&#8217;t quite fit, but the <code>pre-build-hook</code> sounds good enough.</p>
+</div>
+<div class="paragraph">
+<p>The code to be included in <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a> is:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Just a few example options.
+BUILD_ONLY_CFLAGS=      -Wall -Werror -O2 -DTEMPDIR='"/tmp"'</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.if ${BUILD_ONLY_CFLAGS:U:M*}
+pre-build-checks-hook: add-build-only-cflags</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>add-build-only-cflags: .PHONY
+    ${RUN} cd ${CWRAPPERS_CONFIG_DIR};      \
+    ${TEST} ! -f ${.TARGET} || exit 0;      \
+    for flag in ${BUILD_ONLY_CFLAGS}; do    \
+            ${ECHO} "append=$$flag" &gt;&gt; cc;  \
+    done;                                   \
+    &gt; ${.TARGET}
+.endif</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(When editing the <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>, make sure that the commands of the <code>add-build-only-cflags</code> target are indented with a tab, not with spaces.)</p>
+</div>
+<div class="paragraph">
+<p>The condition in the <code>.if</code> statement contains the <code>:U</code> modifier to prevent parse errors if the variable should be undefined, possibly because it is only defined for a subset of the packages. The <code>:M*</code> modifier ensures that there is at least one compiler option, to prevent a syntax error in the shell parser.</p>
+</div>
+<div class="paragraph">
+<p>The code around the <code>${.TARGET}</code> variable ensures that the additional compiler options are only appended once, even if <strong>bmake build</strong> is run multiple times. To do this, it creates a marker file.</p>
+</div>
+<div class="paragraph">
+<p>To verify that this setup works, run <strong>bmake configure</strong> in a package directory. Up to now, everything works as usual. Examine the directory
+<code>work/.cwrappers/config</code> to see that the compiler options from <code>BUILD_ONLY_CFLAGS</code> are not yet added to the file <code>cc</code>. Examine the tail of the <code>work/.work.log</code> file to see that the normal compiler
+options are used.</p>
+</div>
+<div class="paragraph">
+<p>Now run <strong>bmake build</strong>. This will append the options to the file <code>cc</code> and will create the marker file in the same directory. After that, the build starts as usual, but with the added compiler options. Examine the tail of the file <code>work/.work.log</code> to see that the lines starting with
+<code>[*]</code> don&#8217;t contain the compiler options, but the corresponding lines starting with <code>&lt;.&gt;</code> do end with these options.</p>
+</div>
+<div class="paragraph">
+<p>Building packages using this setup variant and fixing the resulting bugs is the same as in <a href="https://www.netbsd.org/docs/pkgsrc/bulk.html#bulk.var.comperr">Section 8.4.2, “Detect classes of bugs by forcing compiler warnings”</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_4_use_custom_directories">22.4. 8.4.4. Use custom directories</h3>
+<div class="paragraph">
+<p>Some directories like <code>PREFIX</code>, <code>VARBASE</code>, <code>PKG_SYSCONFDIR</code>, <code>PKGMANDIR</code>, <code>PKG_INFODIR</code> can be configured in pkgsrc. Set these to arbitrary paths during bootstrap or afterwards in <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PREFIX=         /a-random-uuid
+PKG_SYSCONFDIR= /a-random-uuid
+VARBASE=        /a-random-uuid
+PKGMANDIR=	a-random-uuid
+PKG_INFODIR=	a-random-uuid</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_5_turn_warnings_into_errors">22.5. 8.4.5. Turn warnings into errors</h3>
+<div class="paragraph">
+<p>When building a package, warnings are typically ignored since they just flow by and do not cause the build to fail immediately. To find these warnings, redefine them to errors in <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DELAYED_WARNING_MSG=    ${DELAYED_ERROR_MSG} "(was warning)"
+WARNING_MSG=            ${FAIL_MSG} "(was warning)"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are many more classes of warnings in pkgsrc, and most of them can be redefined with a simple definition like above.</p>
+</div>
+<div class="paragraph">
+<p>If a package suggests to add <code>USE_TOOLS+=perl</code> to the package Makefile, research whether the package actually needs Perl. If it does, add <code>USE_TOOLS+=perl</code> to the package Makefile, and if it doesn&#8217;t, add <code>TOOLS_BROKEN+=perl</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_6_reject_packages_for_which_pkglint_reports_errors">22.6. 8.4.6. Reject packages for which pkglint reports errors</h3>
+<div class="paragraph">
+<p>Using pkglint as part of the regular build process is mostly a waste of time. If you want to fix some of the warnings, just run pkglint recursively on the whole pkgsrc tree. This will take a few minutes (up to 10), which is much faster than a complete bulk build.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_7_reject_packages_that_contain_forbidden_strings">22.7. 8.4.7. Reject packages that contain forbidden strings</h3>
+<div class="paragraph">
+<p>To ensure that the binary packages don&#8217;t contain references to the build directory, there is already <code>CHECK_WRKREF</code>. If that variable includes the item <code>extra</code>, it is possible to define additional patterns that must not appear in any installed file. This is specified in <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>HECK_WRKREF=                   extra
+CHECK_WRKREF_EXTRA_DIRS+=       /usr/local
+CHECK_WRKREF_EXTRA_DIRS+=       /usr/pkg
+CHECK_WRKREF_EXTRA_DIRS+=	@[A-Z][A-Z]*@</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above patterns will probably generate many false positives, therefore the results need to be taken with a grain of salt.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_8_reject_packages_whose_self_test_fails">22.8. 8.4.8. Reject packages whose self-test fails</h3>
+<div class="paragraph">
+<p>To run the test suites that come with each package, add this line to <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PKGSRC_RUN_TEST=        yes</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Be prepared that even the most basic packages fail this test. When doing a bulk build with this, it will often abort in the early phase where the packages are scanned for their dependencies since there are cyclic dependencies. There is still a lot to do in this area.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_9_reject_packages_that_use_undefined_shell_variables">22.9. 8.4.9. Reject packages that use undefined shell variables</h3>
+<div class="paragraph">
+<p>To catch typos in the shell snippets from the Makefile fragments, add the <code>-u</code> flag to most of the commands by adding this line to <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>RUN=    @set -eu;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After that, ensure that none of the bulk build log files (even those for successfully built packages) contains the string <code>parameter not set</code> or whatever error message the command <strong>sh -ceu '$undefined'</strong> outputs.</p>
+</div>
+<div class="paragraph">
+<p>See <code>mk/misc/common.mk</code> for the existing definition.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_8_4_10_turn_off_verbose_logging">22.10. 8.4.10. Turn off verbose logging</h3>
+<div class="paragraph">
+<p>The build logs of a package are often quite long. This allows error messages or other interesting details to hide between the noise. To make
+the actual error message stand out more, add these lines to <a href="https://www.netbsd.org/docs/pkgsrc/configuring.html#mk.conf"><code>mk.conf</code></a>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>GNU_CONFIGURE_QUIET=    yes
+MAKE_FLAGS+=            -s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>-s</code> option works for both GNU Make and BSD Make. On exotic platforms with their own make, it may be a little different.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_8_5_creating_a_multiple_cd_rom_packages_collection">23. 8.5. Creating a multiple CD-ROM packages collection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After your pkgsrc bulk-build has completed, you may wish to create a CD-ROM set of the resulting binary packages to assist in installing packages on other machines. The <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/cdpack/index.html"><code>pkgtools/cdpack</code></a> package provides a simple tool for creating the ISO 9660 images. <strong>cdpack</strong> arranges the packages on the CD-ROMs in a way that keeps all the dependencies for a given package on the same CD as that package.</p>
+</div>
+<div class="sect2">
+<h3 id="_8_5_1_example_of_cdpack">23.1. 8.5.1. Example of cdpack</h3>
+<div class="paragraph">
+<p>Complete documentation for cdpack is found in the cdpack(1) man page. The following short example assumes that the binary packages are left in <code>/usr/pkgsrc/packages/All</code> and that sufficient disk space exists in <code>/u2</code> to hold the ISO 9660 images.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># mkdir /u2/images
+# pkg_add /usr/pkgsrc/packages/All/cdpack
+# cdpack /usr/pkgsrc/packages/All /u2/images</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you wish to include a common set of files(<code>COPYRIGHT</code>, <code>README</code>, etc.) on each CD in the collection, then you need to create a directory which contains these files, e.g.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># mkdir /tmp/common
+# echo "This is a README" &gt; /tmp/common/README
+# echo "Another file" &gt; /tmp/common/COPYING
+# mkdir /tmp/common/bin
+# echo "#!/bin/sh" &gt; /tmp/common/bin/myscript
+# echo "echo Hello world" &gt;&gt; /tmp/common/bin/myscript
+# chmod 755 /tmp/common/bin/myscript</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now create the images:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># cdpack -x /tmp/common /usr/pkgsrc/packages/All /u2/images</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each image will contain <code>README</code>, <code>COPYING</code>, and <code>bin/myscript</code> in their root directories.</p>
+</div>
+<div class="paragraph">
+<p>Unresolved directive in book.adoc - include::bibliography.adoc[]</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_index">Example Index</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-07-07 06:24:23 UTC
+</div>
+</div>
+</body>
+</html>

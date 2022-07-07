@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Chapter 18. Buildlink methodology</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<style>
+
+.previous {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #f1f1f1;
+    color: black;
+}
+.index {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #f1f1f1;
+    color: black;
+
+}
+.next {
+    text-decoration: none;
+    display: inline-block;
+    padding: 9px 16px;
+    background-color: #FF4500;
+    color: white;
+    float: right !important;}
+
+#myBtn {
+  #display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #FF4500; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
+}
+
+</style>
+<script>
+//Get the button
+var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+
+
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/tools.html" class="previous">&laquo; Previous</a>
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/index.html" class="previous">&laquo; Index</a>
+<a href="https://jaypatelani.github.io/trydocs/pkgsrcNEW/plist.html" class="next">Next &raquo;</a>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<div id="header">
+<h1>Chapter 18. Buildlink methodology</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_18_1_converting_packages_to_use_buildlink3">18.1. Converting packages to use buildlink3</a></li>
+<li><a href="#_18_2_writing_buildlink3_mk_files">18.2. Writing buildlink3.mk files</a>
+<ul class="sectlevel2">
+<li><a href="#_18_2_1_anatomy_of_a_buildlink3_mk_file">18.2.1. Anatomy of a buildlink3.mk file</a></li>
+<li><a href="#_18_2_2_updating_buildlink_api_depends_pkg_and_buildlink_abi_depends_pkg_in_buildlink3_mk_files">18.2.2. Updating BUILDLINK_API_DEPENDS.pkg and BUILDLINK_ABI_DEPENDS.pkg in buildlink3.mk files</a></li>
+</ul>
+</li>
+<li><a href="#_18_3_writing_builtin_mk_files">18.3. Writing builtin.mk files</a>
+<ul class="sectlevel2">
+<li><a href="#_18_3_1_anatomy_of_a_builtin_mk_file">18.3.1. Anatomy of a builtin.mk file</a></li>
+<li><a href="#_18_3_2_global_preferences_for_native_or_pkgsrc_software">18.3.2. Global preferences for native or pkgsrc software</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Buildlink is a framework in pkgsrc that controls what headers and libraries are seen by a package&#8217;s configure and build processes. This is implemented in a two step process:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Symlink headers and libraries for dependencies into <code>BUILDLINK_DIR</code>, which by default is a subdirectory of <code>WRKDIR</code>.</p>
+</li>
+<li>
+<p>Create wrapper scripts that are used in place of the normal compiler tools that translate <code>-I${LOCALBASE}/include</code> and <code>-L${LOCALBASE}/lib</code> into references to <code>BUILDLINK_DIR</code>. The wrapper scripts also make native compiler on some operating systems look like GCC, so that packages that expect GCC won&#8217;t require modifications to build with those native compilers.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This normalizes the environment in which a package is built so that the package may be built consistently despite what other software may be installed. Please note that the normal system header and library paths, e.g. <code>/usr/include</code>, <code>/usr/lib</code>, etc., are always searched&#8201;&#8212;&#8201;buildlink3 is designed to insulate the package build from non-system-supplied software.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_18_1_converting_packages_to_use_buildlink3">18.1. Converting packages to use buildlink3</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The process of converting packages to use the buildlink3 framework (“bl3ifying”) is fairly straightforward. The things to keep in mind are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure that the build always calls the wrapper scripts instead of the actual toolchain. Some packages are tricky, and the only way to know for sure is the check <code>${WRKDIR}/.work.log</code> to see if the	wrappers are being invoked.</p>
+</li>
+<li>
+<p>Don&#8217;t override <code>PREFIX</code> from within the package Makefile, e.g. Java VMs, standalone shells, etc., because the code to symlink files into <code>${BUILDLINK_DIR}</code> looks for files relative to “pkg_info -qp <em><code>pkgname</code></em>”.</p>
+</li>
+<li>
+<p>Remember that <em>only</em> the <code>buildlink3.mk</code> files that you list in a package&#8217;s Makefile are added as dependencies for that package.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If a dependency on a particular package is required for its libraries and headers, then we replace:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DEPENDS+=       foo&gt;=1.1.0:../../category/foo</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.include "../../category/foo/buildlink3.mk"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The buildlink3.mk files usually define the required dependencies. If you need a newer version of the dependency when using buildlink3.mk files, then you can define it in your Makefile; for example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>BUILDLINK_API_DEPENDS.foo+=   foo&gt;=1.1.0
+.include "../../category/foo/buildlink3.mk"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are several <code>buildlink3.mk</code> files in <code>pkgsrc/mk</code> that handle special package issues:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>bdb.buildlink3.mk</code> chooses either the native or a pkgsrc Berkeley DB implementation based on	the values of <code>BDB_ACCEPTED</code> and <code>BDB_DEFAULT</code>.</p>
+</li>
+<li>
+<p><code>curses.buildlink3.mk</code>: If the system comes with neither Curses nor NCurses, this will take care to install the <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/devel/ncurses/index.html"><code>devel/ncurses</code></a> package.</p>
+</li>
+<li>
+<p><code>krb5.buildlink3.mk</code> uses the value of <code>KRB5_ACCEPTED</code> to choose between adding a dependency on Heimdal or MIT-krb5 for packages that require a Kerberos 5 implementation.</p>
+</li>
+<li>
+<p><code>motif.buildlink3.mk</code> checks for a system-provided Motif installation or adds a dependency on <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/x11/lesstif/index.html"><code>x11/lesstif</code></a> or <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/x11/motif/index.html"><code>x11/motif</code></a>. The user can set <code>MOTIF_TYPE</code> to “dt”, “lesstif” or “motif” to choose which Motif version will be used.</p>
+</li>
+<li>
+<p><code>readline.buildlink3.mk</code> checks for a system-provided GNU readline or editline (libedit) installation, or adds a dependency on <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/devel/readline/index.html"><code>devel/readline</code></a>, <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/devel/editline/index.html"><code>devel/editline</code></a>. The user can set <code>READLINE_DEFAULT</code> to choose readline implementation. If your package really needs GNU readline library, its Makefile should include <code>devel/readline/buildlink3.mk</code> instead of <code>readline.buildlink3.mk</code>.</p>
+</li>
+<li>
+<p><code>oss.buildlink3.mk</code> defines several variables that may be used by packages that use the Open Sound System (OSS) API.</p>
+</li>
+<li>
+<p><code>pgsql.buildlink3.mk</code> will accept any of the Postgres versions in the variable <code>PGSQL_VERSIONS_ACCEPTED</code> and default to	the version <code>PGSQL_VERSION_DEFAULT</code>. See the file for more information.</p>
+</li>
+<li>
+<p><code>pthread.buildlink3.mk</code> uses the value of <code>PTHREAD_OPTS</code> and checks for native pthreads or adds	a dependency on <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/devel/pth/index.html"><code>devel/pth</code></a> as needed.</p>
+</li>
+<li>
+<p><code>xaw.buildlink3.mk</code> uses the value of <code>XAW_TYPE</code> to choose a particular Athena widgets library.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The comments in those <code>buildlink3.mk</code> files provide a more complete description of how to use them properly.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_18_2_writing_buildlink3_mk_files">18.2. Writing buildlink3.mk files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A package&#8217;s <code>buildlink3.mk</code> file is included by Makefiles to indicate the need to compile and link against header files and libraries provided by the package. A <code>buildlink3.mk</code> file should always provide enough information to add the correct type of dependency relationship and include any other <code>buildlink3.mk</code> files that it needs to find headers and libraries that it needs in turn.</p>
+</div>
+<div class="paragraph">
+<p>To generate an initial <code>buildlink3.mk</code> file for further editing, Rene Hexel&#8217;s <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/createbuildlink/index.html"><code>pkgtools/createbuildlink</code></a> package is highly recommended. For most packages, the following command will generate a good starting point for <code>buildlink3.mk</code> files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>% cd pkgsrc/category/pkgdir
+% createbuildlink &gt;buildlink3.mk</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_18_2_1_anatomy_of_a_buildlink3_mk_file">18.2.1. Anatomy of a buildlink3.mk file</h3>
+<div class="paragraph">
+<p>The following real-life example <code>buildlink3.mk</code> is taken from <code>pkgsrc/graphics/tiff</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># $NetBSD: buildlink.html,v 1.224 2022/05/21 15:41:36 nia Exp $
+BUILDLINK_TREE+=        tiff
+.if !defined(TIFF_BUILDLINK3_MK)
+TIFF_BUILDLINK3_MK:=
+BUILDLINK_API_DEPENDS.tiff+=    tiff&gt;=3.6.1
+BUILDLINK_ABI_DEPENDS.tiff+=    tiff&gt;=3.7.2nb1
+BUILDLINK_PKGSRCDIR.tiff?=      ../../graphics/tiff
+.include "../../devel/zlib/buildlink3.mk"
+.include "../../graphics/jpeg/buildlink3.mk"
+.endif # TIFF_BUILDLINK3_MK
+BUILDLINK_TREE+=        -tiff</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The header and footer manipulate <code>BUILDLINK_TREE</code>, which is common across all <code>buildlink3.mk</code> files and is used to track the dependency tree.</p>
+</div>
+<div class="paragraph">
+<p>The main section is protected from multiple inclusion and controls how the dependency on <em><code>pkg</code></em> is added. Several important variables are set in the section:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>BUILDLINK_API_DEPENDS.<em>pkg</code></em> is the dependency version recorded in the installed package; this should always be set using <strong>+=</strong> to ensure that we&#8217;re appending to any pre-existing list of values. This variable should be set to the last version of the package that had an backwards-incompatible API change.</p>
+</li>
+<li>
+<p><code>BUILDLINK_PKGSRCDIR.<em>pkg</code></em> is the location of the <em><code>pkg</code></em> pkgsrc directory.</p>
+</li>
+<li>
+<p><code>BUILDLINK_DEPMETHOD.<em>pkg</code></em> (not shown above) controls whether we use <code>BUILD_DEPENDS</code> or <code>DEPENDS</code> to add the dependency on <em><code>pkg</code></em>.  The build dependency is selected by setting <code>BUILDLINK_DEPMETHOD.<em>pkg</code></em> to “build”. By default, the full dependency is used.</p>
+</li>
+<li>
+<p><code>BUILDLINK_INCDIRS.<em>pkg</code></em> and <code>BUILDLINK_LIBDIRS.<em>pkg</code></em> (not shown above) are lists of subdirectories of <code>${BUILDLINK_PREFIX.<em>pkg</code></em>} to add to the header and library search paths. These default to “include” and “lib” respectively.</p>
+</li>
+<li>
+<p><code>BUILDLINK_CPPFLAGS.<em>pkg</code></em> (not shown above) is the list of preprocessor flags to add to <code>CPPFLAGS</code>, which are passed on to the configure and build phases. The “-I” option should be avoided and instead be handled using <code>BUILDLINK_INCDIRS.<em>pkg</code></em> as above.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following variables are all optionally defined within this second section (protected against multiple inclusion) and control which package files are symlinked into <code>${BUILDLINK_DIR}</code> and how their names are transformed during the symlinking:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>BUILDLINK_FILES.<em>pkg</code></em> (not shown above) is a shell glob pattern relative to <code>${BUILDLINK_PREFIX.<em>pkg</code></em>} to be symlinked into <code>${BUILDLINK_DIR}</code>, e.g. <code>include/*.h</code>.</p>
+</li>
+<li>
+<p><code>BUILDLINK_FILES_CMD.<em>pkg</code></em> (not shown above) is a shell pipeline that outputs to stdout a list of files relative to <code>${BUILDLINK_PREFIX.<em>pkg</code></em>}. The resulting files are to be symlinked into <code>${BUILDLINK_DIR}</code>. By default, this takes the <code>+CONTENTS</code> of a <em><code>pkg</code></em> and filters it through <code>${BUILDLINK_CONTENTS_FILTER.<em>pkg</code></em>}.</p>
+</li>
+<li>
+<p><code>BUILDLINK_CONTENTS_FILTER.<em>pkg</code></em> (not shown above) is a filter command that filters <code>+CONTENTS</code> input into a list of files relative to <code>${BUILDLINK_PREFIX.<em>pkg</code></em>} on stdout. By default, <code>BUILDLINK_CONTENTS_FILTER.<em>pkg</code></em> outputs the contents of the <code>include</code> and <code>lib</code> directories in the package <code>+CONTENTS</code>.</p>
+</li>
+<li>
+<p><code>BUILDLINK_FNAME_TRANSFORM.<em>pkg</code></em> (not shown above) is a list of sed arguments used to transform the name of the source filename into a destination filename, e.g. <strong>-e "s|/curses.h|/ncurses.h|g"</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This section can additionally include any <code>buildlink3.mk</code> needed for <em><code>pkg</code></em>'s library dependencies. Including these <code>buildlink3.mk</code> files means that the headers and libraries for these dependencies are also symlinked into <code>${BUILDLINK_DIR}</code> whenever the <em><code>pkg</code></em> <code>buildlink3.mk</code> file is included. Dependencies are only added for directly include <code>buildlink3.mk</code> files.</p>
+</div>
+<div class="paragraph">
+<p>When providing a <code>buildlink3.mk</code> and including other <code>buildlink3.mk</code> files in it, please only add necessary ones, i.e., those whose libraries or header files are automatically exposed when the package is use.</p>
+</div>
+<div class="paragraph">
+<p>In particular, if only an executable (<code>bin/foo</code>) is linked against a library, that library does not need to be propagated in the <code>buildlink3.mk</code> file.</p>
+</div>
+<div class="paragraph">
+<p>The following steps should help you decide if a <code>buildlink3.mk</code> file needs to be included:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Look at the installed header files: What headers do they include? The packages providing these files must be buildlinked.</p>
+</li>
+<li>
+<p>Run <code>ldd</code> on all installed libraries and look against what other libraries they link. Some of the packages providing these probably need to be buildlinked; however, it&#8217;s not automatic, since e.g. GTK on some systems pulls in the X libraries, so they will show up in the <code>ldd</code> output, while on others (like OS X) it won&#8217;t. <code>ldd</code> output can thus only be	used as a hint.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_18_2_2_updating_buildlink_api_depends_pkg_and_buildlink_abi_depends_pkg_in_buildlink3_mk_files">18.2.2. Updating BUILDLINK_API_DEPENDS.pkg and BUILDLINK_ABI_DEPENDS.pkg in buildlink3.mk files</h3>
+<div class="paragraph">
+<p>Both variables set lower bounds for a version of this package. The two variables differ in that one describes source compatibility (API) and the other binary compatibility (ABI). The difference is that a change in the API breaks compilation of programs while changes in the ABI stop compiled programs from running.</p>
+</div>
+<div class="paragraph">
+<p>The <code>BUILDLINK_API_DEPENDS.<em>pkg</code></em> variable in a <code>buildlink3.mk</code> should be changed very rarely. (One possible scenario: If all packages using this package need a higher version than defined in the <code>buildlink3.mk</code>, <code>BUILDLINK_API_DEPENDS.<em>pkg</code></em> could be updated to that higher version.)</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, changes to <code>BUILDLINK_ABI_DEPENDS.<em>pkg</code></em> are more common. The variable will need to be updated every time the major version of one of its shared libraries is changed, or any other change where a binary built against the previous version of the package will not run against the new version any longer.</p>
+</div>
+<div class="paragraph">
+<p>In such a case, the package&#8217;s <code>BUILDLINK_ABI_DEPENDS.<em>pkg</code></em> must be increased to require the new package version. Then the <code>PKGREVISION</code> of all packages <em><code>foo</code></em> that depend on this package need to be increased, and if they have <code>buildlink3.mk</code> files, <code>BUILDLINK_ABI_DEPENDS.<em>foo</code></em> in their <code>buildlink3.mk</code> files must be increased to the new version as well. This is required so that a package will pull in the versions of the packages that use the new ABI and that the packages' <code>PKGREVISION</code>s uniquely identify the packages built against the new ABI. The <a href="https://cdn.NetBSD.org/pub/pkgsrc/current/pkgsrc/pkgtools/revbump/index.html"><code>pkgtools/revbump</code></a> package can help with these updates.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="https://www.netbsd.org/docs/pkgsrc/fixes.html#dependencies">Section 21.1.5, “Handling dependencies”</a> for more information about dependencies on other packages, including the <code>BUILDLINK_API_DEPENDS</code> definitions.</p>
+</div>
+<div class="paragraph">
+<p>Please take careful consideration before adjusting <code>BUILDLINK_API_DEPENDS.<em>pkg</code></em> or <code>BUILDLINK_ABI_DEPENDS.<em>pkg</code></em> in a <code>buildlink3.mk</code> file as we don&#8217;t want to cause unneeded package deletions and rebuilds. In many cases, new versions of packages work just fine with older dependencies.</p>
+</div>
+<div class="paragraph">
+<p>Also, it is not needed to set <code>BUILDLINK_ABI_DEPENDS.<em>pkg</code></em> when it is identical to <code>BUILDLINK_API_DEPENDS.<em>pkg</code></em>.</p>
+</div>
+<div class="paragraph">
+<p>Note there is also the distinction that users are able to disable enforcement of ABI dependencies using the <code>USE_ABI_DEPENDS</code> variable, but there is no equivalent option for API dependencies.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_18_3_writing_builtin_mk_files">18.3. Writing builtin.mk files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some packages in pkgsrc install headers and libraries that coincide with headers and libraries present in the base system. Aside from a <code>buildlink3.mk</code> file, these packages should also include a <code>builtin.mk</code> file that includes the necessary checks to decide whether using the built-in software or the pkgsrc software is appropriate.</p>
+</div>
+<div class="paragraph">
+<p>The only requirements of a builtin.mk file for <em><code>pkg</code></em> are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>It should set <code>USE_BUILTIN.<em>pkg</code></em> to either “yes” or “no” after it is included.</p>
+</li>
+<li>
+<p>It should <em>not</em> override any <code>USE_BUILTIN.<em>pkg</code></em> which is already set before the <code>builtin.mk</code> file is included.</p>
+</li>
+<li>
+<p>It should be written to allow multiple inclusion. This is <em>very</em> important and takes careful attention to <code>Makefile</code> coding.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_18_3_1_anatomy_of_a_builtin_mk_file">18.3.1. Anatomy of a builtin.mk file</h3>
+<div class="paragraph">
+<p>The following is the recommended template for builtin.mk files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.if !defined(IS_BUILTIN.foo)
+#
+# IS_BUILTIN.foo is set to "yes" or "no" depending on whether "foo"
+# genuinely exists in the system or not.
+#
+IS_BUILTIN.foo?=        no
+# BUILTIN_PKG.foo should be set here if "foo" is built-in and its package
+# version can be determined.
+#
+.  if !empty(IS_BUILTIN.foo:M[yY][eE][sS])
+BUILTIN_PKG.foo?=       foo-1.0
+.  endif
+.endif  # IS_BUILTIN.foo
+.if !defined(USE_BUILTIN.foo)
+USE_BUILTIN.foo?=       ${IS_BUILTIN.foo}
+.  if defined(BUILTIN_PKG.foo)
+.    for _depend_ in ${BUILDLINK_API_DEPENDS.foo}
+.      if !empty(USE_BUILTIN.foo:M[yY][eE][sS])
+USE_BUILTIN.foo!=                                                           \
+    ${PKG_ADMIN} pmatch '${_depend_}' ${BUILTIN_PKG.foo}            \
+    &amp;&amp; ${ECHO} "yes" || ${ECHO} "no"
+.      endif
+.    endfor
+.  endif
+.endif  # USE_BUILTIN.foo
+CHECK_BUILTIN.foo?=     no
+.if !empty(CHECK_BUILTIN.foo:M[nN][oO])
+#
+# Here we place code that depends on whether USE_BUILTIN.foo is set to
+# "yes" or "no".
+#
+.endif  # CHECK_BUILTIN.foo</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first section sets <code>IS_BUILTIN.<em>pkg</code></em> depending on if <em><code>pkg</code></em> really exists in the base system. This should not be a base system software with similar functionality to <em><code>pkg</code></em>; it should only be “yes” if the actual package is included as part of the base system. This variable is only used internally within the <code>builtin.mk</code> file.</p>
+</div>
+<div class="paragraph">
+<p>The second section sets <code>BUILTIN_PKG.<em>pkg</code></em> to the version of <em><code>pkg</code></em> in the base system if it exists (if <code>IS_BUILTIN.<em>pkg</code></em> is “yes”). This variable is only used internally within the <code>builtin.mk</code> file.</p>
+</div>
+<div class="paragraph">
+<p>The third section sets <code>USE_BUILTIN.<em>pkg</code></em> and is <em>required</em> in all <code>builtin.mk</code> files. The code in this section must make the determination whether the built-in software is adequate to satisfy the dependencies listed in <code>BUILDLINK_API_DEPENDS.<em>pkg</code></em>. This is typically done by comparing <code>BUILTIN_PKG.<em>pkg</code></em> against each of the dependencies in <code>BUILDLINK_API_DEPENDS.<em>pkg</code></em>. <code>USE_BUILTIN.<em>pkg</code></em> <em>must</em> be set to the correct value by the end of the <code>builtin.mk</code> file. Note that<code>USE_BUILTIN.<em>pkg</code></em> may be “yes” even if <code>IS_BUILTIN.<em>pkg</code></em> is “no” because we may make the determination that the built-in version of the software is similar enough to be used as a replacement.</p>
+</div>
+<div class="paragraph">
+<p>The last section is guarded by <code>CHECK_BUILTIN.<em>pkg</code></em>, and includes code that uses the value of <code>USE_BUILTIN.<em>pkg</code></em> set in the previous section. This typically includes, e.g., adding additional dependency restrictions and listing additional files to symlink into <code>${BUILDLINK_DIR}</code> (via <code>BUILDLINK_FILES.<em>pkg</code></em>).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_18_3_2_global_preferences_for_native_or_pkgsrc_software">18.3.2. Global preferences for native or pkgsrc software</h3>
+<div class="paragraph">
+<p>When building packages, it&#8217;s possible to choose whether to set a global preference for using either the built-in (native) version or the pkgsrc version of software to satisfy a dependency. This is controlled by setting <code>PREFER_PKGSRC</code> and <code>PREFER_NATIVE</code>. These variables take values of either “yes”, “no”, or a list of packages. <code>PREFER_PKGSRC</code> tells pkgsrc to use the pkgsrc versions of software, while <code>PREFER_NATIVE</code> tells pkgsrc to use the built-in versions. Preferences are determined by the most specific instance of the package in either <code>PREFER_PKGSRC</code> or <code>PREFER_NATIVE</code>. If a package is specified in neither or in both variables, then <code>PREFER_PKGSRC</code> has precedence over <code>PREFER_NATIVE</code>. For example, to require using pkgsrc versions of software for all but the most basic bits on a NetBSD system, you can set:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PREFER_PKGSRC=  yes
+PREFER_NATIVE=  getopt skey tcp_wrappers</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A package <em>must</em> have a <code>builtin.mk</code> file to be listed in <code>PREFER_NATIVE</code>, otherwise it is simply ignored in that list.</p>
+</div>
+<div class="paragraph">
+<p><code>PREFER_PKGSRC</code> and <code>PREFER_NATIVE</code> should be set during bootstrap  to ensure that the bootstrap process does not use inapropriate native tools as dependencies for core packages.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># ./bootstrap --prefer-pkgsrc yes --prefer-native openssl</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Switching between settings globally at a later date can introduce complications with dependency resolution. This is caused by packages built with the opposite preference being installed alongside each other. Hence, any changes to these variables after bootstrap will necessitate rebuilding all packages depending on one whose preference has been changed. This is not trivial and should be avoided.</p>
+</div>
+<div class="paragraph">
+<p>When using pkgsrc on Linux systems, there is high risk of "leakage", where programs installed by pkgsrc may inadvertently use a command or library not installed by pkgsrc, e.g. those installed by yum or apt. Such foreign dependencies may be installed, removed, or upgraded to a version incompatible with the pkgsrc package at any time, causing pkgsrc packages to subsequently malfunction. Pkgsrc cannot prevent this, as it has no control over other package managers. Another potential problem is that under Redhat Enterprise and related Linux systems, yum packages are only patched and never upgraded, so eventually they may become too outdated for use by pkgsrc. Even intentionally using foreign dependencies, not considered leakage, can lead to these problems, so it is generally discouraged. In order to minimize such problems, PREFER_PKGSRC defaults to "yes" on Linux systems. This ensures that pkgsrc is aware of any changes to dependency packages and can rebuild or upgrade the entire dependency tree as needed. This default can be overridden by setting --prefer-pkgsrc to "no" or a list of packages, or by setting --prefer-native to "yes".</p>
+</div>
+<div class="paragraph">
+<div class="title">Next</div>
+<p>Chapter 19. PLIST issues <a href="chapter-19.html">chapter-19.html</a></p>
+</div>
+<div class="paragraph">
+<div class="title">Previous</div>
+<p>Chapter 17. Tools needed for building or running <a href="chapter-17.html">chapter-17.html</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-07-07 06:24:23 UTC
+</div>
+</div>
+</body>
+</html>
